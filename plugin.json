@@ -1,0 +1,16 @@
+{
+    "pluginName": "Translate",
+    "version": "1.0.0",
+    "description": "中英翻译插件",
+    "author": "HaleShaw",
+    "homepage": "https://github.com/HaleShaw/uTools-Translate",
+    "preload": "preload.js",
+    "logo": "logo.png",
+    "features": [
+        {
+            "code": "lookup",
+            "explain": "中英文翻译，基于有道网页API。",
+            "cmds": ["翻译", "translate", "有道", "tr"]
+        }
+    ]
+}
