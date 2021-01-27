@@ -12,6 +12,12 @@ function doGet(url) {
             });
             res.on('end', () => {
                 try {
+                    console.log(rawData);
+                    if (rawData.indexOf('frequent-error') != -1) {
+                        resolve({
+                            errorCode: 302
+                        });
+                    }
                     const parsedData = JSON.parse(rawData);
                     resolve(parsedData);
                 } catch (e) {
@@ -77,6 +83,10 @@ async function getData(url) {
 
             case 50:
                 errMsg = '无效的key';
+                break;
+
+            case 302:
+                errMsg = 'API请求异常频繁，暂时被封禁，请稍后再试';
                 break;
 
             default:
