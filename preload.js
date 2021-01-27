@@ -1,19 +1,28 @@
-const axios = require('axios');
+const http = require('http');
 const translateApi =
     'http://fanyi.youdao.com/openapi.do?keyfrom=WoxLauncher&key=1247918016&type=data&doctype=json&version=1.1&q=';
 
 function doGet(url) {
-    return new Promise((reslove, reject) => {
-        axios({
-            method: 'get',
-            url: url
-        })
-            .then(res => {
-                reslove(res.data);
-            })
-            .catch(err => {
-                reject(err);
+    return new Promise((resolve, reject) => {
+        http.get(url, res => {
+            res.setEncoding('utf8');
+            let rawData = '';
+            res.on('data', chunk => {
+                rawData += chunk;
             });
+            res.on('end', () => {
+                try {
+                    const parsedData = JSON.parse(rawData);
+                    resolve(parsedData);
+                } catch (e) {
+                    console.error(e.message);
+                    reject(e.message);
+                }
+            });
+        }).on('error', e => {
+            console.error(e.message);
+            reject(e.message);
+        });
     });
 }
 

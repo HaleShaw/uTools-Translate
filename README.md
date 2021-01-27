@@ -1,11 +1,12 @@
 # uTools-Translate
 
 uTools plugin - Translate
+
 uTools 插件 - 翻译
 
-支持中英文翻译
-
-支持自动复制翻译结果
+- 支持中英文翻译
+- 支持自动复制翻译结果
+- 自动即时查询
 
 ## 数据来源
 
