@@ -4,6 +4,8 @@ uTools plugin - Translate
 
 uTools 插件 - 翻译
 
+![Translate](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/master/Translate.gif)
+
 - 支持中英文翻译
 - 支持自动复制翻译结果
 - 自动即时查询
