@@ -17,9 +17,10 @@ function doGet(url) {
                         resolve({
                             errorCode: 302
                         });
+                    } else {
+                        const parsedData = JSON.parse(rawData);
+                        resolve(parsedData);
                     }
-                    const parsedData = JSON.parse(rawData);
-                    resolve(parsedData);
                 } catch (e) {
                     console.error(e.message);
                     reject(e.message);
@@ -103,6 +104,14 @@ window.exports = {
     lookup: {
         mode: 'list',
         args: {
+            enter: (action, callbackSetList) => {
+                let word = action.payload.trim();
+                if (!word) return callbackSetList();
+                let url = translateApi + word;
+                getData(url).then(data => {
+                    callbackSetList(data);
+                });
+            },
             search: (action, searchWord, callbackSetList) => {
                 let word = searchWord.trim();
                 if (!word) return callbackSetList();
