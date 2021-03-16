@@ -106,11 +106,23 @@ window.exports = {
         args: {
             enter: (action, callbackSetList) => {
                 let word = action.payload.trim();
-                if (!word) return callbackSetList();
-                let url = translateApi + word;
-                getData(url).then(data => {
-                    callbackSetList(data);
-                });
+                console.log(word);
+                // Exclude the trigger keyword.
+                if (
+                    !word ||
+                    word == '翻译' ||
+                    word == 'translate' ||
+                    word == '有道' ||
+                    word == 'tr'
+                ) {
+                    return callbackSetList();
+                } else {
+                    // Waiting for the plugin being ready.
+                    setTimeout(() => {
+                        // This event will trigger search event.
+                        utools.setSubInputValue(word);
+                    }, 100);
+                }
             },
             search: (action, searchWord, callbackSetList) => {
                 let word = searchWord.trim();

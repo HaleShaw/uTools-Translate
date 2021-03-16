@@ -1,6 +1,6 @@
 {
     "pluginName": "Translate",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "中英翻译插件",
     "author": "HaleShaw",
     "homepage": "https://github.com/HaleShaw/uTools-Translate",
@@ -18,7 +18,7 @@
                 {
                     "type": "regex",
                     "label": "Translate",
-                    "match": "/^[a-zA-Z][a-zA-Z0-9' ]/",
+                    "match": "/^[\u4e00-\u9fa5a-zA-Z][\u4e00-\u9fa5a-zA-Z0-9' ]/",
                     "minLength": 1
                 }
             ]
