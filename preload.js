@@ -33,7 +33,8 @@ function doGet(url) {
     });
 }
 
-async function getData(url) {
+async function lookUp(word) {
+    const url = translateApi + word;
     let response = await doGet(url);
     const errorCode = response.errorCode;
     let data = [];
@@ -106,17 +107,8 @@ window.exports = {
         args: {
             enter: (action, callbackSetList) => {
                 let word = action.payload.trim();
-                console.log(word);
-                // Exclude the trigger keyword.
-                if (
-                    !word ||
-                    word == '翻译' ||
-                    word == 'translate' ||
-                    word == '有道' ||
-                    word == 'tr'
-                ) {
-                    return callbackSetList();
-                } else {
+                const type = action.type;
+                if (type == 'over' || type == 'regex') {
                     // Waiting for the plugin being ready.
                     setTimeout(() => {
                         // This event will trigger search event.
@@ -127,8 +119,7 @@ window.exports = {
             search: (action, searchWord, callbackSetList) => {
                 let word = searchWord.trim();
                 if (!word) return callbackSetList();
-                let url = translateApi + word;
-                getData(url).then(data => {
+                lookUp(word).then(data => {
                     callbackSetList(data);
                 });
             },
