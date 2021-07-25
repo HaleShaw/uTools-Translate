@@ -1,6 +1,9 @@
 const http = require('http');
+const MouseTrap = require('./assets/mousetrap.min')
+const setting = require('./assets/setting')
 const translateApi =
     'http://fanyi.youdao.com/openapi.do?keyfrom=WoxLauncher&key=1247918016&type=data&doctype=json&version=1.1&q=';
+var height;
 
 function doGet(url) {
     return new Promise((resolve, reject) => {
@@ -101,6 +104,12 @@ async function lookUp(word) {
     return data;
 }
 
+MouseTrap.bind('ctrl+t', () => {
+    height = document.documentElement.clientHeight;
+    setting.open(height)
+    utools.subInputBlur()
+})
+
 window.exports = {
     lookup: {
         mode: 'list',
@@ -119,6 +128,20 @@ window.exports = {
             search: (action, searchWord, callbackSetList) => {
                 let word = searchWord.trim();
                 if (!word) return callbackSetList();
+
+                // Do search while the setting window is not closed.
+                let msg = document.getElementById("msg");
+                if (msg) {
+                    msg.innerText = " ";
+                }
+                let settingEle = document.getElementById("setting");
+                if (settingEle && settingEle.style.display != "none") {
+                    settingEle.style.display = "none";
+                    let rawRoot = document.getElementById("root");
+                    rawRoot.style.display = "block";
+                    utools.setExpendHeight(height);
+                    utools.subInputFocus();
+                }
                 lookUp(word).then(data => {
                     callbackSetList(data);
                 });
@@ -128,7 +151,7 @@ window.exports = {
                 window.utools.hideMainWindow();
                 window.utools.outPlugin();
             },
-            placeholder: '请输入需要查询的中英文内容'
+            placeholder: '请输入需要查询的中英文内容        设置(Ctrl+T)'
         }
     }
 };
