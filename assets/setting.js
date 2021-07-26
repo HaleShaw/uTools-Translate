@@ -1,6 +1,17 @@
 const eleIdName = "setting";
 const styleIdName = "settingStyle";
-const options = ["youDaoOld", "youDao", "baiDu"];
+const options = {
+    "youDaoOld": {
+        "name": "内置有道",
+        "api": ""
+    }, "youDao": {
+        "name": "有道",
+        "api": ""
+    }, "baiDu": {
+        "name": "百度",
+        "api": ""
+    }
+};
 const settingHeight = 190;
 var height;
 const styleStr = `
@@ -95,15 +106,14 @@ function addSetting() {
 function loadConfiguration() {
     let option = utools.dbStorage.getItem("option");
     if (!option || option.error) {
-        option = options[0];
+        option = Object.keys(options)[0];
         utools.dbStorage.setItem("option", option);
     }
     let radios = document.getElementsByName('service');
     for (let i = 0; i < radios.length; i++) {
         if (radios[i].value == option) {
-            radios[i].setAttribute("checked", true);
-        } else {
-            radios[i].removeAttribute("checked");
+            radios[i].checked = true;
+            break;
         }
     }
 
@@ -133,33 +143,40 @@ function loadConfiguration() {
 }
 
 function saveConfiguration() {
-    let option = options[0];
+    let option = Object.keys(options)[0];
     let radios = document.getElementsByName('service');
     for (let i = 0; i < radios.length; i++) {
-        if (radios[i]['checked']) {
+        if (radios[i].checked) {
             option = radios[i].value;
         }
     }
-    console.log(option);
     const youDaoAppId = document.getElementById("youDaoAppId").value;
     const youDaoAppSecret = document.getElementById("youDaoAppSecret").value;
     const baiDuAppId = document.getElementById("baiDuAppId").value;
     const baiDuAppSecret = document.getElementById("baiDuAppSecret").value;
+    let saveFailed = false;
     switch (option) {
-        case options[2]:
+        case Object.keys(options)[1]:
             if (isBlank(youDaoAppId) || isBlank(youDaoAppSecret)) {
                 let msg = document.getElementById("msg");
                 msg.innerText = "应用ID或密钥不能为空！"
                 document.getElementById("youDaoAppId").focus();
-                return;
+                saveFailed = true;
             }
-        case options[3]:
+            break;
+        case Object.keys(options)[2]:
             if (isBlank(baiDuAppId) || isBlank(baiDuAppSecret)) {
                 let msg = document.getElementById("msg");
                 msg.innerText = "应用ID或密钥不能为空！"
                 document.getElementById("baiDuAppId").focus();
-                return;
+                saveFailed = true;
             }
+            break;
+        default:
+            break;
+    }
+    if(saveFailed){
+        return;
     }
     utools.dbStorage.setItem("option", option);
     utools.dbStorage.setItem("youDaoAppId", youDaoAppId);
@@ -168,7 +185,7 @@ function saveConfiguration() {
     utools.dbStorage.setItem("baiDuAppSecret", baiDuAppSecret);
     hideSetting();
     resize();
-    utools.showNotification('切换成功！')
+    utools.showNotification(`切换为${options[option]["name"]}成功！`)
 }
 
 function addListener() {
@@ -226,5 +243,6 @@ module.exports = {
         loadConfiguration();
         addListener();
         showSetting();
-    }
+    },
+    options
 }
