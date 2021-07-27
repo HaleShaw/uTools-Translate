@@ -2,6 +2,7 @@ const MouseTrap = require("./assets/mousetrap.min");
 const setting = require("./assets/setting");
 const youDaoOld = require("./assets/youDaoOld");
 const youDao = require("./assets/youDao");
+const baiDu = require("./assets/baiDu");
 
 var height;
 
@@ -20,6 +21,7 @@ async function lookUp(word) {
       data = await youDao.lookupYouDao(word);
       break;
     case Object.keys(setting.options)[2]:
+      data = await baiDu.lookupBaiDu(word);
       break;
     default:
       break;

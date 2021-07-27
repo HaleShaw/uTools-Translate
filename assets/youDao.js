@@ -1,6 +1,6 @@
 const CryptoJS = require("./crypto-js");
 const setting = require("./setting");
-const errorCodeOther = 9999;
+const utils = require("./utils");
 const errorCodeMsg = {
   102: "不支持的语言类型",
   103: "翻译文本过长",
@@ -161,7 +161,7 @@ async function lookupYouDao(word) {
     signType: "v3",
     curtime: curtime
   };
-  let response = await doPost(api, param);
+  let response = await utils.post(api, param);
   const errorCode = response.errorCode;
   if (errorCode == "0") {
     const trans = response.translation;
@@ -223,26 +223,6 @@ async function lookupYouDao(word) {
   return data;
 }
 
-function doPost(url, param) {
-  return new Promise((resolve, reject) => {
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-      },
-      mode: "cors",
-      body: stringify(param)
-    })
-      .then(res => {
-        resolve(res.json());
-      })
-      .catch(e => {
-        console.error(e);
-        reject({ errorCode: errorCodeOther, message: e });
-      });
-  });
-}
-
 function truncate(str) {
   var len = str.length;
   if (len <= 20) return str;
@@ -252,14 +232,6 @@ function truncate(str) {
 function getSign(appId, query, salt, curtime, appSecret) {
   const str = appId + truncate(query) + salt + curtime + appSecret;
   return CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex);
-}
-
-function stringify(obj) {
-  return Object.keys(obj)
-    .map(key => {
-      return encodeURIComponent(key) + "=" + encodeURIComponent(obj[key]);
-    })
-    .join("&");
 }
 
 module.exports = {

@@ -1,6 +1,5 @@
-const http = require("http");
 const setting = require("./setting");
-const errorCodeOther = 9999;
+const utils = require("./utils");
 const errorCodeMsg = {
   20: "要翻译的文本过长",
   30: "无法进行有效的翻译",
@@ -11,7 +10,7 @@ const errorCodeMsg = {
 };
 async function lookupYouDaoOld(word) {
   const url = setting.options.youDaoOld.api + word;
-  let response = await doGet(url);
+  let response = await utils.get(url);
   console.log(response);
   const errorCode = response.errorCode;
   let data = [];
@@ -60,38 +59,6 @@ async function lookupYouDaoOld(word) {
     });
   }
   return data;
-}
-
-function doGet(url) {
-  return new Promise((resolve, reject) => {
-    http
-      .get(url, res => {
-        res.setEncoding("utf8");
-        let rawData = "";
-        res.on("data", chunk => {
-          rawData += chunk;
-        });
-        res.on("end", () => {
-          try {
-            if (rawData.indexOf("frequent-error") != -1) {
-              resolve({
-                errorCode: 302
-              });
-            } else {
-              const parsedData = JSON.parse(rawData);
-              resolve(parsedData);
-            }
-          } catch (e) {
-            console.error(e.message);
-            reject({ errorCode: errorCodeOther, message: e.message });
-          }
-        });
-      })
-      .on("error", e => {
-        console.error(e.message);
-        reject({ errorCode: errorCodeOther, message: e.message });
-      });
-  });
 }
 
 module.exports = {

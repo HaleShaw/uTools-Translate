@@ -24,7 +24,7 @@ var height;
 const styleStr = `
     body {
       padding: 10px 20px;
-      font-size: 20px;
+      font-size: 18px;
     }
 
     .buttons {
@@ -32,8 +32,12 @@ const styleStr = `
     }
 
     .service > span {
-      margin: 3px 3px 3px 20px;
+      margin: 3px 3px 3px 15px;
       display: inline-flex;
+    }
+
+    .secret {
+      width: 280px;
     }
 
     .buttons {
@@ -69,7 +73,7 @@ const settingStr = `
       <span>应用ID</span>
       <input id="youDaoAppId" name="appId" type="input" value="" />
       <span>应用密钥</span>
-      <input id="youDaoAppSecret" name="appSecret" type="input" value="" />
+      <input id="youDaoAppSecret" class="secret" name="appSecret" type="input" value="" />
     </div>
     <div class="service">
       <label>
@@ -79,7 +83,7 @@ const settingStr = `
       <span>应用ID</span>
       <input id="baiDuAppId" name="appId" type="input" value="" />
       <span>应用密钥</span>
-      <input id="baiDuAppSecret" name="appSecret" type="input" value="" />
+      <input id="baiDuAppSecret" class="secret" name="appSecret" type="input" value="" />
     </div>
   </div>
   <span id="msg"></span>
