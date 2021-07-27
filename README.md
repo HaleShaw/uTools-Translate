@@ -5,9 +5,11 @@ uTools plugin - Translate
 uTools 插件 - 翻译
 
 ![Translate](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/master/Translate.gif)
-![TranslateSetting](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/master/Translate.png)
+![TranslateScreenshot](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/master/TranslateScreenshot.png)
+![TranslateSetting](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/master/TranslateSetting.png)
 
 - 支持中英文翻译
+- 支持单词句子翻译
 - 支持自动复制翻译结果
 - 支持自动翻译复制结果
 - 支持切换翻译API
