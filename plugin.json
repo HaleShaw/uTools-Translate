@@ -1,27 +1,27 @@
 {
-    "pluginName": "Translate",
-    "version": "1.0.3",
-    "description": "中英翻译插件",
-    "author": "HaleShaw",
-    "homepage": "https://github.com/HaleShaw/uTools-Translate",
-    "preload": "preload.js",
-    "logo": "logo.png",
-    "features": [
+  "pluginName": "Translate",
+  "version": "2.0.0",
+  "description": "中英翻译插件",
+  "author": "HaleShaw",
+  "homepage": "https://github.com/HaleShaw/uTools-Translate",
+  "preload": "preload.js",
+  "logo": "logo.png",
+  "features": [
+    {
+      "code": "lookup",
+      "explain": "中英文翻译，基于有道网页翻译API、有道文本翻译API、百度通用翻译API。",
+      "cmds": [
+        "翻译",
+        "translate",
+        "有道",
+        "tr",
         {
-            "code": "lookup",
-            "explain": "中英文翻译，基于有道网页API。",
-            "cmds": [
-                "翻译",
-                "translate",
-                "有道",
-                "tr",
-                {
-                    "type": "regex",
-                    "label": "Translate",
-                    "match": "/^[\u4e00-\u9fa5a-zA-Z][\u4e00-\u9fa5a-zA-Z0-9' ]/",
-                    "minLength": 1
-                }
-            ]
+          "type": "regex",
+          "label": "Translate",
+          "match": "/^[\u4e00-\u9fa5a-zA-Z][\u4e00-\u9fa5a-zA-Z0-9' ]/",
+          "minLength": 1
         }
-    ]
+      ]
+    }
+  ]
 }

@@ -5,7 +5,7 @@ const errorCodeMsg = {
   30: "无法进行有效的翻译",
   40: "不支持的语言类型",
   50: "无效的key",
-  302: "API请求异常频繁，暂时被封禁，请稍后再试",
+  302: "API请求太过频繁，请稍后再试",
   9999: "其他错误"
 };
 async function lookupYouDaoOld(word) {

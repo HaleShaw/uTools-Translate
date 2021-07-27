@@ -7,7 +7,7 @@ const errorCodeMsg = {
   52003: "未授权用户",
   54000: "必填参数为空",
   54001: "签名错误",
-  54003: "访问频率受限",
+  54003: "API请求太过频繁，请稍后再试",
   54004: "账户余额不足",
   54005: "长query请求频繁",
   58000: "客户端IP非法",
@@ -38,7 +38,7 @@ async function lookupBaiDu(word) {
     appid: appId,
     salt: salt,
     from: "auto",
-    to: "zh",
+    to: "auto",
     sign: sign
   };
   let response = await utils.post(api, param);
