@@ -14,6 +14,11 @@ const options = {
     api: "https://fanyi-api.baidu.com/api/trans/vip/translate"
   }
 };
+const constant = {
+  dataIcon: "logo.png",
+  errTitle: "错误",
+  hotKey: "Ctrl+T"
+};
 const settingHeight = 190;
 var height;
 const styleStr = `
@@ -248,5 +253,6 @@ function isBlank(str) {
 
 module.exports = {
   open,
-  options
+  options,
+  constant
 };
