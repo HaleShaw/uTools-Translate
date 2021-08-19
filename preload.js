@@ -41,6 +41,16 @@ window.exports = {
     mode: "list",
     args: {
       enter: (action, callbackSetList) => {
+        utools.showMessageBox({
+          type: "none",
+          title: "提示",
+          message: `    重要提示：
+    从此版起，《Translate》和《词典》两插件将合并为《翻译》（作者HaleShaw）。
+    两者功能都将保留，且合并加强。
+    《Translate》此插件后续将不再维护，请转移使用《翻译》。
+    对此带来的不便，敬请谅解！谢谢支持！`,
+        });
+        utools.outPlugin();
         let word = action.payload.trim();
         const type = action.type;
         if (type == "over" || type == "regex") {
@@ -77,7 +87,7 @@ window.exports = {
         window.utools.hideMainWindow();
         window.utools.outPlugin();
       },
-      placeholder: "请输入需要查询的中英文内容        设置(Ctrl+T)"
-    }
-  }
+      placeholder: "请输入需要查询的中英文内容        设置(Ctrl+T)",
+    },
+  },
 };
