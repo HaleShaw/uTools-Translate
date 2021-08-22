@@ -1,25 +1,44 @@
 {
-  "pluginName": "Translate",
+  "pluginName": "翻译",
   "version": "3.0.0",
-  "description": "中英翻译插件",
+  "description": "中英翻译插件，支持多API切换、音标句子朗读、实时输入翻译、原生列表自动复制",
   "author": "HaleShaw",
   "homepage": "https://github.com/HaleShaw/uTools-Translate",
-  "preload": "preload.js",
+  "main": "index.html",
   "logo": "logo.png",
   "features": [
     {
-      "code": "lookup",
-      "explain": "中英文翻译，基于有道网页翻译API、有道文本翻译API、百度通用翻译API。",
+      "code": "translate_text",
+      "explain": "中英文翻译，音标朗读，句子朗读，多API切换。",
       "cmds": [
         "翻译",
         "translate",
+        "词典",
+        "dictionary",
         "tr",
+        "d",
         {
           "type": "regex",
-          "label": "Translate",
+          "label": "翻译",
           "match": "/^[\u4e00-\u9fa5a-zA-Z][\u4e00-\u9fa5a-zA-Z0-9' ]/",
           "minLength": 1
         }
+      ]
+    },
+    {
+      "code": "translate_setting",
+      "explain": "翻译设置，切换翻译API",
+      "cmds": [
+        "翻译设置",
+        "词典设置",
+        "translate setting",
+        "dictionary setting",
+        "setting",
+        "t setting",
+        "d setting",
+        "设置",
+        "ts",
+        "ds"
       ]
     }
   ]

@@ -1,0 +1,76 @@
+#setting {
+  padding: 10px 20px;
+  font-size: 18px;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.service > span {
+  margin: 3px 3px 3px 15px;
+  display: inline-flex;
+}
+
+.secret {
+  width: 280px;
+}
+
+.buttons {
+  margin-top: 15px;
+}
+
+.buttons > button {
+  font-size: 16px;
+  padding: 3px 8px;
+}
+
+#msg {
+  font-size: 16px;
+  line-height: 20px;
+  color: red;
+  display: inline-block !important;
+}
+
+.eye {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  margin-top: 7px;
+  opacity: 0.7;
+  margin-left: -25px;
+}
+
+.eye:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+  .eye.closed {
+    content: url(../images/eyeCloseBlack.png);
+  }
+
+  .eye.open {
+    content: url(../images/eyeOpenBlack.png);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #setting {
+    color: #f6f6f6;
+  }
+
+  input{
+    color: #f6f6f6;
+    background-color: #303133;
+  }
+
+  .eye.closed {
+    content: url(../images/eyeCloseWhite.png);
+  }
+
+  .eye.open {
+    content: url(../images/eyeOpenWhite.png);
+  }
+}

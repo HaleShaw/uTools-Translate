@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dictionary</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/setting.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/list.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/page.css" />
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/mousetrap.min.js"></script>
+  </head>
+  <body>
+    <div id="page"></div>
+    <div id="root">
+      <div class="list">
+        <div></div>
+        <div class="quick-index-identity">
+          <div>Alt+1</div>
+          <div>Alt+2</div>
+          <div>Alt+3</div>
+          <div>Alt+4</div>
+          <div>Alt+5</div>
+          <div>Alt+6</div>
+          <div>Alt+7</div>
+          <div>Alt+8</div>
+          <div>Alt+9</div>
+          <div>Alt+0</div>
+        </div>
+      </div>
+    </div>
+    <div id="setting" class="hide">
+      <div id="services">
+        <div class="service">
+          <label>
+            <input name="service" type="radio" value="youDaoOld" />
+            有道
+          </label>
+          <span>（内置）旧API，可请求频率相对稍低</span>
+        </div>
+        <div class="service">
+          <label>
+            <input name="service" type="radio" value="youDaoWap" />
+            有道
+          </label>
+          <span>（内置）移动版API，精度相对稍低，非列表模式</span>
+        </div>
+        <div class="service">
+          <label>
+            <input name="service" type="radio" value="youDao" />
+            有道
+          </label>
+          <span>应用ID</span>
+          <input id="youDaoAppId" name="appId" type="input" value="" />
+          <span>应用密钥</span>
+          <input id="youDaoAppSecret" class="secret" name="appSecret" type="password" value="" />
+          <img class="eye closed" />
+        </div>
+        <div class="service">
+          <label>
+            <input name="service" type="radio" value="baiDu" />
+            百度
+          </label>
+          <span>应用ID</span>
+          <input id="baiDuAppId" name="appId" type="input" value="" />
+          <span>应用密钥</span>
+          <input id="baiDuAppSecret" class="secret" name="appSecret" type="password" value="" />
+          <img class="eye closed" />
+        </div>
+      </div>
+      <span id="msg"></span>
+      <div class="buttons">
+        <button id="btnClose">关闭</button>
+        <button id="btnSave">保存</button>
+      </div>
+    </div>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/crypto-js.js"></script>
+    <script src="assets/js/youDaoOld.js"></script>
+    <script src="assets/js/youDaoWap.js"></script>
+    <script src="assets/js/youDao.js"></script>
+    <script src="assets/js/baiDu.js"></script>
+    <script src="assets/js/setting.js"></script>
+    <script src="assets/js/index.js"></script>
+  </body>
+</html>
