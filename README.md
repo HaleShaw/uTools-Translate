@@ -20,23 +20,23 @@ uTools 插件 - 翻译
 
 - 设置页面
 
-  ![translateSetting](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSetting.png)
+  ![translateSetting](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateSetting.png)
 
 - 有道WAP API，页面模式
 
-  ![translatePage](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePage.png)
+  ![translatePage](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translatePage.png)
 
 - 列表模式，暗黑模式
 
-  ![translateListDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateListDark.png)
+  ![translateListDark](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateListDark.png)
 
 - 页面模式，暗黑模式
 
-  ![translatePageDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePageDark.png)
+  ![translatePageDark](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translatePageDark.png)
 
 - 设置页面，暗黑模式
 
-  ![translateSettingDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSettingDark.png)
+  ![translateSettingDark](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateSettingDark.png)
 
 ## Features
 
