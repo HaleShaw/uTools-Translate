@@ -10,13 +10,27 @@ uTools 插件 - 翻译
 
 ## Screenshots
 
-![translateSentence](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateSentence.png)
-![translateBaidu](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateBaidu.png)
-![translateSetting](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSetting.png)
-![translatePage](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePage.png)
-![translateListDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateListDark.png)
-![translatePageDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePageDark.png)
-![translateSettingDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSettingDark.png)
+- 翻译句子，列表模式
+
+  ![translateSentence](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateSentence.png)
+
+- 百度API
+  ![translateBaidu](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateBaidu.png)
+
+- 设置页面
+  ![translateSetting](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSetting.png)
+
+- 有道WAP API，页面模式
+  ![translatePage](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePage.png)
+
+- 列表模式，暗黑模式
+  ![translateListDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateListDark.png)
+
+- 页面模式，暗黑模式
+  ![translatePageDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePageDark.png)
+
+- 设置页面，暗黑模式
+  ![translateSettingDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSettingDark.png)
 
 ## Features
 
@@ -40,13 +54,15 @@ uTools 插件 - 翻译
 
 - 有道词典 https://m.youdao.com
 
-  属于移动端网页API，故精准度不是非常高。
+  属于移动端网页API，精准度不是非常高。
 
 - 有道翻译 http://openapi.youdao.com/api
 
   需要到[有道智云官网](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
 
 - 百度翻译 https://fanyi-api.baidu.com/api/trans/vip/translate
+
+  翻译内容较少，仅有基本翻译。
 
   需要到[百度翻译开放平台](http://api.fanyi.baidu.com/)申请获取应用ID和应用密钥。
 
