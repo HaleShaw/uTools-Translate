@@ -13,10 +13,7 @@
       "cmds": [
         "翻译",
         "translate",
-        "词典",
-        "dictionary",
         "tr",
-        "d",
         {
           "type": "regex",
           "label": "翻译",
@@ -28,18 +25,7 @@
     {
       "code": "translate_setting",
       "explain": "翻译设置，切换翻译API",
-      "cmds": [
-        "翻译设置",
-        "词典设置",
-        "translate setting",
-        "dictionary setting",
-        "setting",
-        "t setting",
-        "d setting",
-        "设置",
-        "ts",
-        "ds"
-      ]
+      "cmds": ["翻译设置", "translate setting", "setting", "t setting", "设置", "ts"]
     }
   ]
 }
