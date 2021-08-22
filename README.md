@@ -15,21 +15,27 @@ uTools 插件 - 翻译
   ![translateSentence](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateSentence.png)
 
 - 百度API
+
   ![translateBaidu](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateBaidu.png)
 
 - 设置页面
+
   ![translateSetting](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSetting.png)
 
 - 有道WAP API，页面模式
+
   ![translatePage](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePage.png)
 
 - 列表模式，暗黑模式
+
   ![translateListDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateListDark.png)
 
 - 页面模式，暗黑模式
+
   ![translatePageDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translatePageDark.png)
 
 - 设置页面，暗黑模式
+
   ![translateSettingDark](https://raw.githubusercontent.com/HaleShaw/uToolsTranslate/main/screenshots/translateSettingDark.png)
 
 ## Features
