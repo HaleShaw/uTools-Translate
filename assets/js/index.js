@@ -19,21 +19,39 @@ const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行�
 // 延迟查询的时间毫秒数。
 const delayTime = 300;
 
+// 弹出更新说明的版本号列表。
+const versionWhiteList = ["3.0.0", "3.0.1", "3.0.2"];
+const version = "3.0.2";
+
 utools.onPluginReady(() => {
   utools.setExpendHeight(0);
-  const version = utools.getAppVersion();
   let versionsArr = utools.dbStorage.getItem("versions");
   const versions = new Set(versionsArr);
-  if (versions.has(version)) {
-    return;
+
+  let flag = false;
+  for (let i = 0; i < versionWhiteList.length; i++) {
+    if (versions.has(versionWhiteList[i])) {
+      flag = true;
+      break;
+    }
   }
+  if (versions.size() > 0) {
+    flag = true;
+    versions.clear();
+  }
+
   versions.add(version);
   utools.dbStorage.setItem("versions", Array.from(versions));
+  if (flag) {
+    return;
+  }
   utools.showMessageBox({
     type: "none",
     title: "提示",
     message: `    重大更新！
     从此版起，《词典》和《Translate》两插件将合并为《翻译》（作者HaleShaw）。两者功能都将保留，且合并加强。
+    请先查看可响应的命令集。
+    进入“翻译设置”后，可以选择第2个API（有道移动版）进入以前的页面模式，其他API为列表模式。
     1.添加多API支持，可以随意切换配置API；
     2.添加列表模式，完美模拟原生列表模式，支持点击、回车、快捷键选中复制；
     3.保留旧版页面模式，清晰查看翻译结果；
@@ -57,6 +75,7 @@ utools.onPluginEnter(({ code, type, payload }) => {
   } else if (code == "translate_setting") {
     utools.subInputBlur();
     $("#root").addClass("hide");
+    $("#page").addClass("hide");
     $("#setting").removeClass("hide");
     initSetting();
   }
@@ -97,6 +116,7 @@ async function switchApi(word) {
 
   if (option == Object.keys(options)[1]) {
     $("#root").addClass("hide");
+    $("#setting").addClass("hide");
     $("#page").removeClass("hide");
     await lookupYouDaoWap(word);
   } else if (
@@ -105,6 +125,7 @@ async function switchApi(word) {
     option == Object.keys(options)[3]
   ) {
     $("#page").addClass("hide");
+    $("#setting").addClass("hide");
     $("#root").removeClass("hide");
     bindHotkey();
     let data = [];

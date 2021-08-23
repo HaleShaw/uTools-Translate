@@ -1,6 +1,6 @@
 {
   "pluginName": "翻译",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "中英翻译插件，支持多API切换、音标句子朗读、实时输入翻译、原生列表自动复制",
   "author": "HaleShaw",
   "homepage": "https://github.com/HaleShaw/uTools-Translate",

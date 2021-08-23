@@ -138,6 +138,7 @@ function hideSetting() {
   $("#msg").html("");
   $("#setting").addClass("hide");
   $("#root").removeClass("hide");
+  $("#page").removeClass("hide");
   utools.outPlugin();
 }
 
