@@ -56,7 +56,7 @@ utools.onPluginEnter(({ code, type, payload }) => {
     }
   } else if (code == "translate_setting") {
     utools.subInputBlur();
-    $("#root").hide();
+    $("#root").addClass("hide");
     $("#setting").removeClass("hide");
     initSetting();
   }
@@ -96,14 +96,16 @@ async function switchApi(word) {
   }
 
   if (option == Object.keys(options)[1]) {
-    $("#root").hide();
+    $("#root").addClass("hide");
+    $("#page").removeClass("hide");
     await lookupYouDaoWap(word);
   } else if (
     option == Object.keys(options)[0] ||
     option == Object.keys(options)[2] ||
     option == Object.keys(options)[3]
   ) {
-    $("#page").hide();
+    $("#page").addClass("hide");
+    $("#root").removeClass("hide");
     bindHotkey();
     let data = [];
     switch (option) {

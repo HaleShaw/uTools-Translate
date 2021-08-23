@@ -136,7 +136,8 @@ function addEyeListener() {
 
 function hideSetting() {
   $("#msg").html("");
-  $("#setting").hide();
+  $("#setting").addClass("hide");
+  $("#root").removeClass("hide");
   utools.outPlugin();
 }
 
