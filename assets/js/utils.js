@@ -44,6 +44,24 @@ function post(url, param) {
   });
 }
 
+function caiYunPost(url, body, headers) {
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "POST",
+      headers: headers,
+      mode: "cors",
+      body: JSON.stringify(body),
+    })
+      .then(res => {
+        resolve(res.json());
+      })
+      .catch(e => {
+        console.error(e);
+        reject({ errorCode: errorCodeOther, message: e });
+      });
+  });
+}
+
 function stringify(obj) {
   return Object.keys(obj)
     .map(key => {
@@ -58,4 +76,8 @@ function getPhoneticEn(word) {
 
 function getPhoneticUs(word) {
   return `<button type="button" class="phonetic"><audio src="${ttsApi}${word}&type=2"></audio></button>`;
+}
+
+function isChinese(word) {
+  return /[\u4e00-\u9fa5]/.test(word);
 }

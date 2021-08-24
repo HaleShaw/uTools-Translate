@@ -7,6 +7,15 @@
   text-align: center;
 }
 
+#setting > .title {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+#services {
+  margin-top: 10px;
+}
+
 .service > span {
   margin: 3px 3px 3px 15px;
   display: inline-flex;
@@ -61,7 +70,7 @@
     color: #f6f6f6;
   }
 
-  input{
+  input {
     color: #f6f6f6;
     background-color: #303133;
   }

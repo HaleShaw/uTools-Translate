@@ -15,10 +15,14 @@ const options = {
     name: "百度",
     api: "https://fanyi-api.baidu.com/api/trans/vip/translate",
   },
+  caiYun: {
+    name: "彩云小译",
+    api: "http://api.interpreter.caiyunai.com/v1/translator",
+  },
 };
 
 // 设置窗口的高度。
-const settingHeight = 219;
+const settingHeight = 135 + 29 * 5;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
@@ -62,6 +66,11 @@ function loadConfiguration() {
   if (baiDuAppSecret) {
     document.getElementById("baiDuAppSecret").value = baiDuAppSecret;
   }
+
+  let caiYunToken = utools.dbStorage.getItem("caiYunToken");
+  if (caiYunToken) {
+    document.getElementById("caiYunToken").value = caiYunToken;
+  }
 }
 
 function saveConfiguration() {
@@ -76,6 +85,7 @@ function saveConfiguration() {
   const youDaoAppSecret = document.getElementById("youDaoAppSecret").value;
   const baiDuAppId = document.getElementById("baiDuAppId").value;
   const baiDuAppSecret = document.getElementById("baiDuAppSecret").value;
+  const caiYunToken = document.getElementById("caiYunToken").value;
   let saveFailed = false;
   switch (option) {
     case Object.keys(options)[2]:
@@ -92,6 +102,13 @@ function saveConfiguration() {
         saveFailed = true;
       }
       break;
+    case Object.keys(options)[4]:
+      if (isBlank(caiYunToken)) {
+        $("#msg").text(errMsgEmptyApp);
+        document.getElementById("caiYunToken").focus();
+        saveFailed = true;
+      }
+      break;
     default:
       break;
   }
@@ -103,6 +120,7 @@ function saveConfiguration() {
   utools.dbStorage.setItem("youDaoAppSecret", youDaoAppSecret);
   utools.dbStorage.setItem("baiDuAppId", baiDuAppId);
   utools.dbStorage.setItem("baiDuAppSecret", baiDuAppSecret);
+  utools.dbStorage.setItem("caiYunToken", caiYunToken);
   hideSetting();
   utools.showNotification(`切换为${options[option]["name"]}成功！`);
 }

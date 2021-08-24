@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Dictionary</title>
+    <title>翻译</title>
     <link rel="stylesheet" type="text/css" href="assets/css/index.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/setting.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/list.css" />
@@ -30,6 +30,7 @@
       </div>
     </div>
     <div id="setting" class="hide">
+      <a class="title">翻译设置</a>
       <div id="services">
         <div class="service">
           <label>
@@ -67,6 +68,15 @@
           <input id="baiDuAppSecret" class="secret" name="appSecret" type="password" value="" />
           <img class="eye closed" />
         </div>
+        <div class="service">
+          <label>
+            <input name="service" type="radio" value="caiYun" />
+            彩云
+          </label>
+          <span>Token</span>
+          <input id="caiYunToken" class="secret" name="appSecret" type="password" value="" />
+          <img class="eye closed" />
+        </div>
       </div>
       <span id="msg"></span>
       <div class="buttons">
@@ -80,6 +90,7 @@
     <script src="assets/js/youDaoWap.js"></script>
     <script src="assets/js/youDao.js"></script>
     <script src="assets/js/baiDu.js"></script>
+    <script src="assets/js/caiYun.js"></script>
     <script src="assets/js/setting.js"></script>
     <script src="assets/js/index.js"></script>
   </body>

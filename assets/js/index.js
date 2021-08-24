@@ -122,7 +122,8 @@ async function switchApi(word) {
   } else if (
     option == Object.keys(options)[0] ||
     option == Object.keys(options)[2] ||
-    option == Object.keys(options)[3]
+    option == Object.keys(options)[3] ||
+    option == Object.keys(options)[4]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -138,6 +139,9 @@ async function switchApi(word) {
         break;
       case Object.keys(options)[3]:
         data = await lookupBaiDu(word);
+        break;
+      case Object.keys(options)[4]:
+        data = await lookUpCaiYun(word);
         break;
       default:
         break;
