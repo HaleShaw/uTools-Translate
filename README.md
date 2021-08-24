@@ -53,24 +53,41 @@ uTools 插件 - 翻译
 
 ## API
 
-- 有道词典 http://fanyi.youdao.com
+- 有道词典
+
+  http://fanyi.youdao.com
 
   官方提示此版本API已经停用，但经测试现还能使用。
+
   不过调用频率不能太高，否则容易暂时被封禁。
 
-- 有道词典 https://m.youdao.com
+- 有道词典
+
+  https://m.youdao.com
 
   属于移动端网页API，精准度不是非常高。
 
-- 有道翻译 http://openapi.youdao.com/api
+- 有道翻译
+
+  http://openapi.youdao.com/api
 
   需要到[有道智云官网](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
 
-- 百度翻译 https://fanyi-api.baidu.com/api/trans/vip/translate
+- 百度翻译
+
+  https://fanyi-api.baidu.com/api/trans/vip/translate
 
   翻译内容较少，仅有基本翻译。
 
-  需要到[百度翻译开放平台](http://api.fanyi.baidu.com/)申请获取应用ID和应用密钥。
+  需要到[百度翻译开放平台](http://api.fanyi.baidu.com)申请获取应用ID和应用密钥。
+
+- 彩云小译
+
+  http://api.interpreter.caiyunai.com/v1/translator
+
+  翻译内容较少，仅有基本翻译。
+
+  需要到[彩云科技](https://fanyi.caiyunapp.com/#/api)申请获取应用Token。
 
 ## Reference
 
