@@ -20,8 +20,8 @@ const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行�
 const delayTime = 300;
 
 // 弹出更新说明的版本号列表。
-const versionWhiteList = ["3.0.0", "3.0.1", "3.0.2", "3.0.3"];
-const version = "3.0.3";
+const versionWhiteList = ["3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.0.4"];
+const version = "3.0.4";
 
 utools.onPluginReady(() => {
   utools.setExpendHeight(0);
@@ -35,11 +35,10 @@ utools.onPluginReady(() => {
       break;
     }
   }
-  if (versions.size() > 0) {
+  if (versions.has("2.0.1")) {
     flag = true;
-    versions.clear();
+    versions.delete("2.0.1");
   }
-
   versions.add(version);
   utools.dbStorage.setItem("versions", Array.from(versions));
   if (flag) {
@@ -123,7 +122,8 @@ async function switchApi(word) {
     option == Object.keys(options)[0] ||
     option == Object.keys(options)[2] ||
     option == Object.keys(options)[3] ||
-    option == Object.keys(options)[4]
+    option == Object.keys(options)[4] ||
+    option == Object.keys(options)[5]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -142,6 +142,9 @@ async function switchApi(word) {
         break;
       case Object.keys(options)[4]:
         data = await lookUpCaiYun(word);
+        break;
+      case Object.keys(options)[5]:
+        data = await lookUpXunFei(word);
         break;
       default:
         break;

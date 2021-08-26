@@ -62,6 +62,26 @@ function caiYunPost(url, body, headers) {
   });
 }
 
+function xunFeiPost(url, form) {
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      },
+      mode: "cors",
+      body: form,
+    })
+      .then(res => {
+        resolve(res.json());
+      })
+      .catch(e => {
+        console.error(e);
+        reject({ errorCode: errorCodeOther, message: e });
+      });
+  });
+}
+
 function stringify(obj) {
   return Object.keys(obj)
     .map(key => {

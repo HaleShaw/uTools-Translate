@@ -19,10 +19,14 @@ const options = {
     name: "彩云小译",
     api: "http://api.interpreter.caiyunai.com/v1/translator",
   },
+  xunFei: {
+    name: "讯飞",
+    api: "https://saas.xfyun.cn/ai-application/trans/its",
+  },
 };
 
 // 设置窗口的高度。
-const settingHeight = 135 + 29 * 5;
+const settingHeight = 135 + 29 * 6;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
