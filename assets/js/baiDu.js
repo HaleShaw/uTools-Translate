@@ -36,7 +36,7 @@ async function lookupBaiDu(word) {
     to: "auto",
     sign: sign,
   };
-  let response = await post(api, param);
+  let response = await post(api, stringify(param), formHeaders);
   const errorCode = response.error_code;
   if (!errorCode) {
     const trans = response.trans_result;

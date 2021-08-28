@@ -14,7 +14,7 @@ async function lookUpXunFei(word) {
   form.append("to", target);
   form.append("text", base64Str);
 
-  let response = await xunFeiPost(api, form);
+  let response = await post(api, form, formHeaders);
   let err = response.flag;
   if (err) {
     const tran = response?.data?.result?.trans_result?.dst;

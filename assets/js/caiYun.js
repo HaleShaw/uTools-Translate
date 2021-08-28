@@ -29,7 +29,7 @@ async function lookUpCaiYun(word) {
     "content-type": "application/json",
     "x-authorization": "token " + token,
   };
-  let response = await caiYunPost(api, body, headers);
+  let response = await post(api, JSON.stringify(body), headers);
   let message = response?.message;
   if (!message) {
     const tran = response?.target;

@@ -20,8 +20,8 @@ const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行�
 const delayTime = 300;
 
 // 弹出更新说明的版本号列表。
-const versionWhiteList = ["3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.0.4"];
-const version = "3.0.4";
+const versionWhiteList = ["3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.5"];
+const version = "3.0.5";
 
 utools.onPluginReady(() => {
   utools.setExpendHeight(0);
@@ -40,6 +40,7 @@ utools.onPluginReady(() => {
     versions.delete("2.0.1");
   }
   versions.add(version);
+  utools.dbStorage.removeItem("versions");
   utools.dbStorage.setItem("versions", Array.from(versions));
   if (flag) {
     return;
@@ -112,8 +113,8 @@ async function switchApi(word) {
     option = Object.keys(options)[0];
     utools.dbStorage.setItem("option", option);
   }
-
   if (option == Object.keys(options)[1]) {
+    console.log("yyy");
     $("#root").addClass("hide");
     $("#setting").addClass("hide");
     $("#page").removeClass("hide");
@@ -123,7 +124,9 @@ async function switchApi(word) {
     option == Object.keys(options)[2] ||
     option == Object.keys(options)[3] ||
     option == Object.keys(options)[4] ||
-    option == Object.keys(options)[5]
+    option == Object.keys(options)[5] ||
+    option == Object.keys(options)[6] ||
+    option == Object.keys(options)[7]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -135,16 +138,22 @@ async function switchApi(word) {
         data = await lookupYouDaoOld(word);
         break;
       case Object.keys(options)[2]:
-        data = await lookupYouDao(word);
+        data = await lookUpYouDaoWeb(word);
         break;
       case Object.keys(options)[3]:
-        data = await lookupBaiDu(word);
+        data = await lookUpGoogle(word);
         break;
       case Object.keys(options)[4]:
-        data = await lookUpCaiYun(word);
+        data = await lookUpXunFei(word);
         break;
       case Object.keys(options)[5]:
-        data = await lookUpXunFei(word);
+        data = await lookupYouDao(word);
+        break;
+      case Object.keys(options)[6]:
+        data = await lookupBaiDu(word);
+        break;
+      case Object.keys(options)[7]:
+        data = await lookUpCaiYun(word);
         break;
       default:
         break;

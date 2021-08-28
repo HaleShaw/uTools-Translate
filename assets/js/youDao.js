@@ -156,7 +156,7 @@ async function lookupYouDao(word) {
     signType: "v3",
     curtime: curtime,
   };
-  let response = await post(api, param);
+  let response = await post(api, stringify(param), formHeaders);
   const errorCode = response.errorCode;
   if (errorCode == "0") {
     const trans = response.translation;
