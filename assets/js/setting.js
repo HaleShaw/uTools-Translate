@@ -100,23 +100,23 @@ function saveConfiguration() {
   const caiYunToken = document.getElementById("caiYunToken").value;
   let saveFailed = false;
   switch (option) {
-    case Object.keys(options)[2]:
+    case Object.keys(options)[5]:
       if (isBlank(youDaoAppId) || isBlank(youDaoAppSecret)) {
         $("#msg").text(errMsgEmptyApp);
         document.getElementById("youDaoAppId").focus();
         saveFailed = true;
       }
       break;
-    case Object.keys(options)[3]:
+    case Object.keys(options)[6]:
       if (isBlank(baiDuAppId) || isBlank(baiDuAppSecret)) {
         $("#msg").text(errMsgEmptyApp);
         document.getElementById("baiDuAppId").focus();
         saveFailed = true;
       }
       break;
-    case Object.keys(options)[4]:
+    case Object.keys(options)[7]:
       if (isBlank(caiYunToken)) {
-        $("#msg").text(errMsgEmptyApp);
+        $("#msg").text("Token不能为空！");
         document.getElementById("caiYunToken").focus();
         saveFailed = true;
       }
