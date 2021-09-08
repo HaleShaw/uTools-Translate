@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/page.css" />
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/mousetrap.min.js"></script>
+    <script src="assets/js/crypto-js.js"></script>
   </head>
   <body>
     <div id="page"></div>
@@ -91,6 +92,17 @@
         </div>
         <div class="service">
           <label>
+            <input name="service" type="radio" value="tencent" />
+            腾讯
+          </label>
+          <span>应用ID</span>
+          <input id="tencentAppId" name="appId" type="input" value="" />
+          <span>应用密钥</span>
+          <input id="tencentAppSecret" class="secret" name="appSecret" type="password" value="" />
+          <img class="eye closed" />
+        </div>
+        <div class="service">
+          <label>
             <input name="service" type="radio" value="caiYun" />
             彩云
           </label>
@@ -106,11 +118,11 @@
       </div>
     </div>
     <script src="assets/js/utils.js"></script>
-    <script src="assets/js/crypto-js.js"></script>
     <script src="assets/js/youDaoOld.js"></script>
     <script src="assets/js/youDaoWeb.js"></script>
     <script src="assets/js/youDaoWap.js"></script>
     <script src="assets/js/google.js"></script>
+    <script src="assets/js/tencent.js"></script>
     <script src="assets/js/youDao.js"></script>
     <script src="assets/js/baiDu.js"></script>
     <script src="assets/js/caiYun.js"></script>

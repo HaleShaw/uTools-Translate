@@ -20,8 +20,8 @@ const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行�
 const delayTime = 300;
 
 // 弹出更新说明的版本号列表。
-const versionWhiteList = ["3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.5"];
-const version = "3.0.5";
+const versionWhiteList = ["3.0.0", "3.0.1", "3.0.2", "3.0.3", "3.0.4", "3.0.5", "3.0.6", "3.0.7"];
+const version = "3.0.7";
 
 utools.onPluginReady(() => {
   utools.setExpendHeight(0);
@@ -55,7 +55,7 @@ utools.onPluginReady(() => {
     1.添加多API支持，可以随意切换配置API；
     2.添加列表模式，完美模拟原生列表模式，支持点击、回车、快捷键选中复制；
     3.保留旧版页面模式，清晰查看翻译结果；
-    4.新的有道API、百度API和彩云小译API，需要自行到对应的开发者平台官网申请应用ID和密钥；
+    4.新的有道API、百度API、腾讯API和彩云小译API，需要自行到对应的开发者平台官网申请应用ID和密钥；
     5.内置有道移动版API为非列表模式，其他都为列表模式；
     6.内置有道旧API为有道官方已弃用API，可免费使用。但请求频率太高，容易被暂时封禁；
     7.内置有道移动版API为手机网页版解析而来，此版API原生官方支持精度相对较低，对查询精准度要求较高者可考虑使用其他API。`,
@@ -126,7 +126,8 @@ async function switchApi(word) {
     option == Object.keys(options)[4] ||
     option == Object.keys(options)[5] ||
     option == Object.keys(options)[6] ||
-    option == Object.keys(options)[7]
+    option == Object.keys(options)[7] ||
+    option == Object.keys(options)[8]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -153,6 +154,9 @@ async function switchApi(word) {
         data = await lookupBaiDu(word);
         break;
       case Object.keys(options)[7]:
+        data = await lookUpTencent(word);
+        break;
+      case Object.keys(options)[8]:
         data = await lookUpCaiYun(word);
         break;
       default:
