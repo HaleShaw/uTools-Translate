@@ -65,5 +65,5 @@ async function lookupBaiDu(word) {
 }
 
 function getSignBaiDu(appId, query, salt, appSecret) {
-  return CryptoJS.MD5(appId + query + salt + appSecret).toString();
+  return window.MD5(appId + query + salt + appSecret);
 }

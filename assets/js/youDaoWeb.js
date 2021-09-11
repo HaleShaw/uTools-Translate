@@ -5,7 +5,7 @@ async function lookUpYouDaoWeb(word) {
   const salt = "" + new Date().getTime() + parseInt(10 * Math.random(), 10);
   let key = "]BjuETDhU)zqSxf-=B#7m";
   key = "Y2FYu%TNSbMCxc3t2u^XT";
-  const sign = CryptoJS.MD5("fanyideskweb" + word + salt + key).toString();
+  const sign = window.MD5("fanyideskweb" + word + salt + key);
   const headers = {
     "Content-Type": "application/x-www-form-urlencoded",
     Referer: "http://fanyi.youdao.com/",

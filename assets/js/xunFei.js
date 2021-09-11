@@ -6,8 +6,7 @@ async function lookUpXunFei(word) {
   const source = flag ? "cn" : "en";
   const target = flag ? "en" : "cn";
 
-  const wordArray = CryptoJS.enc.Utf8.parse(word);
-  const base64Str = CryptoJS.enc.Base64.stringify(wordArray);
+  const base64Str = window.base64(word);
 
   let form = new URLSearchParams();
   form.append("from", source);

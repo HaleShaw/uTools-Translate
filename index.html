@@ -9,7 +9,6 @@
     <link rel="stylesheet" type="text/css" href="assets/css/page.css" />
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/mousetrap.min.js"></script>
-    <script src="assets/js/crypto-js.js"></script>
   </head>
   <body>
     <div id="page"></div>
@@ -36,21 +35,24 @@
         <div class="service">
           <label>
             <input name="service" type="radio" value="youDaoOld" />
-            有道
+            <img src="./assets//images/icon/youDaoOld.png" />
+            <span>有道</span>
           </label>
           <span>（内置）旧API，可请求频率相对稍低</span>
         </div>
         <div class="service">
           <label>
             <input name="service" type="radio" value="youDaoWap" />
-            有道
+            <img src="./assets//images/icon/youDaoWap.png" />
+            <span>有道</span>
           </label>
           <span>（内置）移动版API，精度相对稍低，非列表模式</span>
         </div>
         <div class="service">
           <label>
             <input name="service" type="radio" value="google" />
-            谷歌
+            <img src="./assets//images/icon/google.png" />
+            <span>谷歌</span>
           </label>
           <span>（内置）</span>
         </div>
@@ -64,14 +66,24 @@
         <div class="service">
           <label>
             <input name="service" type="radio" value="xunFei" />
-            讯飞
+            <img src="./assets//images/icon/xunFei.png" />
+            <span>讯飞</span>
           </label>
           <span>（内置）</span>
         </div>
         <div class="service">
           <label>
+            <input name="service" type="radio" value="deepL" />
+            <img src="./assets//images/icon/deepL.png" />
+            <span>DeepL</span>
+          </label>
+          <span>（内置）国外API，响应相对较慢</span>
+        </div>
+        <div class="service">
+          <label>
             <input name="service" type="radio" value="youDao" />
-            有道
+            <img src="./assets//images/icon/youDao.png" />
+            <span>有道</span>
           </label>
           <span>应用ID</span>
           <input id="youDaoAppId" name="appId" type="input" value="" />
@@ -82,7 +94,8 @@
         <div class="service">
           <label>
             <input name="service" type="radio" value="baiDu" />
-            百度
+            <img src="./assets//images/icon/baiDu.png" />
+            <span>百度</span>
           </label>
           <span>应用ID</span>
           <input id="baiDuAppId" name="appId" type="input" value="" />
@@ -92,8 +105,21 @@
         </div>
         <div class="service">
           <label>
+            <input name="service" type="radio" value="aliYun" />
+            <img src="./assets//images/icon/aliYun.png" />
+            <span>阿里</span>
+          </label>
+          <span>应用ID</span>
+          <input id="aliYunAppId" name="appId" type="input" value="" />
+          <span>应用密钥</span>
+          <input id="aliYunAppSecret" class="secret" name="appSecret" type="password" value="" />
+          <img class="eye closed" />
+        </div>
+        <div class="service">
+          <label>
             <input name="service" type="radio" value="tencent" />
-            腾讯
+            <img src="./assets//images/icon/tencent.png" />
+            <span>腾讯</span>
           </label>
           <span>应用ID</span>
           <input id="tencentAppId" name="appId" type="input" value="" />
@@ -104,7 +130,8 @@
         <div class="service">
           <label>
             <input name="service" type="radio" value="caiYun" />
-            彩云
+            <img src="./assets//images/icon/caiYun.jpg" />
+            <span>彩云</span>
           </label>
           <span>Token</span>
           <input id="caiYunToken" class="secret" name="appSecret" type="password" value="" />
@@ -125,6 +152,8 @@
     <script src="assets/js/tencent.js"></script>
     <script src="assets/js/youDao.js"></script>
     <script src="assets/js/baiDu.js"></script>
+    <script src="assets/js/aliYun.js"></script>
+    <script src="assets/js/deepL.js"></script>
     <script src="assets/js/caiYun.js"></script>
     <script src="assets/js/xunFei.js"></script>
     <script src="assets/js/setting.js"></script>

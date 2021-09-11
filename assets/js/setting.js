@@ -19,6 +19,10 @@ const options = {
     name: "讯飞",
     api: "https://saas.xfyun.cn/ai-application/trans/its",
   },
+  deepL: {
+    name: "DeepL",
+    api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",
+  },
   youDao: {
     name: "有道",
     api: "http://openapi.youdao.com/api",
@@ -26,6 +30,11 @@ const options = {
   baiDu: {
     name: "百度",
     api: "https://fanyi-api.baidu.com/api/trans/vip/translate",
+  },
+  aliYun: {
+    name: "阿里",
+    api: "mt.cn-hangzhou.aliyuncs.com",
+    path: "/api/translate/web/general",
   },
   tencent: {
     name: "腾讯",
@@ -38,7 +47,7 @@ const options = {
 };
 
 // 设置窗口的高度。
-const settingHeight = 135 + 29 * 8;
+const settingHeight = 135 + 29 * 10;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
@@ -83,6 +92,16 @@ function loadConfiguration() {
     document.getElementById("baiDuAppSecret").value = baiDuAppSecret;
   }
 
+  let aliYunAppId = utools.dbStorage.getItem("aliYunAppId");
+  if (aliYunAppId) {
+    document.getElementById("aliYunAppId").value = aliYunAppId;
+  }
+
+  let aliYunAppSecret = utools.dbStorage.getItem("aliYunAppSecret");
+  if (aliYunAppSecret) {
+    document.getElementById("aliYunAppSecret").value = aliYunAppSecret;
+  }
+
   let tencentAppId = utools.dbStorage.getItem("tencentAppId");
   if (tencentAppId) {
     document.getElementById("tencentAppId").value = tencentAppId;
@@ -111,33 +130,42 @@ function saveConfiguration() {
   const youDaoAppSecret = document.getElementById("youDaoAppSecret").value;
   const baiDuAppId = document.getElementById("baiDuAppId").value;
   const baiDuAppSecret = document.getElementById("baiDuAppSecret").value;
+  const aliYunAppId = document.getElementById("aliYunAppId").value;
+  const aliYunAppSecret = document.getElementById("aliYunAppSecret").value;
   const tencentAppId = document.getElementById("tencentAppId").value;
   const tencentAppSecret = document.getElementById("tencentAppSecret").value;
   const caiYunToken = document.getElementById("caiYunToken").value;
   let saveFailed = false;
   switch (option) {
-    case Object.keys(options)[5]:
+    case "youDao":
       if (isBlank(youDaoAppId) || isBlank(youDaoAppSecret)) {
         $("#msg").text(errMsgEmptyApp);
         document.getElementById("youDaoAppId").focus();
         saveFailed = true;
       }
       break;
-    case Object.keys(options)[6]:
+    case "baiDu":
       if (isBlank(baiDuAppId) || isBlank(baiDuAppSecret)) {
         $("#msg").text(errMsgEmptyApp);
         document.getElementById("baiDuAppId").focus();
         saveFailed = true;
       }
       break;
-    case Object.keys(options)[7]:
+    case "aliYun":
+      if (isBlank(aliYunAppId) || isBlank(aliYunAppSecret)) {
+        $("#msg").text(errMsgEmptyApp);
+        document.getElementById("aliYunAppId").focus();
+        saveFailed = true;
+      }
+      break;
+    case "tencent":
       if (isBlank(tencentAppId) || isBlank(tencentAppSecret)) {
         $("#msg").text(errMsgEmptyApp);
         document.getElementById("tencentAppId").focus();
         saveFailed = true;
       }
       break;
-    case Object.keys(options)[8]:
+    case "caiYun":
       if (isBlank(caiYunToken)) {
         $("#msg").text("Token不能为空！");
         document.getElementById("caiYunToken").focus();
@@ -155,6 +183,8 @@ function saveConfiguration() {
   utools.dbStorage.setItem("youDaoAppSecret", youDaoAppSecret);
   utools.dbStorage.setItem("baiDuAppId", baiDuAppId);
   utools.dbStorage.setItem("baiDuAppSecret", baiDuAppSecret);
+  utools.dbStorage.setItem("aliYunAppId", aliYunAppId);
+  utools.dbStorage.setItem("aliYunAppSecret", aliYunAppSecret);
   utools.dbStorage.setItem("tencentAppId", tencentAppId);
   utools.dbStorage.setItem("tencentAppSecret", tencentAppSecret);
   utools.dbStorage.setItem("caiYunToken", caiYunToken);

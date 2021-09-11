@@ -94,7 +94,7 @@ async function lookUpTencent(word) {
   const canonicalHeaders =
     "content-type:application/json; charset=utf-8\n" + "host:" + endpoint + "\n";
   const signedHeaders = "content-type;host";
-  const hashedRequestPayload = CryptoJS.SHA256(payload).toString(CryptoJS.enc.Hex);
+  const hashedRequestPayload = window.SHA256(payload);
 
   const canonicalRequest =
     httpRequestMethod +
@@ -111,17 +111,17 @@ async function lookUpTencent(word) {
 
   // ************* 步骤 2：拼接待签名字符串 *************
   const algorithm = "TC3-HMAC-SHA256";
-  const hashedCanonicalRequest = CryptoJS.SHA256(canonicalRequest).toString(CryptoJS.enc.Hex);
+  const hashedCanonicalRequest = window.SHA256(canonicalRequest);
   const credentialScope = date + "/" + service + "/" + "tc3_request";
   const stringToSign =
     algorithm + "\n" + timestamp + "\n" + credentialScope + "\n" + hashedCanonicalRequest;
 
   // ************* 步骤 3：计算签名 *************
 
-  const kDate = CryptoJS.HmacSHA256(date, "TC3" + appSecret);
-  const kService = CryptoJS.HmacSHA256(service, kDate);
-  const kSigning = CryptoJS.HmacSHA256("tc3_request", kService);
-  const signature = CryptoJS.HmacSHA256(stringToSign, kSigning).toString(CryptoJS.enc.Hex);
+  const kDate = window.hmacSHA256(date, "TC3" + appSecret);
+  const kService = window.hmacSHA256(service, kDate);
+  const kSigning = window.hmacSHA256("tc3_request", kService);
+  const signature = window.hmacSHA256(stringToSign, kSigning, "hex");
 
   // ************* 步骤 4：拼接 Authorization *************
   const authorization =

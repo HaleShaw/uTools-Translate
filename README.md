@@ -79,6 +79,12 @@ uTools 插件 - 翻译
 
   翻译内容较少，仅有基本翻译。
 
+- DeepL
+
+  <https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs>
+
+  国外API，响应相对较慢。
+
 - 有道翻译
 
   <http://openapi.youdao.com/api>
@@ -92,6 +98,14 @@ uTools 插件 - 翻译
   翻译内容较少，仅有基本翻译。
 
   需要到[百度翻译开放平台](http://api.fanyi.baidu.com)申请获取应用ID和应用密钥。
+
+- 阿里翻译
+
+  <https://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general>
+
+  翻译内容较少，仅有基本翻译。
+
+  需要到[阿里云](https://www.aliyun.com/product/ai/base_alimt)申请获取应用ID和应用密钥。
 
 - 腾讯翻译
 

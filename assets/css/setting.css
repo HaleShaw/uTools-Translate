@@ -21,6 +21,17 @@
   display: inline-flex;
 }
 
+.service > label > img {
+  width: 23px;
+  height: 23px;
+  vertical-align: middle;
+}
+
+.service > label > span {
+  width: 3rem;
+  display: inline-flex;
+}
+
 .secret {
   width: 280px;
 }

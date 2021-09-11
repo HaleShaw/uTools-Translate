@@ -226,5 +226,5 @@ function truncate(str) {
 
 function getSignYouDao(appId, query, salt, curtime, appSecret) {
   const str = appId + truncate(query) + salt + curtime + appSecret;
-  return CryptoJS.SHA256(str).toString(CryptoJS.enc.Hex);
+  return window.SHA256(str);
 }
