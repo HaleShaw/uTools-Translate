@@ -93,4 +93,9 @@
   .eye.open {
     content: url(../images/eyeOpenWhite.png);
   }
+
+  /* 部分图标在暗黑模式下需要处理背景色 */
+  .service > label > img.compatible{
+    background-color: white;
+  }
 }

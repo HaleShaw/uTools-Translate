@@ -40,7 +40,7 @@ async function lookupAliYun(word) {
   const payload = JSON.stringify(param);
   const signature = getSignature(payload, appId, appSecret);
   const headers = {
-    Accept: "application/json1",
+    Accept: "application/json",
     "Content-Type": "application/json;chrset=utf-8",
     "Content-MD5": signature.payloadMd5,
     "Content-Length": payload.length,
