@@ -1,4 +1,4 @@
-async function lookUpXunFei(word) {
+async function lookupXunFei(word) {
   let data = [];
   const api = options.xunFei.api;
 

@@ -1,5 +1,5 @@
 let requestId = 57280004;
-async function lookUpDeepL(word) {
+async function lookupDeepL(word) {
   let data = [];
   const api = options.deepL.api;
   let timestamp = new Date().getTime() - 3000;

@@ -55,7 +55,7 @@ const errorCodeMsgTencent = {
   "UnsupportedOperation.UnsupportedLanguage": "不支持的语言，请参照语言列表。",
   "UnsupportedOperation.UnsupportedSourceLanguage": "不支持的源语言，请参照语言列表。",
 };
-async function lookUpTencent(word) {
+async function lookupTencent(word) {
   let data = [];
 
   const endpoint = options.tencent.api;

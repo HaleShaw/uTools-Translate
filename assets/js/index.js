@@ -30,8 +30,9 @@ const versionWhiteList = [
   "3.0.6",
   "3.0.7",
   "3.0.8",
+  "3.0.9",
 ];
-const version = "3.0.8";
+const version = "3.0.9";
 
 utools.onPluginReady(() => {
   utools.setExpendHeight(0);
@@ -65,7 +66,7 @@ utools.onPluginReady(() => {
     1.添加多API支持，可以随意切换配置API；
     2.添加列表模式，完美模拟原生列表模式，支持点击、回车、快捷键选中复制；
     3.保留旧版页面模式，清晰查看翻译结果；
-    4.新的有道API、百度API、阿里API、腾讯API和彩云小译API，需要自行到对应的开发者平台官网申请应用ID和密钥；
+    4.新的有道API、百度API、阿里API、腾讯API、搜狗API和彩云小译API，需要自行到对应的开发者平台官网申请应用ID和密钥；
     5.内置有道移动版API为非列表模式，其他都为列表模式；
     6.内置有道旧API为有道官方已弃用API，可免费使用。但请求频率太高，容易被暂时封禁；
     7.内置有道移动版API为手机网页版解析而来，此版API原生官方支持精度相对较低，对查询精准度要求较高者可考虑使用其他API。`,
@@ -138,7 +139,8 @@ async function switchApi(word) {
     option == Object.keys(options)[7] ||
     option == Object.keys(options)[8] ||
     option == Object.keys(options)[9] ||
-    option == Object.keys(options)[10]
+    option == Object.keys(options)[10] ||
+    option == Object.keys(options)[11]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -150,16 +152,16 @@ async function switchApi(word) {
         data = await lookupYouDaoOld(word);
         break;
       case Object.keys(options)[2]:
-        data = await lookUpYouDaoWeb(word);
+        data = await lookupYouDaoWeb(word);
         break;
       case Object.keys(options)[3]:
-        data = await lookUpGoogle(word);
+        data = await lookupGoogle(word);
         break;
       case Object.keys(options)[4]:
-        data = await lookUpXunFei(word);
+        data = await lookupXunFei(word);
         break;
       case Object.keys(options)[5]:
-        data = await lookUpDeepL(word);
+        data = await lookupDeepL(word);
         break;
       case Object.keys(options)[6]:
         data = await lookupYouDao(word);
@@ -171,10 +173,13 @@ async function switchApi(word) {
         data = await lookupAliYun(word);
         break;
       case Object.keys(options)[9]:
-        data = await lookUpTencent(word);
+        data = await lookupTencent(word);
         break;
       case Object.keys(options)[10]:
-        data = await lookUpCaiYun(word);
+        data = await lookupSoGou(word);
+        break;
+      case Object.keys(options)[11]:
+        data = await lookupCaiYun(word);
         break;
       default:
         break;

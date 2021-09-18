@@ -1,4 +1,4 @@
-async function lookUpGoogle(word) {
+async function lookupGoogle(word) {
   let data = [];
   const api = options.google.api;
   const tl = isChinese(word) ? "en" : "zh-CN";

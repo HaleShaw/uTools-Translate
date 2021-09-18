@@ -1,4 +1,4 @@
-async function lookUpYouDaoWeb(word) {
+async function lookupYouDaoWeb(word) {
   let data = [];
   const api = options.youDaoWeb.api;
 

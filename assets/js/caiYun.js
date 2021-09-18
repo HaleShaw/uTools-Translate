@@ -1,7 +1,7 @@
 const errorCodeMsgCaiYun = {
   "API rate limit exceeded": "API请求太过频繁，请稍后再试",
 };
-async function lookUpCaiYun(word) {
+async function lookupCaiYun(word) {
   let data = [];
   const api = options.caiYun.api;
   const token = utools.dbStorage.getItem("caiYunToken");

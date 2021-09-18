@@ -40,6 +40,10 @@ const options = {
     name: "腾讯",
     api: "tmt.tencentcloudapi.com",
   },
+  soGou: {
+    name: "搜狗",
+    api: "http://fanyi.sogou.com/reventondc/api/sogouTranslate",
+  },
   caiYun: {
     name: "彩云小译",
     api: "http://api.interpreter.caiyunai.com/v1/translator",
@@ -47,7 +51,7 @@ const options = {
 };
 
 // 设置窗口的高度。
-const settingHeight = 135 + 29 * 10;
+const settingHeight = 135 + 29 * 11;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
@@ -112,6 +116,16 @@ function loadConfiguration() {
     document.getElementById("tencentAppSecret").value = tencentAppSecret;
   }
 
+  let soGouAppId = utools.dbStorage.getItem("soGouAppId");
+  if (soGouAppId) {
+    document.getElementById("soGouAppId").value = soGouAppId;
+  }
+
+  let soGouAppSecret = utools.dbStorage.getItem("soGouAppSecret");
+  if (soGouAppSecret) {
+    document.getElementById("soGouAppSecret").value = soGouAppSecret;
+  }
+
   let caiYunToken = utools.dbStorage.getItem("caiYunToken");
   if (caiYunToken) {
     document.getElementById("caiYunToken").value = caiYunToken;
@@ -134,6 +148,8 @@ function saveConfiguration() {
   const aliYunAppSecret = document.getElementById("aliYunAppSecret").value;
   const tencentAppId = document.getElementById("tencentAppId").value;
   const tencentAppSecret = document.getElementById("tencentAppSecret").value;
+  const soGouAppId = document.getElementById("soGouAppId").value;
+  const soGouAppSecret = document.getElementById("soGouAppSecret").value;
   const caiYunToken = document.getElementById("caiYunToken").value;
   let saveFailed = false;
   switch (option) {
@@ -165,6 +181,13 @@ function saveConfiguration() {
         saveFailed = true;
       }
       break;
+    case "soGou":
+      if (isBlank(soGouAppId) || isBlank(soGouAppSecret)) {
+        $("#msg").text(errMsgEmptyApp);
+        document.getElementById("soGouAppId").focus();
+        saveFailed = true;
+      }
+      break;
     case "caiYun":
       if (isBlank(caiYunToken)) {
         $("#msg").text("Token不能为空！");
@@ -187,6 +210,8 @@ function saveConfiguration() {
   utools.dbStorage.setItem("aliYunAppSecret", aliYunAppSecret);
   utools.dbStorage.setItem("tencentAppId", tencentAppId);
   utools.dbStorage.setItem("tencentAppSecret", tencentAppSecret);
+  utools.dbStorage.setItem("soGouAppId", soGouAppId);
+  utools.dbStorage.setItem("soGouAppSecret", soGouAppSecret);
   utools.dbStorage.setItem("caiYunToken", caiYunToken);
   hideSetting();
   utools.showNotification(`切换为${options[option]["name"]}成功！`);
