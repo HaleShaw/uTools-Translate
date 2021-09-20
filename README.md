@@ -18,6 +18,10 @@ uTools 插件 - 翻译
 
   ![translateBaidu](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateBaidu.png)
 
+- 结果过长提示
+
+  ![translatePrompt](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translatePrompt.png)
+
 - 设置页面
 
   ![translateSetting](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateSetting.png)

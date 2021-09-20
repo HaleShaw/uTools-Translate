@@ -276,9 +276,23 @@ function initList(data) {
     $(list[i]).click(function (e) {
       copyExit(list[i]);
     });
-  }
 
+    // 如果横向显示溢出，则为元素添加title属性。
+    let title = list[i].querySelector("div.list-item-title");
+    if (title.scrollWidth > title.offsetWidth) {
+      list[i].setAttribute("title", getContent(title));
+    }
+  }
   addPhoneticListener();
+}
+
+/**
+ * 获取选中行的内容。
+ * @param {Object} ele 选中的行DOM元素下的title元素。
+ */
+function getContent(ele) {
+  const tran = ele.querySelector("span.translation");
+  return tran ? tran.textContent.trim() : ele.textContent.trim();
 }
 
 /**
@@ -286,14 +300,8 @@ function initList(data) {
  * @param {Object} ele 选中的行DOM元素。
  */
 function copyExit(ele) {
-  let content = "";
-  const tran = ele.querySelector("div.list-item-title>span.translation");
-  if (tran) {
-    content = tran.textContent;
-  } else {
-    content = ele.querySelector("div.list-item-title").textContent;
-  }
-  utools.copyText(content.trim());
+  const title = ele.querySelector("div.list-item-title");
+  utools.copyText(getContent(title));
   utools.outPlugin();
   utools.hideMainWindow();
 }
