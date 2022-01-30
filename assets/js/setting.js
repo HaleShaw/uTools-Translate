@@ -15,6 +15,11 @@ const options = {
     name: "谷歌",
     api: "https://translate.google.cn/translate_a/single?client=gtx&dt=t&dj=1&hl=zh-CN&sl=auto",
   },
+  googleNew: {
+    name: "谷歌",
+    api: "translate.google.cn",
+    path: "/_/TranslateWebserverUi/data/batchexecute",
+  },
   xunFei: {
     name: "讯飞",
     api: "https://saas.xfyun.cn/ai-application/trans/its",

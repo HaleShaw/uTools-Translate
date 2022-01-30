@@ -32,8 +32,9 @@ const versionWhiteList = [
   "3.0.8",
   "3.0.9",
   "3.1.0",
+  "3.1.1",
 ];
-const version = "3.1.0";
+const version = "3.1.1";
 
 utools.onPluginReady(() => {
   utools.setExpendHeight(0);
@@ -156,7 +157,7 @@ async function switchApi(word) {
         data = await lookupYouDaoWeb(word);
         break;
       case Object.keys(options)[3]:
-        data = await lookupGoogle(word);
+        data = await lookupGoogleNew(word);
         break;
       case Object.keys(options)[4]:
         data = await lookupXunFei(word);

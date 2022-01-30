@@ -4,6 +4,7 @@ async function lookupGoogle(word) {
   const tl = isChinese(word) ? "en" : "zh-CN";
   const url = api + "&tl=" + tl + "&q=" + word;
   const response = await get(url);
+  console.debug(response);
   let trans = response?.sentences;
   if (trans && trans.length != 0) {
     const phoneticEn = getPhoneticEn(word);
