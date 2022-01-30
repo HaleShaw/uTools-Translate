@@ -6,6 +6,8 @@ uTools 插件 - 翻译
 
 自v3.0.0起，将插件《词典》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/logoDictionary.png" height="28px" witdh="28px">和《Translate》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/logoTranslate.png" height="28px" witdh="28px">合并为《翻译》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/logo.png" height="28px" witdh="28px">
 
+**朗读功能为朗读输入框中的内容，而非翻译结果。**
+
 ![Translate](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.gif)
 
 ## Screenshots
