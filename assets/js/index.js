@@ -66,7 +66,8 @@ function delayLookUp(timeout, word) {
 async function switchApi(word) {
   let option = utools.dbStorage.getItem("option");
   if (!option || option.error) {
-    option = Object.keys(options)[0];
+    // Choose the default API.
+    option = defaultAPI;
     utools.dbStorage.setItem("option", option);
   }
   if (option == Object.keys(options)[1]) {
@@ -100,7 +101,7 @@ async function switchApi(word) {
         data = await lookupYouDaoWeb(word);
         break;
       case Object.keys(options)[3]:
-        data = await lookupGoogleNew(word);
+        data = await lookupGoogle(word);
         break;
       case Object.keys(options)[4]:
         data = await lookupXunFei(word);
@@ -131,6 +132,7 @@ async function switchApi(word) {
     }
     initList(data);
   }
+  console.debug(option);
 }
 
 function bindHotkey() {

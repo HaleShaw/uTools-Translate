@@ -13,10 +13,6 @@ const options = {
   },
   google: {
     name: "谷歌",
-    api: "https://translate.google.cn/translate_a/single?client=gtx&dt=t&dj=1&hl=zh-CN&sl=auto",
-  },
-  googleNew: {
-    name: "谷歌",
     api: "translate.google.cn",
     path: "/_/TranslateWebserverUi/data/batchexecute",
   },
@@ -55,6 +51,9 @@ const options = {
   },
 };
 
+// Set the default API.
+const defaultAPI = Object.keys(options)[4];
+
 // 设置窗口的高度。
 const settingHeight = 135 + 29 * 11;
 
@@ -70,7 +69,8 @@ function initSetting() {
 function loadConfiguration() {
   let option = utools.dbStorage.getItem("option");
   if (!option || option.error) {
-    option = Object.keys(options)[0];
+    // Choose the default API.
+    option = defaultAPI;
     utools.dbStorage.setItem("option", option);
   }
   let radios = document.getElementsByName("service");
