@@ -24,7 +24,7 @@ utools.onPluginEnter(({ code, type, payload }) => {
   if (code == "translate_text") {
     utools.setSubInput(({ text }) => {
       delayLookUp(delayTime, text);
-    }, "请输入需要查询的中英文内容");
+    }, "请输入需要查询的内容");
     if (type == "over" || type == "regex") {
       utools.setSubInputValue(payload);
     }
@@ -65,7 +65,7 @@ function delayLookUp(timeout, word) {
 
 async function switchApi(word) {
   let option = utools.dbStorage.getItem("option");
-  if (!option || option.error) {
+  if (!option || option.error || Object.keys(options).indexOf(option) == -1) {
     // Choose the default API.
     option = defaultAPI;
     utools.dbStorage.setItem("option", option);
@@ -104,7 +104,7 @@ async function switchApi(word) {
         data = await lookupGoogle(word);
         break;
       case Object.keys(options)[4]:
-        data = await lookupXunFei(word);
+        data = await lookupXiaoNiu(word);
         break;
       case Object.keys(options)[5]:
         data = await lookupDeepL(word);

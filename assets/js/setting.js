@@ -16,9 +16,9 @@ const options = {
     api: "translate.google.cn",
     path: "/_/TranslateWebserverUi/data/batchexecute",
   },
-  xunFei: {
-    name: "讯飞",
-    api: "https://saas.xfyun.cn/ai-application/trans/its",
+  xiaoNiu: {
+    name: "小牛",
+    api: "https://test.niutrans.com/NiuTransServer/testaligntrans",
   },
   deepL: {
     name: "DeepL",
