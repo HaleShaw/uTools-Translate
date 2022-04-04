@@ -79,9 +79,9 @@ uTools 插件 - 翻译
 
   翻译内容较少，仅有基本翻译。
 
-- 讯飞
+- 小牛
 
-  <https://saas.xfyun.cn/ai-application/trans/its>
+  <https://test.niutrans.com>
 
   翻译内容较少，仅有基本翻译。
 
@@ -95,7 +95,7 @@ uTools 插件 - 翻译
 
   <http://openapi.youdao.com/api>
 
-  需要到[有道智云官网](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
+  需要到[有道智云](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
 
 - 百度翻译
 
@@ -119,15 +119,7 @@ uTools 插件 - 翻译
 
   翻译内容较少，仅有基本翻译。
 
-  需要到[腾讯云机器翻译TMT](https://cloud.tencent.com/product/tmt)申请获取应用ID和应用密钥。
-
-- 搜狗翻译
-
-  <http://fanyi.sogou.com/reventondc/api/sogouTranslate>
-
-  翻译内容较少，仅有基本翻译。
-
-  需要到[搜狗智深引擎](https://deepi.sogou.com)申请获取应用ID和应用密钥。
+  需要到[腾讯云](https://cloud.tencent.com/product/tmt)申请获取应用ID和应用密钥。
 
 - 彩云小译
 

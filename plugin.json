@@ -24,7 +24,7 @@
     },
     {
       "code": "translate_setting",
-      "explain": "翻译设置，切换翻译API",
+      "explain": "翻译设置，切换翻译API，设置朗读，设置翻译源语言和目标语言",
       "cmds": [
         "翻译设置",
         "translate setting",

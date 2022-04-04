@@ -51,3 +51,26 @@ async function lookupCaiYun(word) {
   }
   return data;
 }
+
+function getType(word) {
+  let source = settingObj["caiYun"]["lang"]["source"];
+  let target = settingObj["caiYun"]["lang"]["target"];
+  let type = "";
+  if ("自动" === source && "自动" === target) {
+    const flag = isChinese(word);
+    const source = flag ? "zh" : "en";
+    const target = flag ? "en" : "zh";
+    type = source + "2" + target;
+  } else if ("自动" === source && "自动" !== target) {
+    type = `auto2${options.caiYun.langMap[target]}`;
+  } else if ("自动" !== source && "自动" === target) {
+    let targetCode = "";
+    if ("中文" === source || "日语" === source) {
+      targetCode = "en";
+    } else if ("英语" === source) {
+      targetCode = "zh";
+    }
+    type = `${options.caiYun.langMap[source]}2${targetCode}`;
+  } else {
+  }
+}

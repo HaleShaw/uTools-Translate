@@ -30,130 +30,328 @@
       </div>
     </div>
     <div id="setting" class="hide">
+      <img class="setting" />
       <a class="title">翻译设置</a>
+      <span id="msg"></span>
+      <div class="speak">
+        <a>朗读</a>
+        <img />
+        <span class="comment">
+          朗读输入框中的内容，固定以英式和美式口音朗读，内容为英文效果最佳。
+        </span>
+        <span class="buttons">
+          <button id="btnClose">取消</button>
+          <button id="btnSave">保存</button>
+        </span>
+      </div>
       <div id="services">
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="youDaoOld" />
-            <img src="./assets//images/icon/youDaoOld.png" />
-            <span>有道</span>
-          </label>
-          <span>（内置）旧API，可请求频率相对稍低</span>
+        <div class="service youDaoOld">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="youDaoOld" />
+              <img src="./assets/images/icon/youDaoOld.png" />
+              <span>有道</span>
+            </label>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <a class="comment">（内置）旧API，可请求频率相对稍低</a>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="youDaoWap" />
-            <img src="./assets//images/icon/youDaoWap.png" />
-            <span>有道</span>
-          </label>
-          <span>（内置）移动版API，精度相对稍低，非列表模式</span>
+        <div class="service youDaoWap">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="youDaoWap" />
+              <img src="./assets/images/icon/youDaoWap.png" />
+              <span>有道</span>
+            </label>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <a class="comment">（内置）移动版API，精度相对稍低，非列表模式</a>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="google" />
-            <img src="./assets//images/icon/google.png" />
-            <span>谷歌</span>
-          </label>
-          <span>（内置）</span>
+        <div class="service google">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="google" />
+              <img src="./assets/images/icon/google.png" />
+              <span>谷歌</span>
+            </label>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <a class="comment">（内置）</a>
+          </div>
         </div>
-        <!-- <div class="service">
-          <label>
-            <input name="service" type="radio" value="youDaoWeb" />
-            有道
-          </label>
-          <span>（内置）网页版API</span>
-        </div> -->
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="xiaoNiu" />
-            <img src="./assets//images/icon/xiaoNiu.png" />
-            <span>小牛</span>
-          </label>
-          <span>（内置）</span>
+        <div class="service youDaoWeb">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="youDaoWeb" />
+              <img src="./assets//images/icon/youDao.png" />
+              <span>有道</span>
+            </label>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <a class="comment">（内置）网页版API</a>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="deepL" />
-            <img src="./assets//images/icon/deepL.png" class="compatible" />
-            <span>DeepL</span>
-          </label>
-          <span>（内置）国外API，响应相对较慢</span>
+        <div class="service xiaoNiu">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="xiaoNiu" />
+              <img src="./assets//images/icon/xiaoNiu.png" />
+              <span>小牛</span>
+            </label>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <a class="comment">（内置）</a>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="youDao" />
-            <img src="./assets//images/icon/youDao.png" />
-            <span>有道</span>
-          </label>
-          <span>应用ID</span>
-          <input id="youDaoAppId" name="appId" type="input" value="" />
-          <span>应用密钥</span>
-          <input id="youDaoAppSecret" class="secret" name="appSecret" type="password" value="" />
-          <img class="eye closed" />
+        <div class="service deepL">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="deepL" />
+              <img src="./assets//images/icon/deepL.png" class="compatible" />
+              <span>DeepL</span>
+            </label>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <a class="comment">（内置）国外API，响应相对较慢</a>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="baiDu" />
-            <img src="./assets//images/icon/baiDu.png" />
-            <span>百度</span>
-          </label>
-          <span>应用ID</span>
-          <input id="baiDuAppId" name="appId" type="input" value="" />
-          <span>应用密钥</span>
-          <input id="baiDuAppSecret" class="secret" name="appSecret" type="password" value="" />
-          <img class="eye closed" />
+        <div class="service youDao">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="youDao" />
+              <img src="./assets//images/icon/youDao.png" />
+              <span>有道</span>
+            </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://ai.youdao.com/doc.s"
+              title="https://ai.youdao.com/doc.s"
+            >
+              有道智云
+            </a>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <div class="private">
+              <div class="key">
+                <span>应用ID</span>
+                <input id="youDaoAppId" name="appId" type="input" value="" />
+              </div>
+              <div class="pwd">
+                <span>应用密钥</span>
+                <input
+                  id="youDaoAppSecret"
+                  class="secret"
+                  name="appSecret"
+                  type="password"
+                  value=""
+                />
+                <img class="eye closed" />
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="aliYun" />
-            <img src="./assets//images/icon/aliYun.png" />
-            <span>阿里</span>
-          </label>
-          <span>应用ID</span>
-          <input id="aliYunAppId" name="appId" type="input" value="" />
-          <span>应用密钥</span>
-          <input id="aliYunAppSecret" class="secret" name="appSecret" type="password" value="" />
-          <img class="eye closed" />
+        <div class="service baiDu">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="baiDu" />
+              <img src="./assets//images/icon/baiDu.png" />
+              <span>百度</span>
+            </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://api.fanyi.baidu.com"
+              title="https://api.fanyi.baidu.com"
+            >
+              百度翻译开放平台
+            </a>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <div class="private">
+              <span>应用ID</span>
+              <input id="baiDuAppId" name="appId" type="input" value="" />
+              <br />
+              <span>应用密钥</span>
+              <input id="baiDuAppSecret" class="secret" name="appSecret" type="password" value="" />
+              <img class="eye closed" />
+            </div>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="tencent" />
-            <img src="./assets//images/icon/tencent.png" class="compatible" />
-            <span>腾讯</span>
-          </label>
-          <span>应用ID</span>
-          <input id="tencentAppId" name="appId" type="input" value="" />
-          <span>应用密钥</span>
-          <input id="tencentAppSecret" class="secret" name="appSecret" type="password" value="" />
-          <img class="eye closed" />
+        <div class="service aliYun">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="aliYun" />
+              <img src="./assets//images/icon/aliYun.png" />
+              <span>阿里</span>
+            </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://www.aliyun.com/product/ai/base_alimt"
+              title="https://www.aliyun.com/product/ai/base_alimt"
+            >
+              阿里云
+            </a>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <div class="private">
+              <span>应用ID</span>
+              <input id="aliYunAppId" name="appId" type="input" value="" />
+              <br />
+              <span>应用密钥</span>
+              <input
+                id="aliYunAppSecret"
+                class="secret"
+                name="appSecret"
+                type="password"
+                value=""
+              />
+              <img class="eye closed" />
+            </div>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="soGou" />
-            <img src="./assets//images/icon/soGou.png" />
-            <span>搜狗</span>
-          </label>
-          <span>应用ID</span>
-          <input id="soGouAppId" name="appId" type="input" value="" />
-          <span>应用密钥</span>
-          <input id="soGouAppSecret" class="secret" name="appSecret" type="password" value="" />
-          <img class="eye closed" />
+        <div class="service tencent">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="tencent" />
+              <img src="./assets//images/icon/tencent.png" class="compatible" />
+              <span>腾讯</span>
+            </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://cloud.tencent.com/product/tmt"
+              title="https://cloud.tencent.com/product/tmt"
+            >
+              腾讯云
+            </a>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <div class="private">
+              <span>应用ID</span>
+              <input id="tencentAppId" name="appId" type="input" value="" />
+              <br />
+              <span>应用密钥</span>
+              <input
+                id="tencentAppSecret"
+                class="secret"
+                name="appSecret"
+                type="password"
+                value=""
+              />
+              <img class="eye closed" />
+            </div>
+          </div>
         </div>
-        <div class="service">
-          <label>
-            <input name="service" type="radio" value="caiYun" />
-            <img src="./assets//images/icon/caiYun.jpg" />
-            <span>彩云</span>
-          </label>
-          <span>Token</span>
-          <input id="caiYunToken" class="secret" name="appSecret" type="password" value="" />
-          <img class="eye closed" />
+        <div class="service caiYun">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="caiYun" />
+              <img src="./assets//images/icon/caiYun.jpg" />
+              <span>彩云</span>
+            </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://fanyi.caiyunapp.com/#/api"
+              title="https://fanyi.caiyunapp.com/#/api"
+            >
+              彩云科技
+            </a>
+          </div>
+          <div class="detail">
+            <div class="exchange">
+              <a>源语言</a>
+              <select class="source"></select>
+              <img class="icon" />
+              <a>目标语言</a>
+              <select class="target"></select>
+            </div>
+            <div class="private">
+              <span>Token</span>
+              <input id="caiYunToken" class="secret" name="appSecret" type="password" value="" />
+              <img class="eye closed" />
+            </div>
+          </div>
         </div>
       </div>
-      <span id="msg"></span>
-      <div class="buttons">
-        <button id="btnClose">关闭</button>
-        <button id="btnSave">保存</button>
+      <div class="footer comment">
+        <i class="info"></i>
+        <a>密钥相关信息都存储在用户本地，可在“帐号与数据”中查看。</a>
+        <a class="author">Copyright © HaleShaw</a>
       </div>
     </div>
     <script src="assets/js/utils.js"></script>
@@ -162,7 +360,6 @@
     <script src="assets/js/youDaoWap.js"></script>
     <script src="assets/js/google.js"></script>
     <script src="assets/js/tencent.js"></script>
-    <script src="assets/js/soGou.js"></script>
     <script src="assets/js/youDao.js"></script>
     <script src="assets/js/baiDu.js"></script>
     <script src="assets/js/aliYun.js"></script>

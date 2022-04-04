@@ -19,6 +19,9 @@ const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行�
 // 延迟查询的时间毫秒数。
 const delayTime = 300;
 
+// 朗读配置。
+var speak;
+
 utools.onPluginEnter(({ code, type, payload }) => {
   utools.setExpendHeight(0);
   if (code == "translate_text") {
@@ -70,6 +73,14 @@ async function switchApi(word) {
     option = defaultAPI;
     utools.dbStorage.setItem("option", option);
   }
+
+  speak = utools.dbStorage.getItem("speak");
+  if (speak === null) {
+    // Choose the default speak setting.
+    speak = defaultSpeak;
+    utools.dbStorage.setItem("speak", speak);
+  }
+
   if (option == Object.keys(options)[1]) {
     $("#root").addClass("hide");
     $("#setting").addClass("hide");
@@ -85,8 +96,7 @@ async function switchApi(word) {
     option == Object.keys(options)[7] ||
     option == Object.keys(options)[8] ||
     option == Object.keys(options)[9] ||
-    option == Object.keys(options)[10] ||
-    option == Object.keys(options)[11]
+    option == Object.keys(options)[10]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -122,9 +132,6 @@ async function switchApi(word) {
         data = await lookupTencent(word);
         break;
       case Object.keys(options)[10]:
-        data = await lookupSoGou(word);
-        break;
-      case Object.keys(options)[11]:
         data = await lookupCaiYun(word);
         break;
       default:

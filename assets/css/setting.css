@@ -1,64 +1,260 @@
 #setting {
   padding: 10px 20px;
-  font-size: 18px;
+  max-width: 755px;
 }
 
-.buttons {
-  text-align: center;
+#setting > img.setting{
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+  margin: -2px 5px 0 10px ;
+}
+
+@media (prefers-color-scheme: light) {
+  #setting > img.setting {
+    content: url(../images/settingBlack.png);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  #setting > img.setting {
+    content: url(../images/settingWhite.png);
+  }
 }
 
 #setting > .title {
   font-weight: bold;
-  font-size: 1.25rem;
+  font-size: 1.125rem;
+}
+
+#msg {
+  margin-left: 2rem;
+  color: #d94235;
+}
+
+#setting > .speak {
+  margin-top: 10px;
+  padding-left: 10px;
+}
+
+#setting > .speak > img {
+  vertical-align: middle;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 1.5rem;
 }
 
 #services {
   margin-top: 10px;
+  max-height: 431px;
+  max-width: 755px;
+  overflow-y: scroll;
+  border-radius: 10px;
 }
 
-.service > span {
-  margin: 3px 3px 3px 15px;
-  display: inline-flex;
+/* 整个API列表的边框阴影 */
+@media (prefers-color-scheme: light) {
+  #services {
+    box-shadow: #e6e6e6 0px 0px 10px 3px;
+  }
 }
 
-.service > label > img {
+@media (prefers-color-scheme: dark) {
+  #services {
+    box-shadow: #222 0px 0px 10px 3px;
+  }
+}
+
+/* 消除圆角被垂直滚动条遮挡，隐藏垂直滚动条两头按钮 */
+#services::-webkit-scrollbar-button {
+  display: block;
+  height: 3px;
+  background-color: transparent;
+}
+
+/* 深色模式下，修改滚动条颜色 */
+@media (prefers-color-scheme: dark) {
+  #services::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+  }
+  #services::-webkit-scrollbar-thumb:hover {
+    background-color: #666;
+  }
+}
+
+.service {
+  padding: 10px 10px;
+  overflow: hidden;
+  line-height: 28px;
+}
+
+@media (prefers-color-scheme: light) {
+  .service:not(:last-child) {
+    border-bottom: 1px solid #e6e6e6;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .service:not(:last-child) {
+    border-bottom: 1px solid #222;
+  }
+}
+
+.service .api {
+  float: left;
+  width: 180px;
+}
+
+.service .api label{
+  cursor: pointer;
+}
+
+.service .api label:hover {
+  color: #0075ff;
+}
+
+.service .api > label > img {
   width: 23px;
   height: 23px;
   vertical-align: middle;
 }
 
-.service > label > span {
-  width: 3rem;
-  display: inline-flex;
+.service .api label span {
+  font-weight: bold;
 }
 
-.secret {
-  width: 280px;
+.service .api input {
+  vertical-align: middle;
+}
+
+.service .api .site {
+  margin-left: 52px;
+  text-decoration: none;
+}
+
+.service .api .site:hover {
+  color: #0075ff;
+}
+
+.service .detail {
+  float: left;
+}
+
+.comment {
+  color: #8f8f94;
+}
+
+.service .exchange select {
+  font-size: 12px;
+}
+
+.exchange .icon {
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* 语言交换按钮 */
+@media (prefers-color-scheme: light) {
+  .exchange .icon {
+    content: url(../images/exchangeBlack.png);
+  }
+  .exchange .icon:hover {
+    background-color: #eee;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .exchange .icon {
+    content: url(../images/exchangeWhite.png);
+  }
+  .exchange .icon:hover {
+    background-color: #666;
+  }
 }
 
 .buttons {
-  margin-top: 15px;
+  float: right;
+  text-align: center;
+  margin-right: 10px;
+  margin-top: -5px;
 }
 
 .buttons > button {
-  font-size: 16px;
-  padding: 3px 8px;
+  padding: 3px 15px;
+  border-radius: 4px;
+  border: 1px solid;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 2px -1px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.3) inset;
+  /* text-shadow: 0 1px 0 rgba(255,255,255, .9); */
 }
 
-#msg {
-  font-size: 16px;
-  line-height: 20px;
-  color: red;
-  display: inline-block !important;
+#btnSave {
+  background-color: #d94235;
+  border-color: #d94235;
+  color: #ffffff;
+}
+
+#btnSave:hover {
+  background-color: #d97564;
+  border-color: #d97564;
+}
+
+#btnClose {
+  background-color: #ddd;
+  border-color: #bbb;
+  color: #555;
+}
+
+#btnClose:hover {
+  background-color: #eaeaec;
+  border-color: #888;
+  color: #888;
+}
+
+.private span {
+  width: 4rem;
+  display: inline-block;
+}
+
+.private input {
+  font-size: 12px;
+  padding: 0 4px;
+  width: 300px;
+  border-radius: 4px;
+}
+
+.private input:focus {
+  outline: none;
+  border-color: #d94235;
+}
+
+@media (prefers-color-scheme: light) {
+  .private input {
+    border: 1px solid #000;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .private input {
+    color: #fff;
+    background-color: #303133;
+    border: 1px solid #767676;
+  }
 }
 
 .eye {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  margin-top: 7px;
+  width: 18px;
+  height: 18px;
+  /* position: absolute; */
+  /* margin-top: 7px; */
   opacity: 0.7;
-  margin-left: -25px;
+  vertical-align: middle;
+  margin-left: -18px;
 }
 
 .eye:hover {
@@ -77,15 +273,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  #setting {
-    color: #f6f6f6;
-  }
-
-  input {
-    color: #f6f6f6;
-    background-color: #303133;
-  }
-
   .eye.closed {
     content: url(../images/eyeCloseWhite.png);
   }
@@ -93,9 +280,40 @@
   .eye.open {
     content: url(../images/eyeOpenWhite.png);
   }
+}
+
+.footer {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.footer .author {
+  float: right;
+}
+
+i.info {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  color: #ffffff;
+  background-color: #d94235;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 50%;
+  font-style: normal;
+}
+
+i.info::after {
+  content: "i";
+}
+
+@media (prefers-color-scheme: dark) {
+  #setting {
+    color: #fff;
+  }
 
   /* 部分图标在暗黑模式下需要处理背景色 */
-  .service > label > img.compatible{
-    background-color: white;
+  .service .api label > img.compatible {
+    background-color: #fff;
   }
 }
