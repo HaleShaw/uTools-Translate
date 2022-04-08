@@ -95,8 +95,7 @@ async function switchApi(word) {
     option == Object.keys(options)[6] ||
     option == Object.keys(options)[7] ||
     option == Object.keys(options)[8] ||
-    option == Object.keys(options)[9] ||
-    option == Object.keys(options)[10]
+    option == Object.keys(options)[9]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -108,30 +107,27 @@ async function switchApi(word) {
         data = await lookupYouDaoOld(word);
         break;
       case Object.keys(options)[2]:
-        data = await lookupYouDaoWeb(word);
-        break;
-      case Object.keys(options)[3]:
         data = await lookupGoogle(word);
         break;
-      case Object.keys(options)[4]:
+      case Object.keys(options)[3]:
         data = await lookupXiaoNiu(word);
         break;
-      case Object.keys(options)[5]:
+      case Object.keys(options)[4]:
         data = await lookupDeepL(word);
         break;
-      case Object.keys(options)[6]:
+      case Object.keys(options)[5]:
         data = await lookupYouDao(word);
         break;
-      case Object.keys(options)[7]:
+      case Object.keys(options)[6]:
         data = await lookupBaiDu(word);
         break;
-      case Object.keys(options)[8]:
+      case Object.keys(options)[7]:
         data = await lookupAliYun(word);
         break;
-      case Object.keys(options)[9]:
+      case Object.keys(options)[8]:
         data = await lookupTencent(word);
         break;
-      case Object.keys(options)[10]:
+      case Object.keys(options)[9]:
         data = await lookupCaiYun(word);
         break;
       default:

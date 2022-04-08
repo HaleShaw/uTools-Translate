@@ -68,7 +68,7 @@ const errorCodeMsgYouDao = {
   4201: "解密失败",
   4301: "语音识别失败",
   4303: "服务的异常",
-  4411: "API请求太过频繁，请稍后再试",
+  4411: "API请求太过频繁，请稍后再试。可进入设置页面切换其他API",
   4412: "超过最大请求时长",
   5001: "无效的OCR类型",
   5002: "不支持的OCR image类型",
@@ -127,7 +127,7 @@ const errorCodeMsgYouDao = {
   17003: "识别类型未找到",
   17004: "不支持的识别类型",
   17005: "服务调用失败",
-  9999: "其他错误",
+  9999: "其他错误，可进入设置页面切换其他API",
 };
 
 async function lookupYouDao(word) {
@@ -163,16 +163,18 @@ async function lookupYouDao(word) {
     const basic = response.basic;
     if (trans.length != 0) {
       let dataTitle = `<span class="translation">${trans.join(", ")}</span>`;
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
-      if (basic && basic.phonetic && basic.phonetic != "") {
-        if (basic["us-phonetic"] && basic["us-phonetic"] != "") {
-          dataTitle += `<span>英[${basic.phonetic}]</span>${phoneticEn}<span>美[${basic["us-phonetic"]}]</span>${phoneticUs}`;
+      if (speak) {
+        const phoneticEn = getPhoneticEn(word);
+        const phoneticUs = getPhoneticUs(word);
+        if (basic && basic.phonetic && basic.phonetic != "") {
+          if (basic["us-phonetic"] && basic["us-phonetic"] != "") {
+            dataTitle += `<span>英[${basic.phonetic}]</span>${phoneticEn}<span>美[${basic["us-phonetic"]}]</span>${phoneticUs}`;
+          } else {
+            dataTitle += `<span>[${basic.phonetic}]</span>${phoneticEn}`;
+          }
         } else {
-          dataTitle += `<span>[${basic.phonetic}]</span>${phoneticEn}`;
+          dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
         }
-      } else {
-        dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
       }
       data.push({ title: dataTitle, description: "翻译结果" });
     }

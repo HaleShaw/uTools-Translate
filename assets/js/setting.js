@@ -7,10 +7,6 @@ const options = {
     name: "有道移动版",
     api: "https://m.youdao.com/dict?le=eng&q=",
   },
-  youDaoWeb: {
-    name: "有道网页版",
-    api: "https://fanyi.youdao.com/translate?smartresult=dict&smartresult=rule",
-  },
   google: {
     name: "谷歌",
     api: "translate.google.cn",
@@ -53,7 +49,6 @@ const defaultAPI = Object.keys(options)[4];
 const defaultSpeak = true;
 
 // 设置窗口的高度。
-// const settingHeight = 135 + 29 * 11;
 const settingHeight = 544;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
@@ -62,7 +57,6 @@ function initSetting() {
   utools.setExpendHeight(settingHeight);
   loadConfiguration();
   addSpeakListener();
-  addLangListener();
   addSiteListener();
   addSettingBtnListener();
   addEyeListener();
@@ -216,7 +210,7 @@ function saveConfiguration() {
   utools.dbStorage.setItem("tencentAppSecret", tencentAppSecret);
   utools.dbStorage.setItem("caiYunToken", caiYunToken);
   hideSetting();
-  utools.showNotification(`切换为：${options[option]["name"]}成功！`);
+  utools.showNotification(`切换为${options[option]["name"]}成功！`);
 }
 
 /**
@@ -226,11 +220,15 @@ function addSpeakListener() {
   $("#setting>.speak>img").click(function () {
     speak = !speak;
     utools.dbStorage.setItem("speak", speak);
+    let speakStatus = "";
     if (speak) {
       $(this).attr("src", "./assets/images/speakOn.png");
+      speakStatus = "打开";
     } else {
       $(this).attr("src", "./assets/images/speakOff.png");
+      speakStatus = "关闭";
     }
+    utools.showNotification(`朗读已${speakStatus}！`);
   });
 }
 

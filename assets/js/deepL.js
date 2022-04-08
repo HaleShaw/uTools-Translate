@@ -47,9 +47,13 @@ async function lookupDeepL(word) {
       let beams = trans[i].beams;
       for (let j = 0; j < beams.length; j++) {
         if (i == 0 && j == 0) {
-          const phoneticEn = getPhoneticEn(word);
-          const phoneticUs = getPhoneticUs(word);
-          dataTitle = `<span class="translation">${beams[j].postprocessed_sentence}</span><span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+          let phoneticHtml = "";
+          if (speak) {
+            const phoneticEn = getPhoneticEn(word);
+            const phoneticUs = getPhoneticUs(word);
+            phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+          }
+          dataTitle = `<span class="translation">${beams[j].postprocessed_sentence}</span>${phoneticHtml}`;
         } else {
           dataTitle = beams[j].postprocessed_sentence;
         }

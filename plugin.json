@@ -10,7 +10,7 @@
   "features": [
     {
       "code": "translate_text",
-      "explain": "多语言翻译，音标朗读，句子朗读，多API切换，自动复制。",
+      "explain": "多语言翻译，音标朗读，句子朗读，多API切换，自动复制",
       "cmds": [
         "翻译",
         "translate",
@@ -24,7 +24,7 @@
     },
     {
       "code": "translate_setting",
-      "explain": "翻译设置，切换翻译API，设置朗读，设置翻译源语言和目标语言",
+      "explain": "翻译设置，切换翻译API，设置朗读",
       "cmds": [
         "翻译设置",
         "translate setting",

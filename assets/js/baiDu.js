@@ -41,12 +41,16 @@ async function lookupBaiDu(word) {
   if (!errorCode) {
     const trans = response.trans_result;
     if (trans && trans.length != 0) {
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
+      let phoneticHtml = "";
+      if (speak) {
+        const phoneticEn = getPhoneticEn(word);
+        const phoneticUs = getPhoneticUs(word);
+        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+      }
       for (let i = 0; i < trans.length; i++) {
         let dataTitle = `<span class="translation">${trans[i].dst}</span>`;
         if (i == 0) {
-          dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+          dataTitle += phoneticHtml;
         }
         data.push({
           title: dataTitle,

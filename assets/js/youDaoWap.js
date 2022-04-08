@@ -4,7 +4,9 @@ async function lookupYouDaoWap(word) {
   $.get(url, function (data) {
     pageFather.html("");
     pageFather.append($("<h1>" + word + "</h1>"));
-    pageFather.append(getPhonetic(data, word));
+    if (speak) {
+      pageFather.append(getPhonetic(data, word));
+    }
     pageFather.append(getParaphrase(data));
     pageFather.append(getTranslation(data));
     pageFather.append(getTransformation(data));

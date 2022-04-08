@@ -11,9 +11,13 @@ async function lookupXiaoNiu(word) {
   let resData = JSON.parse(response);
   const tran = resData?.tgt_text;
   if (tran) {
-    const phoneticEn = getPhoneticEn(word);
-    const phoneticUs = getPhoneticUs(word);
-    let dataTitle = `<span class="translation">${tran}</span><span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+    let phoneticHtml = "";
+    if (speak) {
+      const phoneticEn = getPhoneticEn(word);
+      const phoneticUs = getPhoneticUs(word);
+      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+    }
+    let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
     data.push({
       title: dataTitle,
       description: "基本释义",
@@ -21,7 +25,7 @@ async function lookupXiaoNiu(word) {
   } else {
     data.push({
       title: errTitle,
-      description: "翻译错误",
+      description: "翻译错误，可进入设置页面切换其他API",
     });
   }
   return data;

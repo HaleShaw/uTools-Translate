@@ -44,8 +44,8 @@ const errorCodeMsgTencent = {
   "FailedOperation.ServiceIsolate": "账号因为欠费停止服务，请在腾讯云账户充值。",
   "FailedOperation.UserNotRegistered": "服务未开通，请在腾讯云官网机器翻译控制台开通服务。",
   "InternalError.BackendTimeout": "后台服务超时，请稍后重试。",
-  "InternalError.ErrorUnknown": "未知错误。",
-  "InternalError.RequestFailed": "请求失败。",
+  "InternalError.ErrorUnknown": "未知错误。可进入设置页面切换其他API",
+  "InternalError.RequestFailed": "请求失败。可进入设置页面切换其他API",
   "InvalidParameter.DuplicatedSessionIdAndSeq": "重复的SessionUuid和Seq组合。",
   "InvalidParameter.SeqIntervalTooLarge": "Seq之间的间隙请不要大于2000。",
   "UnauthorizedOperation.ActionNotFound": "请填写正确的Action字段名称。",
@@ -151,9 +151,13 @@ async function lookupTencent(word) {
   const errorCode = response.Response?.Error?.Code;
   if (!errorCode) {
     const tran = response.Response.TargetText;
-    const phoneticEn = getPhoneticEn(word);
-    const phoneticUs = getPhoneticUs(word);
-    let dataTitle = `<span class="translation">${tran}</span><span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+    let phoneticHtml = "";
+    if (speak) {
+      const phoneticEn = getPhoneticEn(word);
+      const phoneticUs = getPhoneticUs(word);
+      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+    }
+    let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
     data.push({
       title: dataTitle,
       description: "基本释义",

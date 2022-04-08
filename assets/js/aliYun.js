@@ -13,7 +13,7 @@ const errorCodeMsgAliYun = {
   10011: "子账号服务失败",
   10012: "翻译服务调用失败",
   10013: "账号服务没有开通或者欠费",
-  9999: "其他错误",
+  9999: "其他错误，可进入设置页面切换其他API",
 };
 async function lookupAliYun(word) {
   let data = [];
@@ -66,9 +66,13 @@ async function lookupAliYun(word) {
   }
   const errorCode = res.Code;
   if (errorCode == "200") {
-    const phoneticEn = getPhoneticEn(word);
-    const phoneticUs = getPhoneticUs(word);
-    const dataTitle = `<span class="translation">${res.Data.Translated}</span><span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+    let phoneticHtml = "";
+    if (speak) {
+      const phoneticEn = getPhoneticEn(word);
+      const phoneticUs = getPhoneticUs(word);
+      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+    }
+    const dataTitle = `<span class="translation">${res.Data.Translated}</span>${phoneticHtml}`;
     data.push({
       title: dataTitle,
       description: "基本释义",

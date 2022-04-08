@@ -1,5 +1,5 @@
 const errorCodeMsgCaiYun = {
-  "API rate limit exceeded": "API请求太过频繁，请稍后再试",
+  "API rate limit exceeded": "API请求太过频繁，请稍后再试。可进入设置页面切换其他API。",
 };
 async function lookupCaiYun(word) {
   let data = [];
@@ -34,9 +34,13 @@ async function lookupCaiYun(word) {
   if (!message) {
     const tran = response?.target;
     if (tran) {
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
-      let dataTitle = `<span class="translation">${tran}</span><span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+      let phoneticHtml = "";
+      if (speak) {
+        const phoneticEn = getPhoneticEn(word);
+        const phoneticUs = getPhoneticUs(word);
+        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+      }
+      let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
         title: dataTitle,
         description: "基本释义",
