@@ -66,16 +66,7 @@ function loadConfiguration() {
   let option = utools.dbStorage.getItem("option");
   let radios = document.getElementsByName("service");
 
-  // It is possible that old settings have been abandoned.
-  let radioSetting = false;
-  for (let i = 0; i < radios.length; i++) {
-    if (radios[i].value == option) {
-      radioSetting = true;
-      break;
-    }
-  }
-
-  if (!option || option.error || !radioSetting) {
+  if (!option || option.error || Object.keys(options).indexOf(option) == -1) {
     // Choose the default API.
     option = defaultAPI;
     utools.dbStorage.setItem("option", option);
