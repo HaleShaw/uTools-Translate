@@ -64,12 +64,22 @@ function initSetting() {
 
 function loadConfiguration() {
   let option = utools.dbStorage.getItem("option");
-  if (!option || option.error) {
+  let radios = document.getElementsByName("service");
+
+  // It is possible that old settings have been abandoned.
+  let radioSetting = false;
+  for (let i = 0; i < radios.length; i++) {
+    if (radios[i].value == option) {
+      radioSetting = true;
+      break;
+    }
+  }
+
+  if (!option || option.error || !radioSetting) {
     // Choose the default API.
     option = defaultAPI;
     utools.dbStorage.setItem("option", option);
   }
-  let radios = document.getElementsByName("service");
   for (let i = 0; i < radios.length; i++) {
     if (radios[i].value == option) {
       radios[i].checked = true;
