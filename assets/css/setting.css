@@ -141,32 +141,36 @@
   float: left;
 }
 
-.detail input {
+.detail input,
+.lang select {
   font-size: 12px;
   padding: 0 4px;
   border-radius: 4px;
 }
 
-.detail input:focus {
+.detail input:focus,
+.lang select:focus {
   outline: none;
   border-color: #d94235;
 }
 
 @media (prefers-color-scheme: light) {
-  .detail input {
+  .detail input ,
+  .lang select{
     border: 1px solid #000;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  .detail input {
+  .detail input,
+  .lang select {
     color: #fff;
     background-color: #303133;
     border: 1px solid #767676;
   }
 }
 
-.lang .icon {
+.lang .exchange {
   vertical-align: middle;
   width: 18px;
   height: 18px;
@@ -174,21 +178,21 @@
 }
 
 @media (prefers-color-scheme: light) {
-  .lang .icon {
-    content: url(../images/eyeCloseBlack.png);
+  .lang .exchange {
+    content: url(../images/exchangeBlack.png);
   }
 
-  .lang .icon:hover{
+  .lang .exchange:hover{
     background-color: #eee;
   }
 }
 
 @media (prefers-color-scheme: dark) {
-  .lang .icon {
-    content: url(../images/eyeCloseBlack.png);
+  .lang .exchange {
+    content: url(../images/exchangeWhite.png);
   }
 
-  .lang .icon:hover{
+  .lang .exchange:hover{
     background-color: #666;
   }
 }

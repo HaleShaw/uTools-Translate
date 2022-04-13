@@ -278,6 +278,7 @@ function initSetting() {
   addSettingBtnListener();
   addEyeListener();
   addLangListener();
+  addExchangeListener();
 }
 
 function loadConfiguration() {
@@ -555,6 +556,19 @@ function changeBrother(thisValue, brother) {
       brother[0].selectedIndex = 1;
     }
   }
+}
+
+/**
+ * Add the exchange button listener.
+ */
+function addExchangeListener() {
+  $(".lang>.exchange").click(function () {
+    let sourceEle = $(".service.aliYun .lang>select.source");
+    let targetEle = $(".service.aliYun .lang>select.target");
+    let temp = sourceEle[0].selectedIndex;
+    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
+    targetEle[0].selectedIndex = temp;
+  });
 }
 
 function hideSetting() {
