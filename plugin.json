@@ -1,7 +1,7 @@
 {
   "pluginName": "翻译",
   "version": "3.1.3",
-  "description": "多语言翻译插件，支持多API切换、音标朗读、句子朗读、实时输入翻译、原生列表自动复制",
+  "description": "多语言翻译插件，支持多API切换、音标朗读、句子朗读、实时输入翻译、原生列表自动复制、语言设置",
   "author": "HaleShaw",
   "homepage": "https://github.com/HaleShaw/uTools-Translate",
   "main": "index.html",
@@ -24,7 +24,7 @@
     },
     {
       "code": "translate_setting",
-      "explain": "翻译设置，切换翻译API，设置朗读",
+      "explain": "翻译设置，切换翻译API，设置朗读，设置源语言和目标语言",
       "cmds": [
         "翻译设置",
         "translate setting",
