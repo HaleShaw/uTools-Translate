@@ -3,11 +3,11 @@
   max-width: 755px;
 }
 
-#setting > img.setting{
+#setting > img.setting {
   width: 24px;
   height: 24px;
   vertical-align: middle;
-  margin: -2px 5px 0 10px ;
+  margin: -2px 5px 0 10px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -106,7 +106,7 @@
   width: 180px;
 }
 
-.service .api label{
+.service .api label {
   cursor: pointer;
 }
 
@@ -139,6 +139,58 @@
 
 .service .detail {
   float: left;
+}
+
+.detail input {
+  font-size: 12px;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+.detail input:focus {
+  outline: none;
+  border-color: #d94235;
+}
+
+@media (prefers-color-scheme: light) {
+  .detail input {
+    border: 1px solid #000;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .detail input {
+    color: #fff;
+    background-color: #303133;
+    border: 1px solid #767676;
+  }
+}
+
+.lang .icon {
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+  .lang .icon {
+    content: url(../images/eyeCloseBlack.png);
+  }
+
+  .lang .icon:hover{
+    background-color: #eee;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .lang .icon {
+    content: url(../images/eyeCloseBlack.png);
+  }
+
+  .lang .icon:hover{
+    background-color: #666;
+  }
 }
 
 .comment {
@@ -192,29 +244,7 @@
 }
 
 .private input {
-  font-size: 12px;
-  padding: 0 4px;
   width: 300px;
-  border-radius: 4px;
-}
-
-.private input:focus {
-  outline: none;
-  border-color: #d94235;
-}
-
-@media (prefers-color-scheme: light) {
-  .private input {
-    border: 1px solid #000;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  .private input {
-    color: #fff;
-    background-color: #303133;
-    border: 1px solid #767676;
-  }
 }
 
 .eye {

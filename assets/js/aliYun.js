@@ -7,12 +7,13 @@ const errorCodeMsgAliYun = {
   10006: "语种识别失败",
   10007: "翻译失败",
   10008: "字符长度过长",
-  19999: "未知异常",
+  19999: "未知异常，可进入设置页面切换其他API",
   10009: "子账号没有权限",
   10010: "账号没有开通服务",
   10011: "子账号服务失败",
   10012: "翻译服务调用失败",
   10013: "账号服务没有开通或者欠费",
+  10033: "语种拼写错误",
   9999: "其他错误，可进入设置页面切换其他API",
 };
 async function lookupAliYun(word) {
@@ -29,12 +30,21 @@ async function lookupAliYun(word) {
     return data;
   }
 
+  let source = utools.dbStorage.getItem("aliYunSource") || "auto";
+  let target = utools.dbStorage.getItem("aliYunTarget") || "auto";
+  if ("auto" == source && "auto" == target) {
+    source = isChinese(word) ? "zh" : "en";
+    target = isChinese(word) ? "en" : "zh";
+  } else if ("auto" == target && "auto" != source) {
+    target = "zh" == source ? "en" : "zh";
+  }
+
   let param = {
     Action: "TranslateGeneral",
     FormatType: "text",
     Scene: "general",
-    SourceLanguage: isChinese(word) ? "zh" : "en",
-    TargetLanguage: isChinese(word) ? "en" : "zh",
+    SourceLanguage: source,
+    TargetLanguage: target,
     SourceText: encodeURIComponent(word),
   };
   const payload = JSON.stringify(param);
@@ -85,7 +95,7 @@ async function lookupAliYun(word) {
   } else {
     data.push({
       title: errTitle,
-      description: errorCodeMsgAliYun.errorCode ? errorCodeMsgAliYun.errorCode : errorCode,
+      description: errorCodeMsgAliYun[errorCode] ? errorCodeMsgAliYun[errorCode] : errorCode,
     });
   }
   return data;

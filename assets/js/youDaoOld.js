@@ -52,10 +52,9 @@ async function lookupYouDaoOld(word) {
       }
     }
   } else {
-    let errMsg = errorCodeMsgYouDaoOld[errorCode];
     data.push({
       title: errTitle,
-      description: errMsg,
+      description: errorCodeMsgYouDaoOld[errorCode],
     });
   }
   return data;

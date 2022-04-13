@@ -211,10 +211,9 @@ async function lookupYouDao(word) {
       }
     }
   } else {
-    let errMsg = errorCodeMsgYouDao[errorCode];
     data.push({
       title: errTitle,
-      description: errMsg,
+      description: errorCodeMsgYouDao[errorCode],
     });
   }
   return data;
