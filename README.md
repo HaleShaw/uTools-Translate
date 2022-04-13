@@ -28,6 +28,10 @@ uTools 插件 - 翻译
 
   ![translateSetting](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateSetting.png)
 
+- 语言设置
+
+  ![translateAliYun](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateAliYun.png)
+
 - 有道WAP API，页面模式
 
   ![translatePage](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translatePage.png)
@@ -55,6 +59,7 @@ uTools 插件 - 翻译
 - 支持自动翻译剪贴板文本
 - 支持单词变形
 - 支持自动即时查询
+- 支持源语言和目标语言设置
 - 支持暗黑模式
 
 ## API
