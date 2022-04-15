@@ -7,6 +7,17 @@ const options = {
     name: "有道移动版",
     api: "https://m.youdao.com/dict?le=eng&q=",
   },
+  youDaoFree: {
+    name: "有道免费版",
+    api: "http://fanyi.youdao.com/translate?doctype=json&type=",
+    langs: {
+      自动: "AUTO",
+      中文: "ZH_CN",
+      英语: "EN",
+      韩语: "KR",
+      日语: "JA",
+    },
+  },
   google: {
     name: "谷歌",
     api: "translate.google.cn",
@@ -261,7 +272,7 @@ const options = {
 };
 
 // Set the default API.
-const defaultAPI = Object.keys(options)[3];
+const defaultAPI = Object.keys(options)[4];
 
 const defaultSpeak = true;
 
@@ -369,6 +380,11 @@ function loadSpeak() {
 }
 
 function loadLang() {
+  loadLangAliYun();
+  loadLangYouDaoFree();
+}
+
+function loadLangAliYun() {
   let aliYunSource = utools.dbStorage.getItem("aliYunSource") || "auto";
   let aliYunTarget = utools.dbStorage.getItem("aliYunTarget") || "auto";
   utools.dbStorage.setItem("aliYunSource", aliYunSource);
@@ -390,6 +406,34 @@ function loadLang() {
   }
   for (let i = 0; i < targetElement.length; i++) {
     if (aliYunTarget == targetElement.options[i].value) {
+      targetElement.options[i].selected = true;
+      break;
+    }
+  }
+}
+
+function loadLangYouDaoFree() {
+  let youDaoFreeSource = utools.dbStorage.getItem("youDaoFreeSource") || "AUTO";
+  let youDaoFreeTarget = utools.dbStorage.getItem("youDaoFreeTarget") || "AUTO";
+  utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
+  utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
+  let names = Object.keys(options.youDaoFree.langs);
+  let htmlStr = "";
+  for (let i = 0; i < names.length; i++) {
+    htmlStr += `<option value=${options.youDaoFree.langs[names[i]]}>${names[i]}</option>`;
+  }
+  let sourceElement = document.querySelector(".service.youDaoFree .lang>select.source");
+  let targetElement = document.querySelector(".service.youDaoFree .lang>select.target");
+  sourceElement.innerHTML = htmlStr;
+  targetElement.innerHTML = htmlStr;
+  for (let i = 0; i < sourceElement.length; i++) {
+    if (youDaoFreeSource == sourceElement.options[i].value) {
+      sourceElement.options[i].selected = true;
+      break;
+    }
+  }
+  for (let i = 0; i < targetElement.length; i++) {
+    if (youDaoFreeTarget == targetElement.options[i].value) {
       targetElement.options[i].selected = true;
       break;
     }
@@ -470,6 +514,11 @@ function saveConfiguration() {
  * Save the configuration of language.
  */
 function saveLang() {
+  let youDaoFreeSource = $(".service.youDaoFree .lang>select.source").val();
+  let youDaoFreeTarget = $(".service.youDaoFree .lang>select.target").val();
+  utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
+  utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
+
   let sourceValue = $(".service.aliYun .lang>select.source").val();
   let targetValue = $(".service.aliYun .lang>select.target").val();
   utools.dbStorage.setItem("aliYunSource", sourceValue);
@@ -532,20 +581,25 @@ function addEyeListener() {
 }
 
 function addLangListener() {
+  addLangListenerAliYun();
+  addLangListenerYouDaoFree();
+}
+
+function addLangListenerAliYun() {
   $(".service.aliYun .lang>select.source").change(function () {
-    changeBrother($(this).val(), $(".service.aliYun .lang>select.target"));
+    changeBrotherAliYun($(this).val(), $(".service.aliYun .lang>select.target"));
   });
   $(".service.aliYun .lang>select.target").change(function () {
-    changeBrother($(this).val(), $(".service.aliYun .lang>select.source"));
+    changeBrotherAliYun($(this).val(), $(".service.aliYun .lang>select.source"));
   });
 }
 
 /**
- * Change the value of the brother select element.
+ * Change the value of the brother select element for AliYun.
  * @param {String} thisValue The value of the current select element.
  * @param {Object} brother The brother jquery object of the current select element.
  */
-function changeBrother(thisValue, brother) {
+function changeBrotherAliYun(thisValue, brother) {
   let brotherValue = brother.val();
   if ("mn" == thisValue || "yue" == thisValue || "zh-tw" == thisValue) {
     brother[0].selectedIndex = 2;
@@ -558,11 +612,51 @@ function changeBrother(thisValue, brother) {
   }
 }
 
+function addLangListenerYouDaoFree() {
+  $(".service.youDaoFree .lang>select.source").change(function () {
+    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.target"));
+  });
+  $(".service.youDaoFree .lang>select.target").change(function () {
+    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.source"));
+  });
+}
+
+/**
+ * Change the value of the brother select element for YouDaoFree.
+ * @param {String} thisValue The value of the current select element.
+ * @param {Object} brother The brother jquery object of the current select element.
+ */
+function changeBrotherYouDaoFree(thisValue, brother) {
+  switch (thisValue) {
+    case "AUTO":
+      brother[0].selectedIndex = 0;
+      break;
+    case "ZH_CN":
+      brother[0].selectedIndex = 2;
+      break;
+    case "EN":
+    case "KR":
+    case "JA":
+      brother[0].selectedIndex = 1;
+      break;
+    default:
+      break;
+  }
+}
+
 /**
  * Add the exchange button listener.
  */
 function addExchangeListener() {
-  $(".lang>.exchange").click(function () {
+  $(".service.youDaoFree .lang>.exchange").click(function () {
+    let sourceEle = $(".service.youDaoFree .lang>select.source");
+    let targetEle = $(".service.youDaoFree .lang>select.target");
+    let temp = sourceEle[0].selectedIndex;
+    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
+    targetEle[0].selectedIndex = temp;
+  });
+
+  $(".service.aliYun .lang>.exchange").click(function () {
     let sourceEle = $(".service.aliYun .lang>select.source");
     let targetEle = $(".service.aliYun .lang>select.target");
     let temp = sourceEle[0].selectedIndex;

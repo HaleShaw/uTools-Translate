@@ -78,6 +78,14 @@ uTools 插件 - 翻译
 
   属于移动端网页API，精准度不是非常高。
 
+- 有道翻译免费版
+
+  <http://fanyi.youdao.com>
+
+  翻译内容较少，仅有基本翻译。
+
+  支持中文与英、日、韩互译。
+
 - 谷歌
 
   <https://translate.google.cn>
