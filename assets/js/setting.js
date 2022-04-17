@@ -31,6 +31,10 @@ const options = {
     name: "DeepL",
     api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",
   },
+  bing: {
+    name: "必应",
+    api: "http://cn.bing.com/dict/search?q=",
+  },
   youDao: {
     name: "有道",
     api: "http://openapi.youdao.com/api",

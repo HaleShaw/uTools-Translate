@@ -104,6 +104,12 @@ uTools 插件 - 翻译
 
   国外API，响应相对较慢。
 
+- 必应
+
+  <http://cn.bing.com/dict>
+
+  必应词典，仅支持单词，不支持句子。
+
 - 有道翻译
 
   <http://openapi.youdao.com/api>
