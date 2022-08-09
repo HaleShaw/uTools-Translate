@@ -1,3 +1,5 @@
+const changeCase = parcelRequire('Focm').default;
+
 // 语音朗读API。
 var ttsApi = "https://dict.youdao.com/dictvoice?audio=";
 
@@ -187,6 +189,22 @@ function bindHotkey() {
   });
 }
 
+// 开发者模式变量命名
+function devModeHandle() {
+  const dev = utools.dbStorage.getItem("dev");
+  if (!dev) {
+    return;
+  }
+  const devCase = utools.dbStorage.getItem("devCase");
+  if (!devCase) {
+    return;
+  }
+  const translation = $(".list-item-title .translation");
+  if (translation) {
+    translation.text(changeCase[devCase](translation.text()));
+  }
+}
+
 function initList(data) {
   let contentFather = $("#root>.list").children(":first");
   contentFather.html("");
@@ -240,6 +258,7 @@ function initList(data) {
       list[i].setAttribute("title", getContent(title));
     }
   }
+  setTimeout(devModeHandle);
   addPhoneticListener();
 }
 

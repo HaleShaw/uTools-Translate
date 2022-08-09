@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/page.css" />
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/mousetrap.min.js"></script>
+    <script src="assets/js/change-case.min.js"></script>
   </head>
   <body>
     <div id="page"></div>
@@ -33,6 +34,20 @@
       <img class="setting" />
       <a class="title">翻译设置</a>
       <span id="msg"></span>
+      <div class="dev lang">
+        <a>开发者模式</a>
+        <img />
+        <select class="devSelect">
+          <option value="camelCase">小驼峰(camelCase)</option>
+          <option value="pascalCase">大驼峰(PascalCase)</option>
+          <option value="snakeCase">下划线(snake_case)</option>
+          <option value="paramCase">中横线(param-case)</option>
+          <option value="constantCase">常量(CONSTANT_CASE)</option>
+        </select>
+        <span class="comment">
+          适用于程序员变量命名，仅输出英文时生效。
+        </span>
+      </div>
       <div class="speak">
         <a>朗读</a>
         <img />

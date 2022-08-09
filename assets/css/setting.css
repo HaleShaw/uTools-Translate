@@ -32,21 +32,26 @@
   color: #d94235;
 }
 
-#setting > .speak {
+#setting > .speak, #setting > .dev {
   margin-top: 10px;
   padding-left: 10px;
 }
 
-#setting > .speak > img {
+#setting > .speak > img, #setting > .dev > img {
   vertical-align: middle;
   cursor: pointer;
   margin-left: 5px;
   margin-right: 1.5rem;
 }
 
+#setting > .dev > .devSelect {
+  margin-right: 1rem;
+}
+
 #services {
   margin-top: 10px;
-  max-height: 431px;
+  /* max-height: 431px; */
+  max-height: calc(431px - 35px);
   max-width: 755px;
   overflow-y: scroll;
   border-radius: 10px;
