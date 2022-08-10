@@ -286,16 +286,22 @@ const settingHeight = 544;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
+// 是否在完整退出插件后第一次进入
+let isFirstEnter = true;
+
 function initSetting() {
   utools.setExpendHeight(settingHeight);
   loadConfiguration();
-  addSpeakListener();
-  addDevListener();
-  addSiteListener();
-  addSettingBtnListener();
-  addEyeListener();
-  addLangListener();
-  addExchangeListener();
+  if (isFirstEnter) {
+    addSpeakListener();
+    addDevListener();
+    addSiteListener();
+    addSettingBtnListener();
+    addEyeListener();
+    addLangListener();
+    addExchangeListener();
+  }
+  isFirstEnter && (isFirstEnter = false);
 }
 
 function loadConfiguration() {

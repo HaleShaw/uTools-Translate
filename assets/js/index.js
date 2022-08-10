@@ -200,8 +200,9 @@ function devModeHandle() {
     return;
   }
   const translation = $(".list-item-title .translation");
-  if (translation) {
-    translation.text(changeCase[devCase](translation.text()));
+  const text = translation.text();
+  if (translation && /[a-zA-Z]/g.test(text)) {
+    translation.text(changeCase[devCase](text));
   }
 }
 
