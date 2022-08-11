@@ -50,7 +50,6 @@
 
 #services {
   margin-top: 10px;
-  /* max-height: 431px; */
   max-height: calc(431px - 35px);
   max-width: 755px;
   overflow-y: scroll;
