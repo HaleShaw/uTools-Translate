@@ -1,3 +1,5 @@
+const changeCase = parcelRequire('Focm').default;
+
 // 语音朗读API。
 var ttsApi = "https://dict.youdao.com/dictvoice?audio=";
 
@@ -21,6 +23,15 @@ const delayTime = 300;
 
 // 朗读配置。
 var speak;
+
+// 命名法中英map
+const devNameMap = {
+  camelCase: "小驼峰",
+  pascalCase: "大驼峰",
+  snakeCase: "下划线",
+  paramCase: "中横线",
+  constantCase: "常量",
+};
 
 utools.onPluginEnter(({ code, type, payload }) => {
   utools.setExpendHeight(0);
@@ -187,7 +198,22 @@ function bindHotkey() {
   });
 }
 
+// 开发者模式变量命名
+function devModeHandle(devCase) {
+  const translation = $(".list-item-title .translation:eq(0)");
+  const text = translation.text();
+  if (translation && /[a-zA-Z]/g.test(text)) {
+    translation.text(changeCase[devCase](text));
+  }
+}
+
 function initList(data) {
+  const dev = utools.dbStorage.getItem("dev");
+  const devCase = utools.dbStorage.getItem("devCase");
+  if (dev && devCase) {
+    const devItem = { ...data[0], description: `开发者模式：${devNameMap[devCase]}命名` };
+    data = [devItem, ...data];
+  }
   let contentFather = $("#root>.list").children(":first");
   contentFather.html("");
   for (let i = 0; i < data.length; i++) {
@@ -239,6 +265,9 @@ function initList(data) {
     if (title.scrollWidth > title.offsetWidth) {
       list[i].setAttribute("title", getContent(title));
     }
+  }
+  if (dev && devCase) {
+    setTimeout(() => devModeHandle(devCase));
   }
   addPhoneticListener();
 }

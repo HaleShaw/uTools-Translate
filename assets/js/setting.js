@@ -279,21 +279,29 @@ const options = {
 const defaultAPI = Object.keys(options)[3];
 
 const defaultSpeak = true;
+const defaultDev = false;
 
 // 设置窗口的高度。
 const settingHeight = 544;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
+// 是否在完整退出插件后第一次进入
+let isFirstEnter = true;
+
 function initSetting() {
   utools.setExpendHeight(settingHeight);
   loadConfiguration();
-  addSpeakListener();
-  addSiteListener();
-  addSettingBtnListener();
-  addEyeListener();
-  addLangListener();
-  addExchangeListener();
+  if (isFirstEnter) {
+    addSpeakListener();
+    addDevListener();
+    addSiteListener();
+    addSettingBtnListener();
+    addEyeListener();
+    addLangListener();
+    addExchangeListener();
+  }
+  isFirstEnter && (isFirstEnter = false);
 }
 
 function loadConfiguration() {
@@ -313,6 +321,7 @@ function loadConfiguration() {
   }
 
   loadSpeak();
+  loadDev();
   loadIdSecret();
   loadLang();
 }
@@ -380,6 +389,29 @@ function loadSpeak() {
     speakBtn.setAttribute("src", "./assets/images/speakOn.png");
   } else {
     speakBtn.setAttribute("src", "./assets/images/speakOff.png");
+  }
+}
+
+/**
+ * Load the configuration of dev.
+ */
+function loadDev() {
+  dev = utools.dbStorage.getItem("dev");
+  const devCase = utools.dbStorage.getItem("devCase") || "camelCase";
+  if (dev === null) {
+    // Choose the default dev setting.
+    dev = defaultDev;
+    utools.dbStorage.setItem("dev", dev);
+  }
+
+  let devBtn = document.querySelector("#setting>.dev>img");
+  const devSelect = document.querySelector("#setting>.dev>.devSelect");
+  $("#setting>.dev>.devSelect").val(devCase);
+  if (dev) {
+    devBtn.setAttribute("src", "./assets/images/speakOn.png");
+  } else {
+    devBtn.setAttribute("src", "./assets/images/speakOff.png");
+    devSelect.setAttribute("disabled", true);
   }
 }
 
@@ -545,6 +577,39 @@ function addSpeakListener() {
       speakStatus = "关闭";
     }
     utools.showNotification(`朗读已${speakStatus}！`);
+  });
+}
+
+// 保存devCase
+function setDevCase(value) {
+  utools.dbStorage.setItem("devCase", value);
+}
+
+/**
+ * Add the dev mode listener.
+ */
+function addDevListener() {
+  const devCase = utools.dbStorage.getItem("devCase");
+  const devSelect = document.querySelector("#setting>.dev>.devSelect");
+  devSelect.addEventListener("change", e => {
+    const { value } = e.target;
+    setDevCase(value);
+  });
+  $("#setting>.dev>img").click(function () {
+    dev = !dev;
+    utools.dbStorage.setItem("dev", dev);
+    let devStatus = "";
+    if (dev) {
+      $(this).attr("src", "./assets/images/speakOn.png");
+      devStatus = "打开";
+      devSelect.removeAttribute("disabled");
+      !devCase && setDevCase(devSelect.value);
+    } else {
+      $(this).attr("src", "./assets/images/speakOff.png");
+      devStatus = "关闭";
+      devSelect.setAttribute("disabled", true);
+    }
+    utools.showNotification(`开发者模式已${devStatus}！`);
   });
 }
 
