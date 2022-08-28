@@ -36,6 +36,10 @@ uTools 插件 - 翻译
 
   ![translatePage](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translatePage.png)
 
+- 变量模式
+
+  ![translateVariable](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateVariable.png)
+
 - 列表模式，暗黑模式
 
   ![translateListDark](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateListDark.png)
