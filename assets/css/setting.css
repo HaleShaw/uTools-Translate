@@ -32,25 +32,27 @@
   color: #d94235;
 }
 
-#setting > .speak, #setting > .dev {
+#setting > .speak,
+#setting > .variable {
   margin-top: 10px;
   padding-left: 10px;
 }
 
-#setting > .speak > img, #setting > .dev > img {
+#setting > .speak > img,
+#setting > .variable > img {
   vertical-align: middle;
   cursor: pointer;
   margin-left: 5px;
   margin-right: 1.5rem;
 }
 
-#setting > .dev > .devSelect {
+#setting > .variable > .variableSelect {
   margin-right: 1rem;
 }
 
 #services {
   margin-top: 10px;
-  max-height: calc(431px - 35px);
+  max-height: 396px;
   max-width: 755px;
   overflow-y: scroll;
   border-radius: 10px;
@@ -220,7 +222,6 @@
   transition-duration: 0.3s;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 2px -1px rgba(0, 0, 0, 0.5),
     0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  /* text-shadow: 0 1px 0 rgba(255,255,255, .9); */
 }
 
 #btnSave {

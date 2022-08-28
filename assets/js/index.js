@@ -25,13 +25,15 @@ const delayTime = 300;
 var speak;
 
 // 命名法中英map
-const devNameMap = {
+const variableNameMap = {
   camelCase: "小驼峰",
   pascalCase: "大驼峰",
   snakeCase: "下划线",
   paramCase: "中横线",
   constantCase: "常量",
 };
+
+const variableReg = /[^a-zA-Z\s]/g;
 
 utools.onPluginEnter(({ code, type, payload }) => {
   utools.setExpendHeight(0);
@@ -198,22 +200,29 @@ function bindHotkey() {
   });
 }
 
-// 开发者模式变量命名
-function devModeHandle(devCase) {
-  const translation = $(".list-item-title .translation:eq(0)");
-  const text = translation.text();
-  if (translation && /[a-zA-Z]/g.test(text)) {
-    translation.text(changeCase[devCase](text));
+/**
+ * 将全为英文的翻译结果按照变量格式化。
+ * @param {Array} data data array.
+ */
+function formatVariableCase(data) {
+  const dev = utools.dbStorage.getItem("variable");
+  const variableCase = utools.dbStorage.getItem("variableCase");
+  text = data[0]["title"];
+  if (dev && variableCase && text) {
+    const tempDom = new DOMParser().parseFromString(text, 'text/html');
+    translationValue = tempDom.querySelector(".translation").innerText;
+    if (!variableReg.test(translationValue)) {
+      variableValue = {
+        title: changeCase[variableCase](translationValue),
+        description: `变量模式：${variableNameMap[variableCase]}`,
+      };
+      data.unshift(variableValue);
+    }
   }
 }
 
 function initList(data) {
-  const dev = utools.dbStorage.getItem("dev");
-  const devCase = utools.dbStorage.getItem("devCase");
-  if (dev && devCase) {
-    const devItem = { ...data[0], description: `开发者模式：${devNameMap[devCase]}命名` };
-    data = [devItem, ...data];
-  }
+  formatVariableCase(data);
   let contentFather = $("#root>.list").children(":first");
   contentFather.html("");
   for (let i = 0; i < data.length; i++) {
@@ -265,9 +274,6 @@ function initList(data) {
     if (title.scrollWidth > title.offsetWidth) {
       list[i].setAttribute("title", getContent(title));
     }
-  }
-  if (dev && devCase) {
-    setTimeout(() => devModeHandle(devCase));
   }
   addPhoneticListener();
 }

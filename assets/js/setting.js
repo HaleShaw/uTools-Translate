@@ -279,14 +279,14 @@ const options = {
 const defaultAPI = Object.keys(options)[3];
 
 const defaultSpeak = true;
-const defaultDev = false;
+const defaultVariable = false;
 
 // 设置窗口的高度。
 const settingHeight = 544;
 
 const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
-// 是否在完整退出插件后第一次进入
+// 是否在完整退出插件后第一次进入。
 let isFirstEnter = true;
 
 function initSetting() {
@@ -294,7 +294,7 @@ function initSetting() {
   loadConfiguration();
   if (isFirstEnter) {
     addSpeakListener();
-    addDevListener();
+    addVariableListener();
     addSiteListener();
     addSettingBtnListener();
     addEyeListener();
@@ -321,7 +321,7 @@ function loadConfiguration() {
   }
 
   loadSpeak();
-  loadDev();
+  loadVariable();
   loadIdSecret();
   loadLang();
 }
@@ -393,25 +393,25 @@ function loadSpeak() {
 }
 
 /**
- * Load the configuration of dev.
+ * Load the configuration of variable.
  */
-function loadDev() {
-  dev = utools.dbStorage.getItem("dev");
-  const devCase = utools.dbStorage.getItem("devCase") || "camelCase";
-  if (dev === null) {
-    // Choose the default dev setting.
-    dev = defaultDev;
-    utools.dbStorage.setItem("dev", dev);
+function loadVariable() {
+  variable = utools.dbStorage.getItem("variable");
+  const variableCase = utools.dbStorage.getItem("variableCase") || "camelCase";
+  if (variable === null) {
+    // Choose the default variable setting.
+    variable = defaultVariable;
+    utools.dbStorage.setItem("variable", variable);
   }
 
-  let devBtn = document.querySelector("#setting>.dev>img");
-  const devSelect = document.querySelector("#setting>.dev>.devSelect");
-  $("#setting>.dev>.devSelect").val(devCase);
-  if (dev) {
-    devBtn.setAttribute("src", "./assets/images/speakOn.png");
+  let variableBtn = document.querySelector("#setting>.variable>img");
+  const variableSelect = document.querySelector("#setting>.variable>.variableSelect");
+  $("#setting>.variable>.variableSelect").val(variableCase);
+  if (variable) {
+    variableBtn.setAttribute("src", "./assets/images/speakOn.png");
   } else {
-    devBtn.setAttribute("src", "./assets/images/speakOff.png");
-    devSelect.setAttribute("disabled", true);
+    variableBtn.setAttribute("src", "./assets/images/speakOff.png");
+    variableSelect.setAttribute("disabled", true);
   }
 }
 
@@ -580,36 +580,31 @@ function addSpeakListener() {
   });
 }
 
-// 保存devCase
-function setDevCase(value) {
-  utools.dbStorage.setItem("devCase", value);
-}
-
 /**
- * Add the dev mode listener.
+ * Add the variable mode listener.
  */
-function addDevListener() {
-  const devCase = utools.dbStorage.getItem("devCase");
-  const devSelect = document.querySelector("#setting>.dev>.devSelect");
-  devSelect.addEventListener("change", e => {
+function addVariableListener() {
+  const variableCase = utools.dbStorage.getItem("variableCase");
+  const variableSelect = document.querySelector("#setting>.variable>.variableSelect");
+  variableSelect.addEventListener("change", e => {
     const { value } = e.target;
-    setDevCase(value);
+    utools.dbStorage.setItem("variableCase", value);
   });
-  $("#setting>.dev>img").click(function () {
-    dev = !dev;
-    utools.dbStorage.setItem("dev", dev);
-    let devStatus = "";
-    if (dev) {
+  $("#setting>.variable>img").click(function () {
+    variable = !variable;
+    utools.dbStorage.setItem("variable", variable);
+    let variableStatus = "";
+    if (variable) {
       $(this).attr("src", "./assets/images/speakOn.png");
-      devStatus = "打开";
-      devSelect.removeAttribute("disabled");
-      !devCase && setDevCase(devSelect.value);
+      variableStatus = "打开";
+      variableSelect.removeAttribute("disabled");
+      !variableCase && utools.dbStorage.setItem("variableCase", variableSelect.value);
     } else {
       $(this).attr("src", "./assets/images/speakOff.png");
-      devStatus = "关闭";
-      devSelect.setAttribute("disabled", true);
+      variableStatus = "关闭";
+      variableSelect.setAttribute("disabled", true);
     }
-    utools.showNotification(`开发者模式已${devStatus}！`);
+    utools.showNotification(`变量模式已${variableStatus}！`);
   });
 }
 
