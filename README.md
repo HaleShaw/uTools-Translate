@@ -168,3 +168,13 @@ uTools 插件 - 翻译
 - [myDictionary-uToolsPlugin](https://github.com/vst93/myDictionary-uToolsPlugin)
 
   借用[作者](https://github.com/vst93)提供的HTML解析方式，感谢！
+
+## Contributors
+
+[![HandsomeWalker](https://avatars.githubusercontent.com/u/21039404?s=64&v=4)HandsomeWalker](https://github.com/HandsomeWalker)
+
+## License
+
+Copyright (c) 2021-present, HaleShaw.
+
+The project is licensed under the [GNU General Public License v3.0](https://github.com/HaleShaw/uTools-Translate/blob/main/LICENSE).
