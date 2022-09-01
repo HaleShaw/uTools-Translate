@@ -98,6 +98,7 @@ async function switchApi(word) {
     $("#root").addClass("hide");
     $("#setting").addClass("hide");
     $("#page").removeClass("hide");
+    bindPhoneticHotkey();
     await lookupYouDaoWap(word);
   } else if (
     option == Object.keys(options)[0] ||
@@ -197,6 +198,19 @@ function bindHotkey() {
   });
   Mousetrap.bind("alt+0", () => {
     copyItemContent(9);
+  });
+  bindPhoneticHotkey();
+}
+
+/**
+ * Bind the hotkey for reading aloud.
+ */
+function bindPhoneticHotkey() {
+  Mousetrap.bind("alt+s", () => {
+    playPhonetic(0);
+  });
+  Mousetrap.bind("alt+d", () => {
+    playPhonetic(1);
   });
 }
 
@@ -389,5 +403,25 @@ function addPhoneticListener() {
     $(phonetics[i]).mouseover(function () {
       phonetics[i].children[0].play();
     });
+  }
+}
+
+/**
+ * Play the phonetic by element index.
+ * While the index is 0, then play the English phonetic.
+ * While the index is 1, then play the American English phonetic.
+ * @param {Number} index The phonetic element index number. 0, 1.
+ */
+function playPhonetic(index) {
+  let phonetics = document.querySelectorAll(".phonetic>audio");
+  let len = phonetics.length;
+  if ((len > 0 && index == 0) || (len == 2 && index == 1)) {
+    phonetics[index].play();
+    return;
+  }
+  let pagePhonetics = document.querySelectorAll(".pageBtn>audio");
+  let pageLen = pagePhonetics.length;
+  if ((pageLen > 0 && index == 0) || (pageLen == 2 && index == 1)) {
+    pagePhonetics[index].play();
   }
 }
