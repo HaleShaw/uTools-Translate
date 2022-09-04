@@ -24,7 +24,7 @@ const delayTime = 300;
 // 朗读配置。
 var speak;
 
-// 命名法中英map
+// 变量模式中，各模式方法名中英map，key不可随意更换，需要与引用包中方法名一致
 const variableNameMap = {
   camelCase: "小驼峰",
   pascalCase: "大驼峰",

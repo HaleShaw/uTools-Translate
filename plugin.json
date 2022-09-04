@@ -1,6 +1,6 @@
 {
   "pluginName": "翻译",
-  "version": "3.1.8",
+  "version": "3.1.9",
   "description": "多语言翻译插件，支持多API切换、音标朗读、句子朗读、实时输入翻译、原生列表自动复制、语言设置、变量命名",
   "author": "HaleShaw",
   "homepage": "https://github.com/HaleShaw/uTools-Translate",
@@ -18,6 +18,11 @@
         {
           "type": "over",
           "label": "翻译",
+          "maxLength": 5000
+        },
+        {
+          "type": "over",
+          "label": "tr",
           "maxLength": 5000
         }
       ]
