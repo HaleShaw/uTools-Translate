@@ -9,8 +9,8 @@ var defaultItem;
 // 单个列表高度。
 const itemHeight = 48;
 
-// 整个窗口最大高度。
-const maxHeight = itemHeight * 10;
+// 列表模式下列表最多行数。
+const maxItemCount = 10;
 
 // 延时ID。
 let delayId = null;
@@ -252,7 +252,7 @@ function initList(data) {
     </div>`);
     contentFather.append(item);
   }
-  let height = data.length * 48;
+  let height = (data.length > maxItemCount ? maxItemCount : data.length) * 48;
   utools.setExpendHeight(height);
   if (data.length == 0) {
     return;
@@ -373,7 +373,21 @@ function copyItemContent(id) {
     return;
   }
 
-  copyExit(list[id]);
+  // When the page has scrolling, the first element in the visual window is not really the first element.
+  // So we should find out the actual index.
+  // The method of JavaScript is not right, we should use JQuery to get the top offset.
+  // ().offsetTop has some problem.
+  // $().offset().top
+  let firstIndex = 0;
+  for (let i = 0; i < list.length; i++) {
+    if (-24 < $(list[i]).offset().top && $(list[i]).offset().top < 24) {
+      firstIndex = i;
+      break;
+    }
+  }
+  let index = firstIndex + id;
+
+  copyExit(list[index]);
 }
 
 function updatePhonetic(ele) {
