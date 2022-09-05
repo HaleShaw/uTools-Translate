@@ -9,8 +9,8 @@ var defaultItem;
 // 单个列表高度。
 const itemHeight = 48;
 
-// 列表模式下列表最多行数。
-const maxItemCount = 10;
+// 整个窗口最大高度。
+const maxHeight = itemHeight * 10;
 
 // 延时ID。
 let delayId = null;
@@ -252,7 +252,7 @@ function initList(data) {
     </div>`);
     contentFather.append(item);
   }
-  let height = (data.length > maxItemCount ? maxItemCount : data.length) * 48;
+  let height = data.length * itemHeight > maxHeight ? maxHeight : data.length * itemHeight;
   utools.setExpendHeight(height);
   if (data.length == 0) {
     return;
