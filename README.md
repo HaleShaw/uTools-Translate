@@ -10,6 +10,8 @@ uTools 插件 - 翻译
 
 <video src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.mp4" controls="controls" width="1104" height="748"></video>
 
+<iframe height=1104 width=748 src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.mp4">
+
 ![Translate](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.gif)
 
 ## Screenshots
