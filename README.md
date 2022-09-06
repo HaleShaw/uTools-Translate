@@ -8,7 +8,7 @@ uTools 插件 - 翻译
 
 **朗读功能为朗读输入框中的内容，而非翻译结果。**
 
-<video src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.mp4"></video>
+<video src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.mp4" controls="controls" width="1104" height="748"></video>
 
 ![Translate](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.gif)
 
