@@ -276,7 +276,7 @@ const options = {
 };
 
 // Set the default API.
-const defaultAPI = Object.keys(options)[3];
+const defaultAPI = Object.keys(options)[2];
 
 const defaultSpeak = true;
 const defaultVariable = false;

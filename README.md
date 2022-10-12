@@ -92,11 +92,11 @@ uTools 插件 - 翻译
 
   支持中文与英、日、韩互译。
 
-- 谷歌
+- ~~谷歌~~
 
-  <https://translate.google.cn>
+  ~~<https://translate.google.cn>~~
 
-  翻译内容较少，仅有基本翻译。
+  ~~翻译内容较少，仅有基本翻译。~~
 
 - 小牛
 

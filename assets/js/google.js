@@ -16,7 +16,17 @@ async function lookupGoogle(word) {
     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
   };
   const response = await window.doPost(api, path, headers, param);
-  var transData = JSON.parse(JSON.parse(response.match(/\[{2}.*\]{2}/g)[0])[0][2]);
+  let transData;
+  try {
+    transData = JSON.parse(JSON.parse(response.match(/\[{2}.*\]{2}/g)[0])[0][2]);
+  } catch (error) {
+    console.error(error);
+    data.push({
+      title: errTitle,
+      description: '翻译错误',
+    });
+    return data;
+  }
   console.debug(transData);
   var transList = transData[1][0][0][5];
   let trans = [];
