@@ -1,15 +1,17 @@
 const https = require("https");
 const crypto = require("crypto");
+var HttpsProxyAgent = require("https-proxy-agent");
 
 /**
  *
  * @param {String} host host.
  * @param {String} path path.
+ * @param {Object} agent The proxy agent.
  * @param {Object} headers headers.
  * @param {String} payload request data.
  * @returns
  */
-window.doPost = function (host, path, headers, payload) {
+window.doPost = function (host, path, agent, headers, payload) {
   return new Promise((resolve, reject) => {
     let req = https.request(
       {
@@ -17,6 +19,7 @@ window.doPost = function (host, path, headers, payload) {
         port: 443,
         path: path,
         method: "POST",
+        agent: agent,
         headers: headers,
       },
       res => {
@@ -37,6 +40,16 @@ window.doPost = function (host, path, headers, payload) {
     req.write(payload);
     req.end();
   });
+};
+
+/**
+ * Create the proxy agent.
+ * @param {String} host The proxy host address.
+ * @param {String} port The proxy port.
+ * @returns
+ */
+window.createAgent = function (host, port) {
+  return new HttpsProxyAgent(`${host}:${port}`);
 };
 
 window.base64 = function (str) {

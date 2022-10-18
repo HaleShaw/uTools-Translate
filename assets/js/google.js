@@ -11,11 +11,12 @@ async function lookupGoogle(word) {
       ])
     );
   const headers = {
-    Referer: "https://translate.google.cn/",
+    Referer: "https://translate.google.com/",
     "Cache-Control": "max-age=0",
     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
   };
-  const response = await window.doPost(api, path, headers, param);
+  let agent = getAgent();
+  const response = await window.doPost(api, path, agent, headers, param);
   let transData;
   try {
     transData = JSON.parse(JSON.parse(response.match(/\[{2}.*\]{2}/g)[0])[0][2]);
@@ -71,4 +72,18 @@ async function lookupGoogle(word) {
     }
   }
   return data;
+}
+
+/**
+ * Get the HttpsProxyAgent by proxy host and port.
+ * @returns HttpsProxyAgent.
+ */
+function getAgent() {
+  let proxyHost = utools.dbStorage.getItem("proxyHost");
+  let proxyPort = utools.dbStorage.getItem("proxyPort");
+  let agent = null;
+  if (proxyHost && '' != proxyHost && proxyPort && proxyPort != '') {
+    agent = window.createAgent(proxyHost, proxyPort);
+  }
+  return agent;
 }

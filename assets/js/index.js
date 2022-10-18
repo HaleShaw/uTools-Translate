@@ -81,9 +81,7 @@ function delayLookUp(timeout, word) {
 
 async function switchApi(word) {
   let option = utools.dbStorage.getItem("option");
-  if (!option || option.error || Object.keys(options).indexOf(option) == -1
-    // Block the unavailable API: Google
-    || Object.keys(options)[3] == option) {
+  if (!option || option.error || Object.keys(options).indexOf(option) == -1) {
     // Choose the default API.
     option = defaultAPI;
     utools.dbStorage.setItem("option", option);

@@ -52,6 +52,14 @@
         <span class="comment">
           朗读输入框中内容，以英式(Alt+S)和美式(Alt+D)口音朗读，内容为英文效果最佳。
         </span>
+      </div>
+      <div class="proxy">
+        <a>代理</a>
+        <span class="comment">地址</span>
+        <input id="proxyHost" class="secret" name="proxyHost" type="text" value="" />
+        <span class="comment">端口</span>
+        <input id="proxyPort" class="secret" name="proxyPort" type="text" value="" />
+        <span class="comment">代理为HTTP，非Socket</span>
         <span class="buttons">
           <button id="btnClose">取消</button>
           <button id="btnSave">保存</button>
@@ -104,13 +112,13 @@
         <div class="service google">
           <div class="api">
             <label>
-              <input name="service" type="radio" value="google" disabled="true" />
+              <input name="service" type="radio" value="google" />
               <img src="./assets/images/icon/google.png" />
-              <span style="text-decoration: line-through">谷歌</span>
+              <span>谷歌</span>
             </label>
           </div>
           <div class="detail">
-            <a class="comment">（内置）国内已无法使用，后期若不能恢复可能会关掉此API</a>
+            <a class="comment">（内置）不太稳定。若不能直接访问谷歌，请设置代理</a>
           </div>
         </div>
         <div class="service xiaoNiu">

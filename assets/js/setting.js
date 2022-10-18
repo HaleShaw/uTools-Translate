@@ -20,7 +20,7 @@ const options = {
   },
   google: {
     name: "谷歌",
-    api: "translate.google.cn",
+    api: "translate.google.com",
     path: "/_/TranslateWebserverUi/data/batchexecute",
   },
   xiaoNiu: {
@@ -322,6 +322,7 @@ function loadConfiguration() {
 
   loadSpeak();
   loadVariable();
+  loadProxy();
   loadIdSecret();
   loadLang();
 }
@@ -415,6 +416,20 @@ function loadVariable() {
   }
 }
 
+/**
+ * Load the configuration of proxy.
+ */
+function loadProxy() {
+  let proxyHost = utools.dbStorage.getItem("proxyHost");
+  if (proxyHost) {
+    document.getElementById('proxyHost').value = proxyHost;
+  }
+  let proxyPort = utools.dbStorage.getItem("proxyPort");
+  if (proxyPort) {
+    document.getElementById('proxyPort').value = proxyPort;
+  }
+}
+
 function loadLang() {
   loadLangAliYun();
   loadLangYouDaoFree();
@@ -479,15 +494,15 @@ function loadLangYouDaoFree() {
 function saveConfiguration() {
   let option = $("input[name=service]:checked").val() || Object.keys(options)[0];
 
-  const youDaoAppId = document.getElementById("youDaoAppId").value;
-  const youDaoAppSecret = document.getElementById("youDaoAppSecret").value;
-  const baiDuAppId = document.getElementById("baiDuAppId").value;
-  const baiDuAppSecret = document.getElementById("baiDuAppSecret").value;
-  const aliYunAppId = document.getElementById("aliYunAppId").value;
-  const aliYunAppSecret = document.getElementById("aliYunAppSecret").value;
-  const tencentAppId = document.getElementById("tencentAppId").value;
-  const tencentAppSecret = document.getElementById("tencentAppSecret").value;
-  const caiYunToken = document.getElementById("caiYunToken").value;
+  const youDaoAppId = document.getElementById("youDaoAppId").value.trim();
+  const youDaoAppSecret = document.getElementById("youDaoAppSecret").value.trim();
+  const baiDuAppId = document.getElementById("baiDuAppId").value.trim();
+  const baiDuAppSecret = document.getElementById("baiDuAppSecret").value.trim();
+  const aliYunAppId = document.getElementById("aliYunAppId").value.trim();
+  const aliYunAppSecret = document.getElementById("aliYunAppSecret").value.trim();
+  const tencentAppId = document.getElementById("tencentAppId").value.trim();
+  const tencentAppSecret = document.getElementById("tencentAppSecret").value.trim();
+  const caiYunToken = document.getElementById("caiYunToken").value.trim();
   let saveFailed = false;
   switch (option) {
     case "youDao":
@@ -542,8 +557,9 @@ function saveConfiguration() {
   utools.dbStorage.setItem("tencentAppSecret", tencentAppSecret);
   utools.dbStorage.setItem("caiYunToken", caiYunToken);
   saveLang();
+  saveProxy();
   hideSetting();
-  utools.showNotification(`切换为${options[option]["name"]}成功！`);
+  utools.showNotification(`保存成功！`);
 }
 
 /**
@@ -559,6 +575,16 @@ function saveLang() {
   let targetValue = $(".service.aliYun .lang>select.target").val();
   utools.dbStorage.setItem("aliYunSource", sourceValue);
   utools.dbStorage.setItem("aliYunTarget", targetValue);
+}
+
+/**
+ * Save the configuration of proxy.
+ */
+function saveProxy() {
+  const proxyHost = document.getElementById('proxyHost').value.trim();
+  const proxyPort = document.getElementById('proxyPort').value.trim();
+  utools.dbStorage.setItem("proxyHost", proxyHost);
+  utools.dbStorage.setItem("proxyPort", proxyPort);
 }
 
 /**
