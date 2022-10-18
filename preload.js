@@ -1,7 +1,8 @@
 const https = require("https");
 const crypto = require("crypto");
-var HttpsProxyAgent = require("https-proxy-agent");
-
+const HttpsProxyAgent = require("https-proxy-agent");
+const fs = require("fs");
+const path = require('path');
 /**
  *
  * @param {String} host host.
@@ -50,6 +51,23 @@ window.doPost = function (host, path, agent, headers, payload) {
  */
 window.createAgent = function (host, port) {
   return new HttpsProxyAgent(`${host}:${port}`);
+};
+
+/**
+ * Get the version of the plugin.
+ * @returns version string.
+ */
+window.getVersion = function () {
+  const filePath = path.join(__dirname, 'plugin.json');
+  const text = fs.readFileSync(filePath);
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (error) {
+    console.error(error);
+    return '';
+  }
+  return `v${data?.version}`;
 };
 
 window.base64 = function (str) {

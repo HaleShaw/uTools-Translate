@@ -33,6 +33,7 @@
     <div id="setting" class="hide">
       <img class="setting" />
       <a class="title">翻译设置</a>
+      <span id="pluginVersion"></span>
       <span id="msg"></span>
       <div class="variable lang">
         <a>变量模式</a>
@@ -55,11 +56,11 @@
       </div>
       <div class="proxy">
         <a>代理</a>
-        <span class="comment">地址</span>
-        <input id="proxyHost" class="secret" name="proxyHost" type="text" value="" />
-        <span class="comment">端口</span>
-        <input id="proxyPort" class="secret" name="proxyPort" type="text" value="" />
-        <span class="comment">代理为HTTP，非Socket</span>
+        <span class="comment">地址：</span>
+        <input id="proxyHost" type="text" value="" />
+        <span class="comment">端口：</span>
+        <input id="proxyPort" type="text" value="" />
+        <span class="comment">HTTP代理，非Socket</span>
         <span class="buttons">
           <button id="btnClose">取消</button>
           <button id="btnSave">保存</button>

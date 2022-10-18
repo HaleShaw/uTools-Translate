@@ -320,11 +320,19 @@ function loadConfiguration() {
     }
   }
 
+  loadVersion();
   loadSpeak();
   loadVariable();
   loadProxy();
   loadIdSecret();
   loadLang();
+}
+
+/**
+ * Load the version of the plugin.
+ */
+function loadVersion() {
+  $('#pluginVersion').text(window.getVersion());
 }
 
 function loadIdSecret() {

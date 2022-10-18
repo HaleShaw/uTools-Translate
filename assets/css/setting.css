@@ -14,17 +14,29 @@
   #setting > img.setting {
     content: url(../images/settingBlack.png);
   }
+
+  #pluginVersion {
+    color: #333333;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
   #setting > img.setting {
     content: url(../images/settingWhite.png);
   }
+
+  #pluginVersion {
+    color: #ffffff;
+  }
 }
 
 #setting > .title {
   font-weight: bold;
   font-size: 1.125rem;
+}
+
+#pluginVersion {
+  margin: 0 5px;
 }
 
 #msg {
@@ -49,6 +61,10 @@
 
 #setting > .proxy > .comment {
   margin-left: 1.25rem;
+}
+
+#proxyPort {
+  width: 60px;
 }
 
 #setting > .variable > .variableSelect {
@@ -153,28 +169,32 @@
 }
 
 .detail input,
-.lang select {
+.lang select,
+.proxy input {
   font-size: 12px;
   padding: 0 4px;
   border-radius: 4px;
 }
 
 .detail input:focus,
-.lang select:focus {
+.lang select:focus,
+.proxy input:focus {
   outline: none;
-  border-color: #d94235;
+  border-color: #aa3333;
 }
 
 @media (prefers-color-scheme: light) {
-  .detail input ,
-  .lang select{
+  .detail input,
+  .lang select,
+  .proxy input {
     border: 1px solid #000;
   }
 }
 
 @media (prefers-color-scheme: dark) {
   .detail input,
-  .lang select {
+  .lang select,
+  .proxy input {
     color: #fff;
     background-color: #303133;
     border: 1px solid #767676;
@@ -193,7 +213,7 @@
     content: url(../images/exchangeBlack.png);
   }
 
-  .lang .exchange:hover{
+  .lang .exchange:hover {
     background-color: #eee;
   }
 }
@@ -203,7 +223,7 @@
     content: url(../images/exchangeWhite.png);
   }
 
-  .lang .exchange:hover{
+  .lang .exchange:hover {
     background-color: #666;
   }
 }
