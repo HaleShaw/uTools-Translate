@@ -18,14 +18,14 @@ const options = {
       日语: "JA",
     },
   },
+  googleAPI: {
+    name: "谷歌",
+    api: "https://translate.googleapis.com/translate_a/single?client=gtx&ie=UTF-8&oe=UTF-8&dt=bd&dt=t&sl=auto",
+  },
   google: {
     name: "谷歌",
     api: "translate.google.com",
     path: "/_/TranslateWebserverUi/data/batchexecute",
-  },
-  xiaoNiu: {
-    name: "小牛",
-    api: "https://test.niutrans.com/NiuTransServer/testaligntrans",
   },
   deepL: {
     name: "DeepL",
@@ -332,7 +332,7 @@ function loadConfiguration() {
  * Load the version of the plugin.
  */
 function loadVersion() {
-  $('#pluginVersion').text(window.getVersion());
+  $("#pluginVersion").text(window.getVersion());
 }
 
 function loadIdSecret() {
@@ -430,11 +430,11 @@ function loadVariable() {
 function loadProxy() {
   let proxyHost = utools.dbStorage.getItem("proxyHost");
   if (proxyHost) {
-    document.getElementById('proxyHost').value = proxyHost;
+    document.getElementById("proxyHost").value = proxyHost;
   }
   let proxyPort = utools.dbStorage.getItem("proxyPort");
   if (proxyPort) {
-    document.getElementById('proxyPort').value = proxyPort;
+    document.getElementById("proxyPort").value = proxyPort;
   }
 }
 
@@ -589,8 +589,8 @@ function saveLang() {
  * Save the configuration of proxy.
  */
 function saveProxy() {
-  const proxyHost = document.getElementById('proxyHost').value.trim();
-  const proxyPort = document.getElementById('proxyPort').value.trim();
+  const proxyHost = document.getElementById("proxyHost").value.trim();
+  const proxyPort = document.getElementById("proxyPort").value.trim();
   utools.dbStorage.setItem("proxyHost", proxyHost);
   utools.dbStorage.setItem("proxyPort", proxyPort);
 }

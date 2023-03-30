@@ -1,4 +1,4 @@
-const changeCase = parcelRequire('Focm').default;
+const changeCase = parcelRequire("Focm").default;
 
 // 语音朗读API。
 var ttsApi = "https://dict.youdao.com/dictvoice?audio=";
@@ -110,7 +110,8 @@ async function switchApi(word) {
     option == Object.keys(options)[7] ||
     option == Object.keys(options)[8] ||
     option == Object.keys(options)[9] ||
-    option == Object.keys(options)[10]
+    option == Object.keys(options)[10] ||
+    option == Object.keys(options)[11]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -125,10 +126,10 @@ async function switchApi(word) {
         data = await lookupYouDaoFree(word);
         break;
       case Object.keys(options)[3]:
-        data = await lookupGoogle(word);
+        data = await lookupGoogleAPI(word);
         break;
       case Object.keys(options)[4]:
-        data = await lookupXiaoNiu(word);
+        data = await lookupGoogle(word);
         break;
       case Object.keys(options)[5]:
         data = await lookupDeepL(word);
@@ -223,7 +224,7 @@ function formatVariableCase(data) {
   const variableCase = utools.dbStorage.getItem("variableCase");
   text = data[0]["title"];
   if (dev && variableCase && text) {
-    const tempDom = new DOMParser().parseFromString(text, 'text/html');
+    const tempDom = new DOMParser().parseFromString(text, "text/html");
     translationValue = tempDom.querySelector(".translation").innerText;
     if (!variableReg.test(translationValue)) {
       variableValue = {

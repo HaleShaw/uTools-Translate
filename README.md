@@ -54,113 +54,73 @@ uTools 插件 - 翻译
 
 ## Features
 
-- 支持中英文翻译
-- 支持切换翻译API
-- 支持单词句子翻译
-- 支持查询音标，朗读
-- 支持句子朗读
-- 支持快捷键朗读（英式：Alt+S，美式：Alt+D）
-- 支持自动复制翻译结果
-- 支持自动翻译剪贴板文本
-- 支持单词变形
-- 支持自动即时查询
-- 支持源语言和目标语言设置
-- 支持变量命名
-- 支持暗黑模式
+1. 支持中英文翻译
+2. 支持切换翻译API
+3. 支持单词句子翻译
+4. 支持查询音标，朗读
+5. 支持句子朗读
+6. 支持快捷键朗读（英式：Alt+S，美式：Alt+D）
+7. 支持自动复制翻译结果
+8. 支持自动翻译剪贴板文本
+9. 支持单词变形
+10. 支持自动即时查询
+11. 支持源语言和目标语言设置
+12. 支持变量命名
+13. 支持暗黑模式
 
 ## API
 
-- 有道词典
-
-  <http://fanyi.youdao.com>
-
-  官方提示此版本API已经停用，但经测试现还能使用。
-
-  不过调用频率不能太高，否则容易暂时被封禁。
-
-- 有道翻译
-
-  <https://m.youdao.com>
-
-  属于移动端网页API，精准度不是非常高。
-
-- 有道翻译免费版
-
-  <http://fanyi.youdao.com>
-
-  翻译内容较少，仅有基本翻译。
-
-  支持中文与英、日、韩互译。
-
-- 谷歌
-
-  <https://translate.google.com>
-
-  翻译内容较少，仅有基本翻译。
-
-  不太稳定。若不能直接访问谷歌，需要设置代理。
-
-- 小牛
-
-  <https://test.niutrans.com>
-
-  翻译内容较少，仅有基本翻译。
-
-- DeepL
-
-  <https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs>
-
-  国外API，响应相对较慢。
-
-- 必应
-
-  <http://cn.bing.com/dict>
-
-  必应词典，仅支持单词，不支持句子。
-
-- 有道翻译
-
-  <http://openapi.youdao.com/api>
-
-  需要到[有道智云](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
-
-- 百度翻译
-
-  <https://fanyi-api.baidu.com/api/trans/vip/translate>
-
-  翻译内容较少，仅有基本翻译。
-
-  需要到[百度翻译开放平台](http://api.fanyi.baidu.com)申请获取应用ID和应用密钥。
-
-- 阿里翻译
-
-  <https://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general>
-
-  翻译内容较少，仅有基本翻译。
-
-  支持214种语言互译。
-
-      除繁体中文、蒙语、粤语外，其他212种语言，可支持任意两种语言之间互译。
-
-      繁体中文、蒙语、粤语仅支持与中文之间的互译。
-
-  需要到[阿里云](https://www.aliyun.com/product/ai/base_alimt)申请获取应用ID和应用密钥。
-
-- 腾讯翻译
-
-  <https://tmt.tencentcloudapi.com>
-
-  翻译内容较少，仅有基本翻译。
-
-  需要到[腾讯云](https://cloud.tencent.com/product/tmt)申请获取应用ID和应用密钥。
-
-- 彩云小译
-
-  <http://api.interpreter.caiyunai.com/v1/translator>
-
-  翻译内容较少，仅有基本翻译。
-
-  需要到[彩云科技](https://fanyi.caiyunapp.com/#/api)申请获取应用Token。
+1. 有道词典
+     - <http://fanyi.youdao.com>
+     - 官方提示此版本API已经停用，但经测试现还能使用。
+     - 不过调用频率不能太高，否则容易暂时被封禁。
+2. 有道翻译
+     - <https://m.youdao.com>
+     - 属于移动端网页API，精准度不是非常高。
+3. 有道翻译免费版
+     - <http://fanyi.youdao.com>
+     - 翻译内容较少，仅有基本翻译。
+     - 支持中文与英、日、韩互译。
+4. 谷歌
+     - <https://translate.googleapis.com>
+     - 翻译内容较少，仅有基本翻译。
+     - 不太稳定。若不能直接访问谷歌，需要设置代理。
+5. 谷歌
+     - <https://translate.google.com>
+     - 翻译内容较少，仅有基本翻译。
+     - 不太稳定。若不能直接访问谷歌，需要设置代理。
+6. ~~小牛~~
+     - <https://test.niutrans.com>
+     - 翻译内容较少，仅有基本翻译。
+     - **服务器异常，已停用。**
+7. DeepL
+     - <https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs>
+     - 国外API，响应相对较慢。
+8. 必应
+     - <http://cn.bing.com/dict>
+     - 必应词典，仅支持单词，不支持句子。
+9. 有道翻译
+     - <http://openapi.youdao.com/api>
+     - 需要到[有道智云](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
+10. 百度翻译
+    - <https://fanyi-api.baidu.com/api/trans/vip/translate>
+    - 翻译内容较少，仅有基本翻译。
+    - 需要到[百度翻译开放平台](http://api.fanyi.baidu.com)申请获取应用ID和应用密钥。
+11. 阿里翻译
+    - <https://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general>
+    - 翻译内容较少，仅有基本翻译。
+    - 支持214种语言互译。
+      - 除繁体中文、蒙语、粤语外，其他212种语言，可支持任意两种语言之间互译。
+      - 繁体中文、蒙语、粤语仅支持与中文之间的互译。
+    - 需要到[阿里云](https://www.aliyun.com/product/ai/base_alimt)申请获取应用ID和应用密钥。
+12. 腾讯翻译
+    - <https://tmt.tencentcloudapi.com>
+    - 翻译内容较少，仅有基本翻译。
+    - 需要到[腾讯云](https://cloud.tencent.com/product/tmt)申请获取应用ID和应用密钥。
+13. 彩云小译
+    - <http://api.interpreter.caiyunai.com/v1/translator>
+    - 翻译内容较少，仅有基本翻译。
+    - 需要到[彩云科技](https://fanyi.caiyunapp.com/#/api)申请获取应用Token。
 
 ## Reference
 
