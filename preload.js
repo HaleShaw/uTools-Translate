@@ -2,7 +2,8 @@ const https = require("https");
 const crypto = require("crypto");
 const HttpsProxyAgent = require("https-proxy-agent");
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
+
 /**
  *
  * @param {String} host host.
@@ -58,14 +59,14 @@ window.createAgent = function (host, port) {
  * @returns version string.
  */
 window.getVersion = function () {
-  const filePath = path.join(__dirname, 'plugin.json');
+  const filePath = path.join(__dirname, "plugin.json");
   const text = fs.readFileSync(filePath);
   let data;
   try {
     data = JSON.parse(text);
   } catch (error) {
     console.error(error);
-    return '';
+    return "";
   }
   return `v${data?.version}`;
 };
@@ -88,8 +89,4 @@ window.hmacSHA1 = function (str, secret = "", encoding) {
 
 window.hmacSHA256 = function (str, secret = "", encoding) {
   return crypto.createHmac("sha256", secret).update(str).digest(encoding);
-};
-
-window.getHash = function (str, encoding = "hex") {
-  return crypto.createHash("sha256").update(str).digest(encoding);
 };

@@ -269,6 +269,14 @@ const options = {
     name: "腾讯",
     api: "tmt.tencentcloudapi.com",
   },
+  huoShan: {
+    name: "火山",
+    api: "open.volcengineapi.com",
+    action: "TranslateText",
+    version: "2020-06-01",
+    region: "cn-north-1",
+    service: "translate",
+  },
   caiYun: {
     name: "彩云小译",
     api: "http://api.interpreter.caiyunai.com/v1/translator",
@@ -374,6 +382,16 @@ function loadIdSecret() {
   let tencentAppSecret = utools.dbStorage.getItem("tencentAppSecret");
   if (tencentAppSecret) {
     document.getElementById("tencentAppSecret").value = tencentAppSecret;
+  }
+
+  let huoShanAppId = utools.dbStorage.getItem("huoShanAppId");
+  if (huoShanAppId) {
+    document.getElementById("huoShanAppId").value = huoShanAppId;
+  }
+
+  let huoShanAppSecret = utools.dbStorage.getItem("huoShanAppSecret");
+  if (huoShanAppSecret) {
+    document.getElementById("huoShanAppSecret").value = huoShanAppSecret;
   }
 
   let caiYunToken = utools.dbStorage.getItem("caiYunToken");
@@ -510,6 +528,8 @@ function saveConfiguration() {
   const aliYunAppSecret = document.getElementById("aliYunAppSecret").value.trim();
   const tencentAppId = document.getElementById("tencentAppId").value.trim();
   const tencentAppSecret = document.getElementById("tencentAppSecret").value.trim();
+  const huoShanAppId = document.getElementById("huoShanAppId").value.trim();
+  const huoShanAppSecret = document.getElementById("huoShanAppSecret").value.trim();
   const caiYunToken = document.getElementById("caiYunToken").value.trim();
   let saveFailed = false;
   switch (option) {
@@ -541,6 +561,13 @@ function saveConfiguration() {
         saveFailed = true;
       }
       break;
+    case "huoShan":
+      if (isBlank(huoShanAppId) || isBlank(huoShanAppSecret)) {
+        $("#msg").text(errMsgEmptyApp);
+        document.getElementById("huoShanAppId").focus();
+        saveFailed = true;
+      }
+      break;
     case "caiYun":
       if (isBlank(caiYunToken)) {
         $("#msg").text("Token不能为空！");
@@ -563,6 +590,8 @@ function saveConfiguration() {
   utools.dbStorage.setItem("aliYunAppSecret", aliYunAppSecret);
   utools.dbStorage.setItem("tencentAppId", tencentAppId);
   utools.dbStorage.setItem("tencentAppSecret", tencentAppSecret);
+  utools.dbStorage.setItem("huoShanAppId", huoShanAppId);
+  utools.dbStorage.setItem("huoShanAppSecret", huoShanAppSecret);
   utools.dbStorage.setItem("caiYunToken", caiYunToken);
   saveLang();
   saveProxy();

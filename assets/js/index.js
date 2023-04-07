@@ -111,7 +111,8 @@ async function switchApi(word) {
     option == Object.keys(options)[8] ||
     option == Object.keys(options)[9] ||
     option == Object.keys(options)[10] ||
-    option == Object.keys(options)[11]
+    option == Object.keys(options)[11] ||
+    option == Object.keys(options)[12]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -150,6 +151,9 @@ async function switchApi(word) {
         data = await lookupTencent(word);
         break;
       case Object.keys(options)[11]:
+        data = await lookupHuoShan(word);
+        break;
+      case Object.keys(options)[12]:
         data = await lookupCaiYun(word);
         break;
       default:
