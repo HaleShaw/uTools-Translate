@@ -15,6 +15,7 @@ const errorCodeMsgHuoShan = {
   100024: "Authorization头格式错误，检查Authorization。",
   100025: "Authorization头中的Credential格式错误，检查Credential。",
   100026: "错误的STS or STS2，可能是多种错误，例如签名错误、过期等。",
+  9999: "其他错误，可进入设置页面切换其他API",
 };
 
 async function lookupHuoShan(word) {
@@ -133,10 +134,12 @@ function getData(word, response) {
     });
     return data;
   } else {
-    let errMsg = errorCodeMsgHuoShan[errorCode];
+    let errorMsg = errorCodeMsgHuoShan[errorCode]
+      ? errorCodeMsgHuoShan[errorCode]
+      : errorCodeMsgHuoShan[errorCodeOther];
     data.push({
       title: errTitle,
-      description: errMsg,
+      description: errorMsg,
     });
     return data;
   }

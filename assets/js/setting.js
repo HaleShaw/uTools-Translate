@@ -281,6 +281,10 @@ const options = {
     name: "彩云小译",
     api: "http://api.interpreter.caiyunai.com/v1/translator",
   },
+  xiaoNiu: {
+    name: "小牛",
+    api: "https://api.niutrans.com/NiuTransServer/translation",
+  },
 };
 
 // Set the default API.
@@ -397,6 +401,11 @@ function loadIdSecret() {
   let caiYunToken = utools.dbStorage.getItem("caiYunToken");
   if (caiYunToken) {
     document.getElementById("caiYunToken").value = caiYunToken;
+  }
+
+  let xiaoNiuToken = utools.dbStorage.getItem("xiaoNiuToken");
+  if (xiaoNiuToken) {
+    document.getElementById("xiaoNiuToken").value = xiaoNiuToken;
   }
 }
 
@@ -531,6 +540,7 @@ function saveConfiguration() {
   const huoShanAppId = document.getElementById("huoShanAppId").value.trim();
   const huoShanAppSecret = document.getElementById("huoShanAppSecret").value.trim();
   const caiYunToken = document.getElementById("caiYunToken").value.trim();
+  const xiaoNiuToken = document.getElementById("xiaoNiuToken").value.trim();
   let saveFailed = false;
   switch (option) {
     case "youDao":
@@ -575,6 +585,13 @@ function saveConfiguration() {
         saveFailed = true;
       }
       break;
+    case "xiaoNiu":
+      if (isBlank(xiaoNiuToken)) {
+        $("#msg").text("APIKey不能为空！");
+        document.getElementById("xiaoNiuToken").focus();
+        saveFailed = true;
+      }
+      break;
     default:
       break;
   }
@@ -593,6 +610,7 @@ function saveConfiguration() {
   utools.dbStorage.setItem("huoShanAppId", huoShanAppId);
   utools.dbStorage.setItem("huoShanAppSecret", huoShanAppSecret);
   utools.dbStorage.setItem("caiYunToken", caiYunToken);
+  utools.dbStorage.setItem("xiaoNiuToken", xiaoNiuToken);
   saveLang();
   saveProxy();
   hideSetting();
