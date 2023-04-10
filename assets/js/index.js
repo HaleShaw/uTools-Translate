@@ -37,6 +37,7 @@ const variableReg = /[^a-zA-Z\s]/g;
 
 utools.onPluginEnter(({ code, type, payload }) => {
   utools.setExpendHeight(0);
+  checkSystem();
   if (code == "translate_text") {
     utools.setSubInput(({ text }) => {
       delayLookUp(delayTime, text);
@@ -52,6 +53,25 @@ utools.onPluginEnter(({ code, type, payload }) => {
     initSetting();
   }
 });
+
+function checkSystem() {
+  let listKey = utools.isMacOS() ? "⌘" : "Alt";
+  let speakKey = utools.isMacOS() ? "Ctrl" : "Alt";
+  document.getElementsByClassName("quick-index-identity")[0].innerHTML = `
+  <div>${listKey}+1</div>
+  <div>${listKey}+2</div>
+  <div>${listKey}+3</div>
+  <div>${listKey}+4</div>
+  <div>${listKey}+5</div>
+  <div>${listKey}+6</div>
+  <div>${listKey}+7</div>
+  <div>${listKey}+8</div>
+  <div>${listKey}+9</div>
+  <div>${listKey}+0</div>`;
+  document.querySelector(
+    "div.speak > span.comment"
+  ).innerHTML = `朗读输入框中内容，以英式(${speakKey}+S)和美式(${speakKey}+D)口音朗读，内容为英文效果最佳。`;
+}
 
 /**
  * 延迟查询，避免频繁调用API.
@@ -178,34 +198,34 @@ function bindHotkey() {
   Mousetrap.bind("enter", () => {
     enter();
   });
-  Mousetrap.bind("alt+1", () => {
+  Mousetrap.bind(["alt+1", "command+1"], () => {
     copyItemContent(0);
   });
-  Mousetrap.bind("alt+2", () => {
+  Mousetrap.bind(["alt+2", "command+2"], () => {
     copyItemContent(1);
   });
-  Mousetrap.bind("alt+3", () => {
+  Mousetrap.bind(["alt+3", "command+3"], () => {
     copyItemContent(2);
   });
-  Mousetrap.bind("alt+4", () => {
+  Mousetrap.bind(["alt+4", "command+4"], () => {
     copyItemContent(3);
   });
-  Mousetrap.bind("alt+5", () => {
+  Mousetrap.bind(["alt+5", "command+5"], () => {
     copyItemContent(4);
   });
-  Mousetrap.bind("alt+6", () => {
+  Mousetrap.bind(["alt+6", "command+6"], () => {
     copyItemContent(5);
   });
-  Mousetrap.bind("alt+7", () => {
+  Mousetrap.bind(["alt+7", "command+7"], () => {
     copyItemContent(6);
   });
-  Mousetrap.bind("alt+8", () => {
+  Mousetrap.bind(["alt+8", "command+8"], () => {
     copyItemContent(7);
   });
-  Mousetrap.bind("alt+9", () => {
+  Mousetrap.bind(["alt+9", "command+9"], () => {
     copyItemContent(8);
   });
-  Mousetrap.bind("alt+0", () => {
+  Mousetrap.bind(["alt+0", "command+0"], () => {
     copyItemContent(9);
   });
   bindPhoneticHotkey();
@@ -215,10 +235,10 @@ function bindHotkey() {
  * Bind the hotkey for reading aloud.
  */
 function bindPhoneticHotkey() {
-  Mousetrap.bind("alt+s", () => {
+  Mousetrap.bind(["alt+s", "ctrl+s"], () => {
     playPhonetic(0);
   });
-  Mousetrap.bind("alt+d", () => {
+  Mousetrap.bind(["alt+d", "ctrl+d"], () => {
     playPhonetic(1);
   });
 }
