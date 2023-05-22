@@ -91,7 +91,10 @@ uTools 插件 - 翻译
      - 不太稳定。若不能直接访问谷歌，可修改hosts，或设置代理。
 6. DeepL
      - <https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs>
-     - 国外API，响应相对较慢。
+     - 免费API，响应相对较慢。
+     - https://api-free.deepl.com/v2/translate
+     - https://api.deepl.com/v2/translate
+     - 官方API，需要到https://www.deepl.com/zh/pro-api订阅方案并获取应用密钥
 7. 必应
      - <http://cn.bing.com/dict>
      - 必应词典，仅支持单词，不支持句子。

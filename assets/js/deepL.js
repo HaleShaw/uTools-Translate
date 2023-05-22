@@ -8,20 +8,21 @@ const errorCodeMsgDeeplApi = {
 let requestId = 57280004;
 
 async function lookupDeeplApi(deeplApiType, word) {
+  let data = [];
   const secret = utools.dbStorage.getItem("deeplAppSecret");
-  const api = "";
-  if(deeplApiType == "proApi")
-    api = options.deeplPro.api;
-  else
-    api = options.deeplFree.api;
-  
-  if (!token) {
+  if (!secret) {
     data.push({
       title: errTitle,
       description: errMsgEmptyConf,
     });
     return data;
   }
+
+  let api = "";
+  if(deeplApiType == "proApi")
+    api = options.deeplPro.api;
+  else
+    api = options.deeplFree.api;
   
   requestId++;
   const headers = { 
@@ -34,28 +35,41 @@ async function lookupDeeplApi(deeplApiType, word) {
 
   try {
     let response = await post(api, param, headers);
-    const tran = response?.translations[0]?.text;
-    if (tran) {
-      let phoneticHtml = "";
-      if (speak) {
-        const phoneticEn = getPhoneticEn(tran);
-        const phoneticUs = getPhoneticUs(tran);
-        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-      }
-      let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
-      data.push({
-        title: dataTitle,
-        description: "基本释义",
-      });
-    } else {
-      let errorCode = response?.error_code;
-      let errorMsg = errorCodeMsgDeeplApi[errorCode]
-        ? errorCodeMsgDeeplApi[errorCode]
-        : errorCodeMsgDeeplApi[errorCodeOther];
+    const translations = response?.translations;
+    if(!translations)
+    {
       data.push({
         title: errTitle,
-        description: errorMsg,
+        description: errMsgEmptyConf,
       });
+      return data;
+    }
+
+    for(let i=0; i<translations.length; ++i)
+    {
+      const tran = translations[i]?.text;
+      if (tran) {
+        let phoneticHtml = "";
+        if (speak) {
+          const phoneticEn = getPhoneticEn(tran);
+          const phoneticUs = getPhoneticUs(tran);
+          phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+        }
+        let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
+        data.push({
+          title: dataTitle,
+          description: "基本释义",
+        });
+      } else {
+        let errorCode = response?.error_code;
+        let errorMsg = errorCodeMsgDeeplApi[errorCode]
+          ? errorCodeMsgDeeplApi[errorCode]
+          : errorCodeMsgDeeplApi[errorCodeOther];
+        data.push({
+          title: errTitle,
+          description: errorMsg,
+        });
+      }
     }
   } catch (error) {
     let errorCode = response?.error_code;
@@ -71,7 +85,6 @@ async function lookupDeeplApi(deeplApiType, word) {
 }
 
 async function lookupDeepL(word) {
-  let data = [];
   const deeplApiType = utools.dbStorage.getItem("deeplApiType");
   if(deeplApiType != "builtin")
   {
@@ -80,6 +93,7 @@ async function lookupDeepL(word) {
   }
 
   // builtin lookup
+  let data = [];
   const api = options.deepL.api;
   let timestamp = new Date().getTime() - 3000;
   requestId++;
