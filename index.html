@@ -141,9 +141,36 @@
               <img src="./assets//images/icon/deepL.png" class="compatible" />
               <span>DeepL</span>
             </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://www.deepl.com/zh/pro-api"
+              title="https://www.deepl.com/zh/pro-api"
+            >
+              DeepL API
+            </a>
           </div>
           <div class="detail">
-            <a class="comment">（内置）国外API，响应相对较慢</a>
+            <div class="lang">
+              <a>接口选择 </a>
+              <select class="source" id="deeplApiType">
+                <option value="builtin">内置接口（无需密钥）</option>
+                <option value="freeApi">Free API</option>
+                <option value="proApi">Pro API</option>
+              </select>
+            </div>
+            <div class="private">
+              <span>应用密钥 </span>
+              <input
+                id="deeplAppSecret"
+                class="secret"
+                name="appSecret"
+                type="password"
+                value=""
+              />
+              <img class="eye closed" />
+            </div>
+            <!-- <a class="comment">国外API，响应相对较慢</a> -->
           </div>
         </div>
         <div class="service bing">

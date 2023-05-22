@@ -31,6 +31,14 @@ const options = {
     name: "DeepL",
     api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",
   },
+  deeplFree: {
+    name: "DeepL-Free",
+    api: "https://api-free.deepl.com/v2/translate",
+  },
+  deeplPro: {
+    name: "DeepL-Pro",
+    api: "https://api.deepl.com/v2/translate",
+  },
   bing: {
     name: "必应",
     api: "http://cn.bing.com/dict/search?q=",
@@ -407,6 +415,22 @@ function loadIdSecret() {
   if (xiaoNiuToken) {
     document.getElementById("xiaoNiuToken").value = xiaoNiuToken;
   }
+
+  let deeplApiType = utools.dbStorage.getItem("deeplApiType");
+  if (deeplApiType) {
+    let select = document.getElementById("deeplApiType");
+    for(let i = 0; i < select.options.length; i++) {
+      if(select.options[i].value == deeplApiType) {
+        select.options[i].selected = true;
+        break;
+      }
+    }
+  }
+
+  let deeplAppSecret = utools.dbStorage.getItem("deeplAppSecret");
+  if (deeplAppSecret) {
+    document.getElementById("deeplAppSecret").value = deeplAppSecret;
+  }
 }
 
 /**
@@ -541,6 +565,9 @@ function saveConfiguration() {
   const huoShanAppSecret = document.getElementById("huoShanAppSecret").value.trim();
   const caiYunToken = document.getElementById("caiYunToken").value.trim();
   const xiaoNiuToken = document.getElementById("xiaoNiuToken").value.trim();
+  const deeplApiTypeItem = document.getElementById("deeplApiType");
+  const deeplApiType = deeplApiTypeItem.options[deeplApiTypeItem.selectedIndex].value.trim();
+  const deeplAppSecret = document.getElementById("deeplAppSecret").value.trim();
   let saveFailed = false;
   switch (option) {
     case "youDao":
@@ -592,6 +619,13 @@ function saveConfiguration() {
         saveFailed = true;
       }
       break;
+    case "deepL":
+      if (deeplApiType != "builtin" && isBlank(deeplAppSecret)) {
+        $("#msg").text("应用密钥不能为空！");
+        document.getElementById("deeplAppSecret").focus();
+        saveFailed = true;
+      }
+      break;
     default:
       break;
   }
@@ -611,6 +645,8 @@ function saveConfiguration() {
   utools.dbStorage.setItem("huoShanAppSecret", huoShanAppSecret);
   utools.dbStorage.setItem("caiYunToken", caiYunToken);
   utools.dbStorage.setItem("xiaoNiuToken", xiaoNiuToken);
+  utools.dbStorage.setItem("deeplApiType", deeplApiType);
+  utools.dbStorage.setItem("deeplAppSecret", deeplAppSecret);
   saveLang();
   saveProxy();
   hideSetting();
