@@ -1,3 +1,5 @@
+const errTitle = "错误";
+const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行设置";
 const errorCodeOther = 9999;
 const errorCodeFrequently = 302;
 const formHeaders = {
@@ -36,7 +38,17 @@ function post(url, body, headers) {
       body: body,
     })
       .then(res => {
-        resolve(res.json());
+        if (res.ok) {
+          let data;
+          try {
+            data = res.json();
+          } catch (error) {
+            reject({ errorCode: errorCodeOther, message: error });
+          }
+          resolve(data);
+        } else {
+          reject({ errorCode: errorCodeOther, message: `${res.status}: ${res.statusText}` });
+        }
       })
       .catch(e => {
         console.error(e);

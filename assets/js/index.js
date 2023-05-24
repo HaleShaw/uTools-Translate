@@ -15,9 +15,6 @@ const maxHeight = itemHeight * 10;
 // 延时ID。
 let delayId = null;
 
-const errTitle = "错误";
-const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行设置";
-
 // 延迟查询的时间毫秒数。
 const delayTime = 300;
 
