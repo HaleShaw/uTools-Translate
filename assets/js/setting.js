@@ -27,13 +27,21 @@ const options = {
     api: "translate.google.com",
     path: "/_/TranslateWebserverUi/data/batchexecute",
   },
+  bing: {
+    name: "必应",
+    api: "http://cn.bing.com/dict/search?q=",
+  },
   deepL: {
     name: "DeepL",
     api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",
   },
-  bing: {
-    name: "必应",
-    api: "http://cn.bing.com/dict/search?q=",
+  deepLFree: {
+    name: "DeepL Free",
+    api: "https://api-free.deepl.com/v2/translate",
+  },
+  deepLPro: {
+    name: "DeepL Pro",
+    api: "https://api.deepl.com/v2/translate",
   },
   youDao: {
     name: "有道",
@@ -348,6 +356,16 @@ function loadVersion() {
 }
 
 function loadIdSecret() {
+  let deepLFreeSecret = utools.dbStorage.getItem("deepLFreeSecret");
+  if (deepLFreeSecret) {
+    document.getElementById("deepLFreeSecret").value = deepLFreeSecret;
+  }
+
+  let deepLProSecret = utools.dbStorage.getItem("deepLProSecret");
+  if (deepLProSecret) {
+    document.getElementById("deepLProSecret").value = deepLProSecret;
+  }
+
   let youDaoAppId = utools.dbStorage.getItem("youDaoAppId");
   if (youDaoAppId) {
     document.getElementById("youDaoAppId").value = youDaoAppId;
@@ -529,6 +547,8 @@ function loadLangYouDaoFree() {
 function saveConfiguration() {
   let option = $("input[name=service]:checked").val() || Object.keys(options)[0];
 
+  const deepLFreeSecret = document.getElementById("deepLFreeSecret").value.trim();
+  const deepLProSecret = document.getElementById("deepLProSecret").value.trim();
   const youDaoAppId = document.getElementById("youDaoAppId").value.trim();
   const youDaoAppSecret = document.getElementById("youDaoAppSecret").value.trim();
   const baiDuAppId = document.getElementById("baiDuAppId").value.trim();
@@ -543,6 +563,20 @@ function saveConfiguration() {
   const xiaoNiuToken = document.getElementById("xiaoNiuToken").value.trim();
   let saveFailed = false;
   switch (option) {
+    case "deepLFree":
+      if (isBlank(deepLFreeSecret)) {
+        $("#msg").text("Auth Key不能为空！");
+        document.getElementById("deepLFreeSecret").focus();
+        saveFailed = true;
+      }
+      break;
+    case "deepLPro":
+      if (isBlank(deepLProSecret)) {
+        $("#msg").text("Auth Key不能为空！");
+        document.getElementById("deepLProSecret").focus();
+        saveFailed = true;
+      }
+      break;
     case "youDao":
       if (isBlank(youDaoAppId) || isBlank(youDaoAppSecret)) {
         $("#msg").text(errMsgEmptyApp);
@@ -599,6 +633,8 @@ function saveConfiguration() {
     return;
   }
   utools.dbStorage.setItem("option", option);
+  utools.dbStorage.setItem("deepLFreeSecret", deepLFreeSecret);
+  utools.dbStorage.setItem("deepLProSecret", deepLProSecret);
   utools.dbStorage.setItem("youDaoAppId", youDaoAppId);
   utools.dbStorage.setItem("youDaoAppSecret", youDaoAppSecret);
   utools.dbStorage.setItem("baiDuAppId", baiDuAppId);

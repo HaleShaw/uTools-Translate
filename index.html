@@ -134,6 +134,18 @@
             <a class="comment">（内置）translate.google.com，可配置hosts，亦可设置代理</a>
           </div>
         </div>
+        <div class="service bing">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="bing" />
+              <img src="./assets//images/icon/bing.png" class="compatible" />
+              <span>必应</span>
+            </label>
+          </div>
+          <div class="detail">
+            <a class="comment">（内置）必应词典，仅支持单词，不支持句子</a>
+          </div>
+        </div>
         <div class="service deepL">
           <div class="api">
             <label>
@@ -146,16 +158,68 @@
             <a class="comment">（内置）国外API，响应相对较慢</a>
           </div>
         </div>
-        <div class="service bing">
+        <div class="service deepLFree">
           <div class="api">
             <label>
-              <input name="service" type="radio" value="bing" />
-              <img src="./assets//images/icon/bing.png" class="compatible" />
-              <span>必应</span>
+              <input name="service" type="radio" value="deepLFree" />
+              <img src="./assets//images/icon/deepL.png" class="compatible" />
+              <span>DeepL Free</span>
             </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://www.deepl.com/pro-api"
+              title="https://www.deepl.com/pro-api"
+            >
+              DeepL API
+            </a>
           </div>
           <div class="detail">
-            <a class="comment">（内置）必应词典，仅支持单词，不支持句子</a>
+            <div class="private">
+              <div class="pwd">
+                <span>AuthKey</span>
+                <input
+                  id="deepLFreeSecret"
+                  class="secret"
+                  name="appSecret"
+                  type="password"
+                  value=""
+                />
+                <img class="eye closed" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="service deepLPro">
+          <div class="api">
+            <label>
+              <input name="service" type="radio" value="deepLPro" />
+              <img src="./assets//images/icon/deepL.png" class="compatible" />
+              <span>DeepL Pro</span>
+            </label>
+            <br />
+            <a
+              class="comment site"
+              href="https://www.deepl.com/pro-api"
+              title="https://www.deepl.com/pro-api"
+            >
+              DeepL API
+            </a>
+          </div>
+          <div class="detail">
+            <div class="private">
+              <div class="pwd">
+                <span>AuthKey</span>
+                <input
+                  id="deepLProSecret"
+                  class="secret"
+                  name="appSecret"
+                  type="password"
+                  value=""
+                />
+                <img class="eye closed" />
+              </div>
+            </div>
           </div>
         </div>
         <div class="service youDao">
@@ -393,6 +457,7 @@
     <script src="assets/js/baiDu.js"></script>
     <script src="assets/js/aliYun.js"></script>
     <script src="assets/js/deepL.js"></script>
+    <script src="assets/js/deepLAPI.js"></script>
     <script src="assets/js/bing.js"></script>
     <script src="assets/js/huoShan.js"></script>
     <script src="assets/js/caiYun.js"></script>
