@@ -142,7 +142,9 @@ uTools 插件 - 翻译
 
 ## Contributors
 
-[![HandsomeWalker](https://avatars.githubusercontent.com/u/21039404?s=64&v=4)HandsomeWalker](https://github.com/HandsomeWalker)
+- [![HandsomeWalker](https://avatars.githubusercontent.com/u/21039404?s=64&v=4)HandsomeWalker](https://github.com/HandsomeWalker)
+
+- [![yqs112358](https://avatars.githubusercontent.com/u/37969157?s=64&v=4)YQ](https://github.com/yqs112358)
 
 ## License
 
