@@ -11,6 +11,7 @@ const errorCodeMsgBaiDu = {
   58001: "译文语言方向不支持",
   58002: "服务当前已关闭",
   90107: "认证未通过或未生效",
+  9999: "其他错误，可进入设置页面切换其他API",
 };
 
 async function lookupBaiDu(word) {
@@ -36,33 +37,45 @@ async function lookupBaiDu(word) {
     to: "auto",
     sign: sign,
   };
-  let response = await post(api, stringify(param), formHeaders);
-  const errorCode = response.error_code;
-  if (!errorCode) {
-    const trans = response.trans_result;
-    if (trans && trans.length != 0) {
-      let phoneticHtml = "";
-      if (speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
-        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-      }
-      for (let i = 0; i < trans.length; i++) {
-        let dataTitle = `<span class="translation">${trans[i].dst}</span>`;
-        if (i == 0) {
-          dataTitle += phoneticHtml;
+  let response;
+  try {
+    response = await post(api, stringify(param), formHeaders);
+    const errorCode = response.error_code;
+    if (!errorCode) {
+      const trans = response.trans_result;
+      if (trans && trans.length != 0) {
+        let phoneticHtml = "";
+        if (speak) {
+          const phoneticEn = getPhoneticEn(word);
+          const phoneticUs = getPhoneticUs(word);
+          phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
         }
-        data.push({
-          title: dataTitle,
-          description: "基本释义",
-        });
+        for (let i = 0; i < trans.length; i++) {
+          let dataTitle = `<span class="translation">${trans[i].dst}</span>`;
+          if (i == 0) {
+            dataTitle += phoneticHtml;
+          }
+          data.push({
+            title: dataTitle,
+            description: "基本释义",
+          });
+        }
       }
+    } else {
+      let errMsg = errorCodeMsgBaiDu[errorCode];
+      data.push({
+        title: errTitle,
+        description: errMsg,
+      });
     }
-  } else {
-    let errMsg = errorCodeMsgBaiDu[errorCode];
+  } catch (error) {
+    let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
+    let errorMsg = errorCodeMsgBaiDu[errorCode]
+      ? errorCodeMsgBaiDu[errorCode]
+      : errorCodeMsgBaiDu[errorCodeOther];
     data.push({
       title: errTitle,
-      description: errMsg,
+      description: errorMsg,
     });
   }
   return data;

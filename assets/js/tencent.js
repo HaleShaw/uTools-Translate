@@ -4,11 +4,10 @@ const errorCodeMsgTencent = {
   "AuthFailure.InvalidSecretId": "密钥非法（不是云 API 密钥类型）。",
   "AuthFailure.MFAFailure": "MFA 错误。",
   "AuthFailure.SecretIdNotFound":
-    "密钥不存在。请在控制台检查密钥是否已被删除或者禁用，如状态正常，请检查密钥是否填写正确，注意前后不得有空格。",
+    "密钥不存在。请在控制台检查密钥是否已被删除或者禁用，如状态正常，请检查密钥是否填写正确。",
   "AuthFailure.SignatureExpire":
     "签名过期。Timestamp 和服务器时间相差不得超过五分钟，请检查本地时间是否和标准时间同步。",
-  "AuthFailure.SignatureFailure":
-    "签名错误。签名计算错误，请对照调用方式中的签名方法文档检查签名计算过程。",
+  "AuthFailure.SignatureFailure": "签名错误，请检查Secret Key。",
   "AuthFailure.TokenFailure": "token 错误。",
   "AuthFailure.UnauthorizedOperation": "请求未授权。请参考 CAM 文档对鉴权的说明。",
   DryRunOperation: "DryRun 操作，代表请求将会是成功的，只是多传了 DryRun 参数。",
@@ -54,6 +53,7 @@ const errorCodeMsgTencent = {
   "UnsupportedOperation.UnSupportedTargetLanguage": "不支持的目标语言，请参照语言列表。",
   "UnsupportedOperation.UnsupportedLanguage": "不支持的语言，请参照语言列表。",
   "UnsupportedOperation.UnsupportedSourceLanguage": "不支持的源语言，请参照语言列表。",
+  9999: "其他错误，可进入设置页面切换其他API",
 };
 async function lookupTencent(word) {
   let data = [];
@@ -83,8 +83,8 @@ async function lookupTencent(word) {
   let payload = JSON.stringify(param);
 
   //时间处理, 获取世界时间日期
-  const timestamp = parseInt(new Date().getTime() / 1000);
-  const date = getDate(timestamp);
+  const timestamp = getTimestamp();
+  const date = getFullDate(timestamp);
 
   // ************* 步骤 1：拼接规范请求串 *************
 
@@ -147,35 +147,39 @@ async function lookupTencent(word) {
     "X-TC-Region": region,
   };
 
-  let response = await post("https://" + endpoint, payload, headers);
-  const errorCode = response.Response?.Error?.Code;
-  if (!errorCode) {
-    const tran = response.Response.TargetText;
-    let phoneticHtml = "";
-    if (speak) {
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
-      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+  let response;
+  try {
+    response = await post("https://" + endpoint, payload, headers);
+    const errorCode = response.Response?.Error?.Code;
+    if (!errorCode) {
+      const tran = response.Response.TargetText;
+      let phoneticHtml = "";
+      if (speak) {
+        const phoneticEn = getPhoneticEn(word);
+        const phoneticUs = getPhoneticUs(word);
+        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+      }
+      let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
+      data.push({
+        title: dataTitle,
+        description: "基本释义",
+      });
+    } else {
+      let errMsg = errorCodeMsgTencent[errorCode];
+      data.push({
+        title: errTitle,
+        description: errMsg,
+      });
     }
-    let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
-    data.push({
-      title: dataTitle,
-      description: "基本释义",
-    });
-  } else {
-    let errMsg = errorCodeMsgTencent[errorCode];
+  } catch (error) {
+    let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
+    let errorMsg = errorCodeMsgTencent[errorCode]
+      ? errorCodeMsgTencent[errorCode]
+      : errorCodeMsgTencent[errorCodeOther];
     data.push({
       title: errTitle,
-      description: errMsg,
+      description: errorMsg,
     });
   }
   return data;
-}
-
-function getDate(timestamp) {
-  const date = new Date(timestamp * 1000);
-  const year = date.getUTCFullYear();
-  const month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
-  const day = ("0" + date.getUTCDate()).slice(-2);
-  return `${year}-${month}-${day}`;
 }

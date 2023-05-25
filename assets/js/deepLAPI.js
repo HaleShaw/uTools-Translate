@@ -29,9 +29,9 @@ async function lookupDeepLAPI(word, type) {
   const targetLang = isChinese(word) ? "EN-US" : "ZH";
   let param = "text=" + encodeURIComponent(word) + "&target_lang=" + targetLang;
   //let agent = getAgent();
-
+  let response;
   try {
-    let response = await post(api, param, headers);
+    response = await post(api, param, headers);
     const translations = response?.translations;
     if (!translations) {
       data.push({
@@ -56,7 +56,7 @@ async function lookupDeepLAPI(word, type) {
           description: "基本释义",
         });
       } else {
-        let errorCode = response?.error_code;
+        let errorCode = response?.errorCode;
         let errorMsg = errorCodeMsgDeepLAPI[errorCode]
           ? errorCodeMsgDeepLAPI[errorCode]
           : errorCodeMsgDeepLAPI[errorCodeOther];
@@ -67,7 +67,7 @@ async function lookupDeepLAPI(word, type) {
       }
     }
   } catch (error) {
-    let errorCode = response?.error_code;
+    let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
     let errorMsg = errorCodeMsgDeepLAPI[errorCode]
       ? errorCodeMsgDeepLAPI[errorCode]
       : errorCodeMsgDeepLAPI[errorCodeOther];

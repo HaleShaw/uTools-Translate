@@ -156,64 +156,76 @@ async function lookupYouDao(word) {
     signType: "v3",
     curtime: curtime,
   };
-  let response = await post(api, stringify(param), formHeaders);
-  const errorCode = response.errorCode;
-  if (errorCode == "0") {
-    const trans = response.translation;
-    const basic = response.basic;
-    if (trans.length != 0) {
-      let dataTitle = `<span class="translation">${trans.join(", ")}</span>`;
-      if (speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
-        if (basic && basic.phonetic && basic.phonetic != "") {
-          if (basic["us-phonetic"] && basic["us-phonetic"] != "") {
-            dataTitle += `<span>英[${basic.phonetic}]</span>${phoneticEn}<span>美[${basic["us-phonetic"]}]</span>${phoneticUs}`;
+  let response;
+  try {
+    response = await post(api, stringify(param), formHeaders);
+    const errorCode = response.errorCode;
+    if (errorCode == "0") {
+      const trans = response.translation;
+      const basic = response.basic;
+      if (trans.length != 0) {
+        let dataTitle = `<span class="translation">${trans.join(", ")}</span>`;
+        if (speak) {
+          const phoneticEn = getPhoneticEn(word);
+          const phoneticUs = getPhoneticUs(word);
+          if (basic && basic.phonetic && basic.phonetic != "") {
+            if (basic["us-phonetic"] && basic["us-phonetic"] != "") {
+              dataTitle += `<span>英[${basic.phonetic}]</span>${phoneticEn}<span>美[${basic["us-phonetic"]}]</span>${phoneticUs}`;
+            } else {
+              dataTitle += `<span>[${basic.phonetic}]</span>${phoneticEn}`;
+            }
           } else {
-            dataTitle += `<span>[${basic.phonetic}]</span>${phoneticEn}`;
+            dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
           }
-        } else {
-          dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+        }
+        data.push({ title: dataTitle, description: "翻译结果" });
+      }
+
+      if (basic && basic.explains && basic.explains.length != 0) {
+        const explains = basic.explains;
+        for (let i = 0; i < explains.length; i++) {
+          data.push({
+            title: explains[i],
+            description: "基本释义",
+          });
         }
       }
-      data.push({ title: dataTitle, description: "翻译结果" });
-    }
 
-    if (basic && basic.explains && basic.explains.length != 0) {
-      const explains = basic.explains;
-      for (let i = 0; i < explains.length; i++) {
+      if (basic && basic.wfs && basic.wfs.length != 0) {
+        const wfs = basic.wfs;
+        let dataTitle = "";
+        for (let i = 0; i < wfs.length; i++) {
+          dataTitle += `${wfs[i].wf.name}:${wfs[i].wf.value};  `;
+        }
         data.push({
-          title: explains[i],
-          description: "基本释义",
+          title: dataTitle,
+          description: "变形",
         });
       }
-    }
 
-    if (basic && basic.wfs && basic.wfs.length != 0) {
-      const wfs = basic.wfs;
-      let dataTitle = "";
-      for (let i = 0; i < wfs.length; i++) {
-        dataTitle += `${wfs[i].wf.name}:${wfs[i].wf.value};  `;
+      const web = response.web;
+      if (web && web.length != 0) {
+        for (let i = 0; i < web.length; i++) {
+          data.push({
+            title: web[i].value.join(", "),
+            description: "网络释义：" + web[i].key,
+          });
+        }
       }
+    } else {
       data.push({
-        title: dataTitle,
-        description: "变形",
+        title: errTitle,
+        description: errorCodeMsgYouDao[errorCode],
       });
     }
-
-    const web = response.web;
-    if (web && web.length != 0) {
-      for (let i = 0; i < web.length; i++) {
-        data.push({
-          title: web[i].value.join(", "),
-          description: "网络释义：" + web[i].key,
-        });
-      }
-    }
-  } else {
+  } catch (error) {
+    let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
+    let errorMsg = errorCodeMsgYouDao[errorCode]
+      ? errorCodeMsgYouDao[errorCode]
+      : errorCodeMsgYouDao[errorCodeOther];
     data.push({
       title: errTitle,
-      description: errorCodeMsgYouDao[errorCode],
+      description: errorMsg,
     });
   }
   return data;

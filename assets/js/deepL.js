@@ -1,3 +1,4 @@
+const errorCodeMsgDeepL = { 9999: "其他错误，可进入设置页面切换其他API" };
 let requestId = 57280004;
 async function lookupDeepL(word) {
   let data = [];
@@ -30,39 +31,51 @@ async function lookupDeepL(word) {
   };
   const headers = { "content-type": "application/json" };
 
-  let response = await post(
-    api,
-    JSON.stringify(param).replace('"method":"LMT_handle_jobs"', '"method": "LMT_handle_jobs"'),
-    headers
-  );
-  if (response.error) {
-    data.push({
-      title: errTitle,
-      description: response.error.message,
-    });
-  } else {
-    let trans = response.result.translations;
-    let dataTitle = "";
-    for (let i = 0; i < trans.length; i++) {
-      let beams = trans[i].beams;
-      for (let j = 0; j < beams.length; j++) {
-        if (i == 0 && j == 0) {
-          let phoneticHtml = "";
-          if (speak) {
-            const phoneticEn = getPhoneticEn(word);
-            const phoneticUs = getPhoneticUs(word);
-            phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+  let response;
+  try {
+    response = await post(
+      api,
+      JSON.stringify(param).replace('"method":"LMT_handle_jobs"', '"method": "LMT_handle_jobs"'),
+      headers
+    );
+    if (response.error) {
+      data.push({
+        title: errTitle,
+        description: response.error.message,
+      });
+    } else {
+      let trans = response.result.translations;
+      let dataTitle = "";
+      for (let i = 0; i < trans.length; i++) {
+        let beams = trans[i].beams;
+        for (let j = 0; j < beams.length; j++) {
+          if (i == 0 && j == 0) {
+            let phoneticHtml = "";
+            if (speak) {
+              const phoneticEn = getPhoneticEn(word);
+              const phoneticUs = getPhoneticUs(word);
+              phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+            }
+            dataTitle = `<span class="translation">${beams[j].postprocessed_sentence}</span>${phoneticHtml}`;
+          } else {
+            dataTitle = beams[j].postprocessed_sentence;
           }
-          dataTitle = `<span class="translation">${beams[j].postprocessed_sentence}</span>${phoneticHtml}`;
-        } else {
-          dataTitle = beams[j].postprocessed_sentence;
+          data.push({
+            title: dataTitle,
+            description: "基本释义",
+          });
         }
-        data.push({
-          title: dataTitle,
-          description: "基本释义",
-        });
       }
     }
+  } catch (error) {
+    let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
+    let errorMsg = errorCodeMsgDeepL[errorCode]
+      ? errorCodeMsgDeepL[errorCode]
+      : errorCodeMsgDeepL[errorCodeOther];
+    data.push({
+      title: errTitle,
+      description: errorMsg,
+    });
   }
   return data;
 }

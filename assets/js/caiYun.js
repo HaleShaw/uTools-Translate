@@ -1,5 +1,6 @@
 const errorCodeMsgCaiYun = {
   "API rate limit exceeded": "API请求太过频繁，请稍后再试。可进入设置页面切换其他API。",
+  9999: "其他错误，可进入设置页面切换其他API",
 };
 async function lookupCaiYun(word) {
   let data = [];
@@ -29,28 +30,40 @@ async function lookupCaiYun(word) {
     "content-type": "application/json",
     "x-authorization": "token " + token,
   };
-  let response = await post(api, JSON.stringify(body), headers);
-  let message = response?.message;
-  if (!message) {
-    const tran = response?.target;
-    if (tran) {
-      let phoneticHtml = "";
-      if (speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
-        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+  let response;
+  try {
+    response = await post(api, JSON.stringify(body), headers);
+    let message = response?.message;
+    if (!message) {
+      const tran = response?.target;
+      if (tran) {
+        let phoneticHtml = "";
+        if (speak) {
+          const phoneticEn = getPhoneticEn(word);
+          const phoneticUs = getPhoneticUs(word);
+          phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+        }
+        let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
+        data.push({
+          title: dataTitle,
+          description: "基本释义",
+        });
       }
-      let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
+    } else {
+      let errMsg = errorCodeMsgCaiYun[message];
       data.push({
-        title: dataTitle,
-        description: "基本释义",
+        title: errTitle,
+        description: errMsg,
       });
     }
-  } else {
-    let errMsg = errorCodeMsgCaiYun[errorCode];
+  } catch (error) {
+    let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
+    let errorMsg = errorCodeMsgCaiYun[errorCode]
+      ? errorCodeMsgCaiYun[errorCode]
+      : errorCodeMsgCaiYun[errorCodeOther];
     data.push({
       title: errTitle,
-      description: errMsg,
+      description: errorMsg,
     });
   }
   return data;

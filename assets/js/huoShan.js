@@ -92,8 +92,8 @@ async function lookupHuoShan(word) {
     Authorization: authorization,
   };
 
-  const res = await post(`https://${host}/?Action=${action}&Version=${version}`, payload, headers);
-  return getData(word, res);
+  const url = `https://${host}/?Action=${action}&Version=${version}`;
+  return await getData(word, url, payload, headers);
 }
 
 /**
@@ -101,39 +101,52 @@ async function lookupHuoShan(word) {
  * @param {Object} response The http request response.
  * @returns The List data.
  */
-function getData(word, response) {
+async function getData(word, url, payload, headers) {
   let data = [];
-  const errorCode = response.ResponseMetadata?.Error?.CodeN;
-  if (!errorCode) {
-    let tranList = response?.TranslationList;
-    if (!tranList && !response.ResponseMetadata) {
-      data.push({
-        title: errTitle,
-        description: "翻译错误",
-      });
-      return data;
-    }
+  let response;
+  try {
+    response = await post(url, payload, headers);
+    const errorCode = response.ResponseMetadata?.Error?.CodeN;
+    if (!errorCode) {
+      let tranList = response?.TranslationList;
+      if (!tranList && !response.ResponseMetadata) {
+        data.push({
+          title: errTitle,
+          description: "翻译错误",
+        });
+        return data;
+      }
 
-    let tran = tranList[0]["Translation"];
-    if (!tran || tran == "" || tran.trim() == "") {
+      let tran = tranList[0]["Translation"];
+      if (!tran || tran == "" || tran.trim() == "") {
+        data.push({
+          title: errTitle,
+          description: "翻译结果为空",
+        });
+        return data;
+      }
+      if (speak) {
+        const phoneticEn = getPhoneticEn(word);
+        const phoneticUs = getPhoneticUs(word);
+        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+      }
+      let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
-        title: errTitle,
-        description: "翻译结果为空",
+        title: dataTitle,
+        description: "基本释义",
       });
       return data;
+    } else {
+      let errorMsg = errorCodeMsgHuoShan[errorCode]
+        ? errorCodeMsgHuoShan[errorCode]
+        : errorCodeMsgHuoShan[errorCodeOther];
+      data.push({
+        title: errTitle,
+        description: errorMsg,
+      });
     }
-    if (speak) {
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
-      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-    }
-    let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
-    data.push({
-      title: dataTitle,
-      description: "基本释义",
-    });
-    return data;
-  } else {
+  } catch (error) {
+    let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
     let errorMsg = errorCodeMsgHuoShan[errorCode]
       ? errorCodeMsgHuoShan[errorCode]
       : errorCodeMsgHuoShan[errorCodeOther];
@@ -141,24 +154,6 @@ function getData(word, response) {
       title: errTitle,
       description: errorMsg,
     });
-    return data;
   }
-}
-
-/**
- * Get the ISO 8601 time string.
- * YYYYMMDD'T'HHMMSS'Z'
- * @returns The time string.
- */
-function getDateTime() {
-  return new Date().toISOString().replace(/[:-]|\.\d{3}/g, "");
-}
-
-/**
- * Get the date string.
- * @param {String} dateTime The ISO 8601 time string.
- * @returns The date string.
- */
-function getDate(dateTime) {
-  return dateTime.substring(0, 8);
+  return data;
 }
