@@ -65,9 +65,8 @@ function checkSystem() {
   <div>${listKey}+8</div>
   <div>${listKey}+9</div>
   <div>${listKey}+0</div>`;
-  document.querySelector(
-    "div.speak > span.comment"
-  ).innerHTML = `朗读输入框中内容，以英式(${speakKey}+S)和美式(${speakKey}+D)口音朗读，内容为英文效果最佳。`;
+  document.getElementById("shortcutEn").innerHTML = `${speakKey}+S`;
+  document.getElementById("shortcutUs").innerHTML = `${speakKey}+D`;
 }
 
 /**

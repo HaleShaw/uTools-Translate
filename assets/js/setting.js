@@ -298,13 +298,25 @@ const options = {
 // Set the default API.
 const defaultAPI = Object.keys(options)[2];
 
-const defaultSpeak = true;
-const defaultVariable = false;
+const DEFAULT_SPEAK = {
+  speakSwitch: true,
+  speakEngine: "Google",
+  speakContent: "Source",
+};
+const DEFAULT_VARIABLE = {
+  variableSwitch: false,
+  variableContent: "Result",
+  variableCase: "camelCase",
+};
+
+const DEFAULT_PROXY = {
+  proxySwitch: false,
+  proxyHost: "",
+  proxyPort: "",
+};
 
 // 设置窗口的高度。
 const settingHeight = 544;
-
-const errMsgEmptyApp = "应用ID或密钥不能为空！";
 
 // 是否在完整退出插件后第一次进入。
 let isFirstEnter = true;
@@ -315,8 +327,10 @@ function initSetting() {
   if (isFirstEnter) {
     addSpeakListener();
     addVariableListener();
+    addProxyListener();
+    addApiListener();
     addSiteListener();
-    addSettingBtnListener();
+    addKeyPasswordListener();
     addEyeListener();
     addLangListener();
     addExchangeListener();
@@ -326,7 +340,7 @@ function initSetting() {
 
 function loadConfiguration() {
   let option = utools.dbStorage.getItem("option");
-  let radios = document.getElementsByName("service");
+  let radios = document.querySelectorAll("input[name=service]");
 
   if (!option || option.error || Object.keys(options).indexOf(option) == -1) {
     // Choose the default API.
@@ -432,18 +446,34 @@ function loadIdSecret() {
  */
 function loadSpeak() {
   speak = utools.dbStorage.getItem("speak");
-  if (speak === null) {
+  if (speak === null || typeof speak == "boolean") {
     // Choose the default speak setting.
-    speak = defaultSpeak;
+    speak = DEFAULT_SPEAK;
     utools.dbStorage.setItem("speak", speak);
   }
 
-  let speakBtn = document.querySelector("#setting>.speak>img");
-  if (speak) {
-    speakBtn.setAttribute("src", "./assets/images/speakOn.png");
-  } else {
-    speakBtn.setAttribute("src", "./assets/images/speakOff.png");
+  let speakSwitch = document.getElementById("funcSwitchSpeak");
+  speakSwitch.checked = speak["speakSwitch"];
+
+  let speakEngineGoogle = document.getElementById("speakEngineRadioGoogle");
+  let speakEngineYouDao = document.getElementById("speakEngineRadioYouDao");
+  const speakEngine = speak["speakEngine"];
+  if ("Google" == speakEngine) {
+    speakEngineGoogle.setAttribute("checked", true);
+  } else if ("YouDao" == speakEngine) {
+    speakEngineYouDao.setAttribute("checked", true);
   }
+
+  let speakContentSource = document.getElementById("speakContentRadioSource");
+  let speakContentResult = document.getElementById("speakContentRadioResult");
+  const speakContent = speak["speakContent"];
+  if ("Source" == speakContent) {
+    speakContentSource.setAttribute("checked", true);
+  } else if ("Result" == speakContent) {
+    speakContentResult.setAttribute("checked", true);
+  }
+
+  updateSpeakStatus(speak["speakSwitch"]);
 }
 
 /**
@@ -451,36 +481,59 @@ function loadSpeak() {
  */
 function loadVariable() {
   variable = utools.dbStorage.getItem("variable");
-  const variableCase = utools.dbStorage.getItem("variableCase") || "camelCase";
-  if (variable === null) {
+  if (variable === null || typeof variable == "boolean") {
     // Choose the default variable setting.
-    variable = defaultVariable;
+    variable = DEFAULT_VARIABLE;
     utools.dbStorage.setItem("variable", variable);
   }
 
-  let variableBtn = document.querySelector("#setting>.variable>img");
-  const variableSelect = document.querySelector("#setting>.variable>.variableSelect");
-  $("#setting>.variable>.variableSelect").val(variableCase);
-  if (variable) {
-    variableBtn.setAttribute("src", "./assets/images/speakOn.png");
-  } else {
-    variableBtn.setAttribute("src", "./assets/images/speakOff.png");
-    variableSelect.setAttribute("disabled", true);
+  let variableSwitch = document.getElementById("funcSwitchVariable");
+  variableSwitch.checked = variable["variableSwitch"];
+
+  let variableContentResult = document.getElementById("variableRadioResult");
+  let variableContentSource = document.getElementById("variableRadioSource");
+  const variableContent = variable["variableContent"];
+  if ("Result" == variableContent) {
+    variableContentResult.setAttribute("checked", true);
+  } else if ("Source" == variableContent) {
+    variableContentSource.setAttribute("checked", true);
   }
+
+  const variableCase = variable["variableCase"];
+  $("#variableSelect").val(variableCase);
+
+  updateVariableStatus(variable["variableSwitch"]);
 }
 
 /**
  * Load the configuration of proxy.
  */
 function loadProxy() {
+  proxy = utools.dbStorage.getItem("proxy");
+  if (proxy === null) {
+    // Choose the default proxy setting.
+    proxy = DEFAULT_PROXY;
+    utools.dbStorage.setItem("proxy", proxy);
+  }
+
+  let proxySwitch = document.getElementById("funcSwitchProxy");
+  proxySwitch.checked = proxy["proxySwitch"];
+
   let proxyHost = utools.dbStorage.getItem("proxyHost");
-  if (proxyHost) {
-    document.getElementById("proxyHost").value = proxyHost;
+  if (proxyHost || "" == proxyHost) {
+    proxy["proxyHost"] = proxyHost;
+    utools.dbStorage.setItem("proxy", proxy);
+    utools.dbStorage.removeItem("proxyHost");
   }
   let proxyPort = utools.dbStorage.getItem("proxyPort");
-  if (proxyPort) {
-    document.getElementById("proxyPort").value = proxyPort;
+  if (proxyPort || "" == proxyPort) {
+    proxy["proxyPort"] = proxyPort;
+    utools.dbStorage.setItem("proxy", proxy);
+    utools.dbStorage.removeItem("proxyPort");
   }
+  document.getElementById("proxyHost").value = proxy["proxyHost"];
+  document.getElementById("proxyPort").value = proxy["proxyPort"];
+  updateProxyStatus(proxy["proxySwitch"]);
 }
 
 function loadLang() {
@@ -544,156 +597,56 @@ function loadLangYouDaoFree() {
   }
 }
 
-function saveConfiguration() {
-  let option = $("input[name=service]:checked").val() || Object.keys(options)[0];
-
-  const deepLFreeSecret = document.getElementById("deepLFreeSecret").value.trim();
-  const deepLProSecret = document.getElementById("deepLProSecret").value.trim();
-  const youDaoAppId = document.getElementById("youDaoAppId").value.trim();
-  const youDaoAppSecret = document.getElementById("youDaoAppSecret").value.trim();
-  const baiDuAppId = document.getElementById("baiDuAppId").value.trim();
-  const baiDuAppSecret = document.getElementById("baiDuAppSecret").value.trim();
-  const aliYunAppId = document.getElementById("aliYunAppId").value.trim();
-  const aliYunAppSecret = document.getElementById("aliYunAppSecret").value.trim();
-  const tencentAppId = document.getElementById("tencentAppId").value.trim();
-  const tencentAppSecret = document.getElementById("tencentAppSecret").value.trim();
-  const huoShanAppId = document.getElementById("huoShanAppId").value.trim();
-  const huoShanAppSecret = document.getElementById("huoShanAppSecret").value.trim();
-  const caiYunToken = document.getElementById("caiYunToken").value.trim();
-  const xiaoNiuToken = document.getElementById("xiaoNiuToken").value.trim();
-  let saveFailed = false;
-  switch (option) {
-    case "deepLFree":
-      if (isBlank(deepLFreeSecret)) {
-        $("#msg").text("Auth Key不能为空！");
-        document.getElementById("deepLFreeSecret").focus();
-        saveFailed = true;
-      }
-      break;
-    case "deepLPro":
-      if (isBlank(deepLProSecret)) {
-        $("#msg").text("Auth Key不能为空！");
-        document.getElementById("deepLProSecret").focus();
-        saveFailed = true;
-      }
-      break;
-    case "youDao":
-      if (isBlank(youDaoAppId) || isBlank(youDaoAppSecret)) {
-        $("#msg").text(errMsgEmptyApp);
-        document.getElementById("youDaoAppId").focus();
-        saveFailed = true;
-      }
-      break;
-    case "baiDu":
-      if (isBlank(baiDuAppId) || isBlank(baiDuAppSecret)) {
-        $("#msg").text(errMsgEmptyApp);
-        document.getElementById("baiDuAppId").focus();
-        saveFailed = true;
-      }
-      break;
-    case "aliYun":
-      if (isBlank(aliYunAppId) || isBlank(aliYunAppSecret)) {
-        $("#msg").text(errMsgEmptyApp);
-        document.getElementById("aliYunAppId").focus();
-        saveFailed = true;
-      }
-      break;
-    case "tencent":
-      if (isBlank(tencentAppId) || isBlank(tencentAppSecret)) {
-        $("#msg").text(errMsgEmptyApp);
-        document.getElementById("tencentAppId").focus();
-        saveFailed = true;
-      }
-      break;
-    case "huoShan":
-      if (isBlank(huoShanAppId) || isBlank(huoShanAppSecret)) {
-        $("#msg").text(errMsgEmptyApp);
-        document.getElementById("huoShanAppId").focus();
-        saveFailed = true;
-      }
-      break;
-    case "caiYun":
-      if (isBlank(caiYunToken)) {
-        $("#msg").text("Token不能为空！");
-        document.getElementById("caiYunToken").focus();
-        saveFailed = true;
-      }
-      break;
-    case "xiaoNiu":
-      if (isBlank(xiaoNiuToken)) {
-        $("#msg").text("APIKey不能为空！");
-        document.getElementById("xiaoNiuToken").focus();
-        saveFailed = true;
-      }
-      break;
-    default:
-      break;
+/**
+ * Update the status of the radios of speak.
+ * @param {Boolean} speakSwitch speakSwitch.
+ */
+function updateSpeakStatus(speakSwitch) {
+  let radios = document.querySelectorAll("#speak > div.content input");
+  for (let i = 0; i < radios.length; i++) {
+    radios[i].disabled = !speakSwitch;
   }
-  if (saveFailed) {
-    return;
-  }
-  utools.dbStorage.setItem("option", option);
-  utools.dbStorage.setItem("deepLFreeSecret", deepLFreeSecret);
-  utools.dbStorage.setItem("deepLProSecret", deepLProSecret);
-  utools.dbStorage.setItem("youDaoAppId", youDaoAppId);
-  utools.dbStorage.setItem("youDaoAppSecret", youDaoAppSecret);
-  utools.dbStorage.setItem("baiDuAppId", baiDuAppId);
-  utools.dbStorage.setItem("baiDuAppSecret", baiDuAppSecret);
-  utools.dbStorage.setItem("aliYunAppId", aliYunAppId);
-  utools.dbStorage.setItem("aliYunAppSecret", aliYunAppSecret);
-  utools.dbStorage.setItem("tencentAppId", tencentAppId);
-  utools.dbStorage.setItem("tencentAppSecret", tencentAppSecret);
-  utools.dbStorage.setItem("huoShanAppId", huoShanAppId);
-  utools.dbStorage.setItem("huoShanAppSecret", huoShanAppSecret);
-  utools.dbStorage.setItem("caiYunToken", caiYunToken);
-  utools.dbStorage.setItem("xiaoNiuToken", xiaoNiuToken);
-  saveLang();
-  saveProxy();
-  hideSetting();
-  utools.showNotification(`保存成功！`);
 }
 
 /**
- * Save the configuration of language.
+ * Update the status of the radios of variable.
+ * @param {Boolean} variableSwitch variableSwitch.
  */
-function saveLang() {
-  let youDaoFreeSource = $(".service.youDaoFree .lang>select.source").val();
-  let youDaoFreeTarget = $(".service.youDaoFree .lang>select.target").val();
-  utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
-  utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
-
-  let sourceValue = $(".service.aliYun .lang>select.source").val();
-  let targetValue = $(".service.aliYun .lang>select.target").val();
-  utools.dbStorage.setItem("aliYunSource", sourceValue);
-  utools.dbStorage.setItem("aliYunTarget", targetValue);
+function updateVariableStatus(variableSwitch) {
+  document.getElementById("variableRadioResult").disabled = !variableSwitch;
+  document.getElementById("variableSelect").disabled = !variableSwitch;
 }
 
 /**
- * Save the configuration of proxy.
+ * Update the status of the radios of proxy.
+ * @param {Boolean} proxySwitch proxySwitch.
  */
-function saveProxy() {
-  const proxyHost = document.getElementById("proxyHost").value.trim();
-  const proxyPort = document.getElementById("proxyPort").value.trim();
-  utools.dbStorage.setItem("proxyHost", proxyHost);
-  utools.dbStorage.setItem("proxyPort", proxyPort);
+function updateProxyStatus(proxySwitch) {
+  document.getElementById("proxyHost").disabled = !proxySwitch;
+  document.getElementById("proxyPort").disabled = !proxySwitch;
 }
 
 /**
  * Add the speak button listener.
  */
 function addSpeakListener() {
-  $("#setting>.speak>img").click(function () {
-    speak = !speak;
+  $("#funcSwitchSpeak").click(function () {
+    let speakSwitch = !speak["speakSwitch"];
+    speak["speakSwitch"] = speakSwitch;
     utools.dbStorage.setItem("speak", speak);
-    let speakStatus = "";
-    if (speak) {
-      $(this).attr("src", "./assets/images/speakOn.png");
-      speakStatus = "打开";
-    } else {
-      $(this).attr("src", "./assets/images/speakOff.png");
-      speakStatus = "关闭";
-    }
+    updateSpeakStatus(speakSwitch);
+    let speakStatus = speakSwitch ? "打开" : "关闭";
     utools.showNotification(`朗读已${speakStatus}！`);
+  });
+
+  $("input[type=radio][name=speakEngineRadio]").change(function () {
+    speak["speakEngine"] = this.value;
+    utools.dbStorage.setItem("speak", speak);
+  });
+
+  $("input[type=radio][name=speakContentRadio]").change(function () {
+    speak["speakContent"] = this.value;
+    utools.dbStorage.setItem("speak", speak);
   });
 }
 
@@ -701,27 +654,63 @@ function addSpeakListener() {
  * Add the variable mode listener.
  */
 function addVariableListener() {
-  const variableCase = utools.dbStorage.getItem("variableCase");
-  const variableSelect = document.querySelector("#setting>.variable>.variableSelect");
-  variableSelect.addEventListener("change", e => {
-    const { value } = e.target;
-    utools.dbStorage.setItem("variableCase", value);
-  });
-  $("#setting>.variable>img").click(function () {
-    variable = !variable;
+  $("#funcSwitchVariable").click(function () {
+    let variable = utools.dbStorage.getItem("variable");
+    let variableSwitch = !variable["variableSwitch"];
+    variable["variableSwitch"] = variableSwitch;
     utools.dbStorage.setItem("variable", variable);
-    let variableStatus = "";
-    if (variable) {
-      $(this).attr("src", "./assets/images/speakOn.png");
-      variableStatus = "打开";
-      variableSelect.removeAttribute("disabled");
-      !variableCase && utools.dbStorage.setItem("variableCase", variableSelect.value);
-    } else {
-      $(this).attr("src", "./assets/images/speakOff.png");
-      variableStatus = "关闭";
-      variableSelect.setAttribute("disabled", true);
-    }
+    updateVariableStatus(variableSwitch);
+    let variableStatus = variableSwitch ? "打开" : "关闭";
     utools.showNotification(`变量模式已${variableStatus}！`);
+  });
+
+  $("input[type=radio][name=variableRadio]").change(function () {
+    let variable = utools.dbStorage.getItem("variable");
+    variable["variableContent"] = this.value;
+    utools.dbStorage.setItem("variable", variable);
+  });
+
+  const variableSelect = document.getElementById("variableSelect");
+  variableSelect.addEventListener("change", e => {
+    let variable = utools.dbStorage.getItem("variable");
+    const { value } = e.target;
+    variable["variableCase"] = value;
+    utools.dbStorage.setItem("variable", variable);
+  });
+}
+
+/**
+ * Add the proxy mode listener.
+ */
+function addProxyListener() {
+  let proxy = utools.dbStorage.getItem("proxy");
+
+  $("#funcSwitchProxy").click(function () {
+    let proxySwitch = !proxy["proxySwitch"];
+    proxy["proxySwitch"] = proxySwitch;
+    utools.dbStorage.setItem("proxy", proxy);
+    updateProxyStatus(proxySwitch);
+    let proxyStatus = proxySwitch ? "打开" : "关闭";
+    utools.showNotification(`代理已${proxyStatus}！`);
+  });
+
+  $("#proxyHost").blur(function () {
+    let proxy = utools.dbStorage.getItem("proxy");
+    proxy["proxyHost"] = this.value.trim();
+    utools.dbStorage.setItem("proxy", proxy);
+  });
+
+  $("#proxyPort").blur(function () {
+    let proxy = utools.dbStorage.getItem("proxy");
+    proxy["proxyPort"] = this.value.trim();
+    utools.dbStorage.setItem("proxy", proxy);
+  });
+}
+
+function addApiListener() {
+  $("input[type=radio][name=service]").change(function () {
+    utools.dbStorage.setItem("option", this.value);
+    utools.showNotification(`翻译引擎切换至${options[this.value]["name"]}！`);
   });
 }
 
@@ -734,13 +723,48 @@ function addSiteListener() {
   });
 }
 
-function addSettingBtnListener() {
-  $("#btnClose").click(function () {
-    hideSetting();
+function addKeyPasswordListener() {
+  $("#deepLFreeSecret").blur(function () {
+    utools.dbStorage.setItem("deepLFreeSecret", this.value.trim());
   });
-
-  $("#btnSave").click(function (e) {
-    saveConfiguration();
+  $("#deepLProSecret").blur(function () {
+    utools.dbStorage.setItem("deepLProSecret", this.value.trim());
+  });
+  $("#youDaoAppId").blur(function () {
+    utools.dbStorage.setItem("youDaoAppId", this.value.trim());
+  });
+  $("#youDaoAppSecret").blur(function () {
+    utools.dbStorage.setItem("youDaoAppSecret", this.value.trim());
+  });
+  $("#baiDuAppId").blur(function () {
+    utools.dbStorage.setItem("baiDuAppId", this.value.trim());
+  });
+  $("#baiDuAppSecret").blur(function () {
+    utools.dbStorage.setItem("baiDuAppSecret", this.value.trim());
+  });
+  $("#aliYunAppId").blur(function () {
+    utools.dbStorage.setItem("aliYunAppId", this.value.trim());
+  });
+  $("#aliYunAppSecret").blur(function () {
+    utools.dbStorage.setItem("aliYunAppSecret", this.value.trim());
+  });
+  $("#tencentAppId").blur(function () {
+    utools.dbStorage.setItem("tencentAppId", this.value.trim());
+  });
+  $("#tencentAppSecret").blur(function () {
+    utools.dbStorage.setItem("tencentAppSecret", this.value.trim());
+  });
+  $("#huoShanAppId").blur(function () {
+    utools.dbStorage.setItem("huoShanAppId", this.value.trim());
+  });
+  $("#huoShanAppSecret").blur(function () {
+    utools.dbStorage.setItem("huoShanAppSecret", this.value.trim());
+  });
+  $("#caiYunToken").blur(function () {
+    utools.dbStorage.setItem("caiYunToken", this.value.trim());
+  });
+  $("#xiaoNiuToken").blur(function () {
+    utools.dbStorage.setItem("xiaoNiuToken", this.value.trim());
   });
 }
 
@@ -750,10 +774,10 @@ function addEyeListener() {
       const className = $(this).attr("class");
       if (className.indexOf("closed") != -1) {
         $(this).removeClass("closed");
-        $(this).addClass("open");
+        $(this).addClass("opened");
         $(this).prev().attr("type", "text");
-      } else if (className.indexOf("open") != -1) {
-        $(this).removeClass("open");
+      } else if (className.indexOf("opened") != -1) {
+        $(this).removeClass("opened");
         $(this).addClass("closed");
         $(this).prev().attr("type", "password");
       }
@@ -769,9 +793,15 @@ function addLangListener() {
 function addLangListenerAliYun() {
   $(".service.aliYun .lang>select.source").change(function () {
     changeBrotherAliYun($(this).val(), $(".service.aliYun .lang>select.target"));
+    utools.dbStorage.setItem("aliYunSource", $(this).val());
+    let targetValue = $(".service.aliYun .lang>select.target").val();
+    utools.dbStorage.setItem("aliYunTarget", targetValue);
   });
   $(".service.aliYun .lang>select.target").change(function () {
     changeBrotherAliYun($(this).val(), $(".service.aliYun .lang>select.source"));
+    utools.dbStorage.setItem("aliYunTarget", $(this).val());
+    let sourceValue = $(".service.aliYun .lang>select.source").val();
+    utools.dbStorage.setItem("aliYunSource", sourceValue);
   });
 }
 
@@ -796,9 +826,15 @@ function changeBrotherAliYun(thisValue, brother) {
 function addLangListenerYouDaoFree() {
   $(".service.youDaoFree .lang>select.source").change(function () {
     changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.target"));
+    utools.dbStorage.setItem("youDaoFreeSource", $(this).val());
+    let youDaoFreeTarget = $(".service.youDaoFree .lang>select.target").val();
+    utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
   });
   $(".service.youDaoFree .lang>select.target").change(function () {
     changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.source"));
+    utools.dbStorage.setItem("youDaoFreeTarget", $(this).val());
+    let youDaoFreeSource = $(".service.youDaoFree .lang>select.source").val();
+    utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
   });
 }
 
@@ -844,22 +880,4 @@ function addExchangeListener() {
     sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
     targetEle[0].selectedIndex = temp;
   });
-}
-
-function hideSetting() {
-  $("#msg").html("");
-  $("#setting").addClass("hide");
-  $("#root").removeClass("hide");
-  $("#page").removeClass("hide");
-  utools.outPlugin();
-}
-
-function isBlank(str) {
-  if (str == "" || str == null || str == undefined) {
-    return true;
-  } else if (str.trim() == "") {
-    return true;
-  } else {
-    return false;
-  }
 }

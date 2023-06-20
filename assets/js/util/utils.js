@@ -1,5 +1,3 @@
-const errTitle = "错误";
-const errMsgEmptyConf = "配置参数为空，请进入“翻译设置”进行设置";
 const errorCodeOther = 9999;
 const errorCodeFrequently = 302;
 const formHeaders = {
@@ -38,11 +36,7 @@ function post(url, body, headers) {
       body: body,
     })
       .then(res => {
-        if (res.ok) {
-          resolve(res.json());
-        } else {
-          reject({ errorCode: res.status, message: res.statusText });
-        }
+        resolve(res.json());
       })
       .catch(e => {
         console.error(e);
@@ -69,46 +63,4 @@ function getPhoneticUs(word) {
 
 function isChinese(word) {
   return /[\u4e00-\u9fa5]/.test(word);
-}
-
-/**
- * Get the timestamp.
- * 1685003426
- * @returns timestamp.
- */
-function getTimestamp() {
-  return parseInt(new Date().getTime() / 1000);
-}
-
-/**
- * Get the ISO 8601 time string.
- * YYYYMMDD'T'HHMMSS'Z'
- * @returns The time string.
- */
-function getDateTime() {
-  return new Date().toISOString().replace(/[:-]|\.\d{3}/g, "");
-}
-
-/**
- * Get the date string.
- * 20201212
- * @param {String} dateTime The ISO 8601 time string.
- * @returns The date string.
- */
-function getDate(dateTime) {
-  return dateTime.substring(0, 8);
-}
-
-/**
- * Get the full date string.
- * 2020-12-12
- * @param {String} timestamp timestamp. eg: 1685003426.
- * @returns The full date string.
- */
-function getFullDate(timestamp) {
-  const date = new Date(timestamp * 1000);
-  const year = date.getUTCFullYear();
-  const month = ("0" + (date.getUTCMonth() + 1)).slice(-2);
-  const day = ("0" + date.getUTCDate()).slice(-2);
-  return `${year}-${month}-${day}`;
 }
