@@ -315,14 +315,21 @@ const DEFAULT_PROXY = {
   proxyPort: "",
 };
 
+const BADGE_TOAST = {
+  内置: "内置免费API，无需配置",
+  列表: "列表模式，快速复制",
+  页面: "页面模式，显示更多内容",
+  多语言: "支持多种语言互译",
+};
+
 // 设置窗口的高度。
-const settingHeight = 544;
+const SETTING_HEIGHT = 544;
 
 // 是否在完整退出插件后第一次进入。
 let isFirstEnter = true;
 
 function initSetting() {
-  utools.setExpendHeight(settingHeight);
+  utools.setExpendHeight(SETTING_HEIGHT);
   loadConfiguration();
   if (isFirstEnter) {
     addSpeakListener();
@@ -334,6 +341,7 @@ function initSetting() {
     addEyeListener();
     addLangListener();
     addExchangeListener();
+    addBadgeListener();
   }
   isFirstEnter && (isFirstEnter = false);
 }
@@ -880,4 +888,28 @@ function addExchangeListener() {
     sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
     targetEle[0].selectedIndex = temp;
   });
+}
+
+/**
+ * When the mouse moves to the badge, display the tooltip.
+ */
+function addBadgeListener() {
+  $("#setting")
+    .find(".badge")
+    .mouseover(function () {
+      $("#tooltip").text(BADGE_TOAST[this.textContent]);
+      $("#tooltip")
+        .css({
+          padding: "5px",
+          top: $(this).offset().top - 5,
+          left: $(this).offset().left + $(this).outerWidth() + 5,
+          position: "absolute",
+          color: "white",
+          background: "black",
+        })
+        .show();
+    })
+    .mouseout(function () {
+      $("#tooltip").hide();
+    });
 }
