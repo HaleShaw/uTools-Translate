@@ -24,7 +24,7 @@ async function lookupGoogle(word) {
     console.error(error);
     data.push({
       title: errTitle,
-      description: '翻译错误',
+      description: "翻译错误",
     });
     return data;
   }
@@ -79,11 +79,20 @@ async function lookupGoogle(word) {
  * @returns HttpsProxyAgent.
  */
 function getAgent() {
-  let proxyHost = utools.dbStorage.getItem("proxyHost");
-  let proxyPort = utools.dbStorage.getItem("proxyPort");
-  let agent = null;
-  if (proxyHost && '' != proxyHost && proxyPort && proxyPort != '') {
-    agent = window.createAgent(proxyHost, proxyPort);
+  let proxy = utools.dbStorage.getItem("proxy");
+  const proxySwitch = proxy["proxySwitch"];
+  const proxyHost = proxy["proxyHost"];
+  const proxyPort = proxy["proxyPort"];
+  if (
+    proxy &&
+    proxySwitch &&
+    undefined != proxyHost &&
+    "" != proxyHost &&
+    undefined != proxyPort &&
+    "" != proxyPort
+  ) {
+    return window.createAgent(proxyHost, proxyPort);
+  } else {
+    return null;
   }
-  return agent;
 }

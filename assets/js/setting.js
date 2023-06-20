@@ -905,7 +905,8 @@ function addBadgeListener() {
           left: $(this).offset().left + $(this).outerWidth() + 5,
           position: "absolute",
           color: "white",
-          background: "black",
+          background: "#292a2d",
+          border: "1px solid #cfd1d4",
         })
         .show();
     })
