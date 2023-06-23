@@ -5,6 +5,13 @@ const errorCodeMsgYouDaoFree = {
   9999: "其他错误，可进入设置页面切换其他API",
 };
 
+const LANG_MAP_YOUDAOFREE = {
+  ZH_CN: "zh-CN",
+  EN: "en",
+  KR: "ko",
+  JA: "ja",
+};
+
 async function lookupYouDaoFree(word) {
   let data = [];
   const api = options.youDaoFree.api;
@@ -19,12 +26,9 @@ async function lookupYouDaoFree(word) {
     const trans = response.translateResult;
     if (trans.length != 0 && trans[0].length != 0) {
       let tran = trans[0][0]?.tgt;
-      let phoneticHtml = "";
-      if (speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
-        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-      }
+      let langSource = getLang(word, source);
+      let langTarget = getLang(tran, target);
+      let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
       let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
         title: dataTitle,
@@ -48,4 +52,12 @@ async function lookupYouDaoFree(word) {
     });
   }
   return data;
+}
+
+function getLang(word, lang) {
+  if ("auto" == lang) {
+    return isChinese(word) ? "zh-CN" : "en";
+  } else {
+    return LANG_MAP_YOUDAOFREE[lang];
+  }
 }

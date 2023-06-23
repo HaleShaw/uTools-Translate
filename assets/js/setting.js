@@ -322,6 +322,11 @@ const BADGE_TOAST = {
   多语言: "支持多种语言互译",
 };
 
+const SPEAK_ENGINE = {
+  YouDao: "https://dict.youdao.com/dictvoice?audio=",
+  Google: "https://translate.googleapis.com/translate_tts?ie=UTF-8&client=gtx&tl=",
+};
+
 // 设置窗口的高度。
 const SETTING_HEIGHT = 544;
 

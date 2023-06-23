@@ -61,9 +61,9 @@ function getPhonetic(data, word) {
       let keyUsSpan = $("<span>美</span>");
 
       let audioUk = $("<audio></audio>");
-      audioUk.attr("src", ttsApi + word + "&type=1");
+      audioUk.attr("src", SPEAK_ENGINE[YouDao] + word + "&type=1");
       let audioUs = $("<audio></audio>");
-      audioUs.attr("src", ttsApi + word + "&type=2");
+      audioUs.attr("src", SPEAK_ENGINE[YouDao] + word + "&type=2");
 
       let btnUk = $('<button type="button" class="pageBtn"></button>');
       btnUk.append(audioUk);

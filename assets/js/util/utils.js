@@ -1,3 +1,4 @@
+const errTitle = "错误";
 const errorCodeOther = 9999;
 const errorCodeFrequently = 302;
 const formHeaders = {
@@ -54,11 +55,38 @@ function stringify(obj) {
 }
 
 function getPhoneticEn(word) {
-  return `<button type="button" class="phonetic"><audio src="${ttsApi}${word}&type=1"></audio></button>`;
+  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE.YouDao}${word}&type=1"></audio></button>`;
 }
 
 function getPhoneticUs(word) {
-  return `<button type="button" class="phonetic"><audio src="${ttsApi}${word}&type=2"></audio></button>`;
+  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE.YouDao}${word}&type=2"></audio></button>`;
+}
+
+function getPhoneticGoogle(word, lang) {
+  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE.Google}${lang}&q=${word}"></audio></button>`;
+}
+
+function getPhoneticHtml(word, result, langSource, langTarget) {
+  const speakSwitch = speak["speakSwitch"];
+  if (!speakSwitch) {
+    return "";
+  }
+  const speakContent = speak["speakContent"];
+  const speakEngine = speak["speakEngine"];
+  const str = speakContent == "Source" ? word : result;
+  if ("YouDao" == speakEngine) {
+    if (
+      ("Source" == speakContent && "en" != langSource) ||
+      ("Result" == speakContent && "en" != langTarget)
+    ) {
+      return "";
+    } else {
+      return `<span>英</span>${getPhoneticEn(str)}<span>美</span>${getPhoneticUs(str)}`;
+    }
+  } else {
+    const lang = speakContent == "Source" ? langSource : langTarget;
+    return getPhoneticGoogle(str, lang);
+  }
 }
 
 function isChinese(word) {

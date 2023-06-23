@@ -1,8 +1,5 @@
 const changeCase = parcelRequire("Focm").default;
 
-// 语音朗读API。
-var ttsApi = "https://dict.youdao.com/dictvoice?audio=";
-
 // 默认被选中的项。
 var defaultItem;
 
@@ -16,7 +13,7 @@ const maxHeight = itemHeight * 10;
 let delayId = null;
 
 // 延迟查询的时间毫秒数。
-const delayTime = 300;
+const DELAY_TIME = 300;
 
 // 朗读配置。
 var speak;
@@ -37,7 +34,7 @@ utools.onPluginEnter(({ code, type, payload }) => {
   checkSystem();
   if (code == "translate_text") {
     utools.setSubInput(({ text }) => {
-      delayLookUp(delayTime, text);
+      delayLookUp(DELAY_TIME, text);
     }, "请输入需要查询的内容");
     if (type == "over" || type == "regex") {
       utools.setSubInputValue(payload);
@@ -83,7 +80,7 @@ function delayLookUp(timeout, word) {
     utools.setExpendHeight(0);
     return;
   }
-  timeout = typeof timeout == "number" ? timeout : delayTime;
+  timeout = typeof timeout == "number" ? timeout : DELAY_TIME;
 
   delayId && clearTimeout(delayId);
   delayId = setTimeout(() => {
@@ -104,9 +101,9 @@ async function switchApi(word) {
   }
 
   speak = utools.dbStorage.getItem("speak");
-  if (speak === null) {
+  if (speak === null || typeof speak == "boolean") {
     // Choose the default speak setting.
-    speak = defaultSpeak;
+    speak = DEFAULT_SPEAK;
     utools.dbStorage.setItem("speak", speak);
   }
 
@@ -239,12 +236,21 @@ function bindHotkey() {
  * Bind the hotkey for reading aloud.
  */
 function bindPhoneticHotkey() {
-  Mousetrap.bind(["alt+s", "ctrl+s"], () => {
-    playPhonetic(0);
-  });
-  Mousetrap.bind(["alt+d", "ctrl+d"], () => {
-    playPhonetic(1);
-  });
+  if (utools.isMacOS()) {
+    Mousetrap.bind(["ctrl+s"], () => {
+      playPhonetic(0);
+    });
+    Mousetrap.bind(["ctrl+d"], () => {
+      playPhonetic(1);
+    });
+  } else {
+    Mousetrap.bind(["alt+s"], () => {
+      playPhonetic(0);
+    });
+    Mousetrap.bind(["alt+d"], () => {
+      playPhonetic(1);
+    });
+  }
 }
 
 /**
@@ -257,7 +263,11 @@ function formatVariableCase(data) {
   text = data[0]["title"];
   if (dev && variableCase && text) {
     const tempDom = new DOMParser().parseFromString(text, "text/html");
-    translationValue = tempDom.querySelector(".translation").innerText;
+    let resultDom = tempDom.querySelector(".translation");
+    if (!resultDom) {
+      return;
+    }
+    translationValue = resultDom.innerText;
     if (!variableReg.test(translationValue)) {
       variableValue = {
         title: changeCase[variableCase](translationValue),
