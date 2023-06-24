@@ -14,6 +14,36 @@ const errorCodeMsgBaiDu = {
   9999: "其他错误，可进入设置页面切换其他API",
 };
 
+// Map to a list of languages that support Google Voice.
+const LANG_MAP_BAIDU = {
+  zh: "zh-CN",
+  en: "en",
+  jp: "ja",
+  kor: "ko",
+  fra: "fr",
+  spa: "es",
+  th: "th",
+  ara: "ar",
+  ru: "ru",
+  pt: "pt",
+  de: "de",
+  it: "it",
+  el: "el",
+  nl: "nl",
+  pl: "pl",
+  bul: "bg",
+  est: "et",
+  dan: "da",
+  fin: "fi",
+  cs: "cs",
+  rom: "ro",
+  slo: "sl",
+  swe: "sv",
+  hu: "hu",
+  cht: "zh-TW",
+  vie: "vi",
+};
+
 async function lookupBaiDu(word) {
   let data = [];
   const api = options.baiDu.api;
@@ -44,16 +74,12 @@ async function lookupBaiDu(word) {
     if (!errorCode) {
       const trans = response.trans_result;
       if (trans && trans.length != 0) {
-        let phoneticHtml = "";
-        if (speak) {
-          const phoneticEn = getPhoneticEn(word);
-          const phoneticUs = getPhoneticUs(word);
-          phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-        }
         for (let i = 0; i < trans.length; i++) {
           let dataTitle = `<span class="translation">${trans[i].dst}</span>`;
           if (i == 0) {
-            dataTitle += phoneticHtml;
+            let langSource = getLangBaiDu(word, response["from"]);
+            let langTarget = getLangBaiDu(trans[i].dst, response["to"]);
+            dataTitle += getPhoneticHtml(word, trans[i].dst, langSource, langTarget);
           }
           data.push({
             title: dataTitle,
@@ -83,4 +109,12 @@ async function lookupBaiDu(word) {
 
 function getSignBaiDu(appId, query, salt, appSecret) {
   return window.MD5(appId + query + salt + appSecret);
+}
+
+function getLangBaiDu(word, lang) {
+  let l = LANG_MAP_BAIDU[lang];
+  if (!l) {
+    l = isChinese(word) ? "zh-CN" : "en";
+  }
+  return l;
 }
