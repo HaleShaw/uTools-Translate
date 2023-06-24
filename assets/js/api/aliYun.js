@@ -16,6 +16,135 @@ const errorCodeMsgAliYun = {
   10033: "语种拼写错误",
   9999: "其他错误，可进入设置页面切换其他API",
 };
+
+// Map to a list of languages that support Google Voice.
+const LANG_MAP_ALIYUN = {
+  zh: "zh-CN",
+  en: "en",
+  sq: "sq",
+  ar: "ar",
+  am: "am",
+  as: "as",
+  az: "az",
+  ee: "ee",
+  ay: "ay",
+  ga: "ga",
+  et: "et",
+  or: "or",
+  om: "om",
+  eu: "eu",
+  be: "be",
+  bm: "bm",
+  bg: "bg",
+  is: "is",
+  pl: "pl",
+  bs: "bs",
+  fa: "fa",
+  bho: "bho",
+  af: "af",
+  tt: "tt",
+  da: "da",
+  de: "de",
+  dv: "dv",
+  ti: "ti",
+  ru: "ru",
+  fr: "fr",
+  sa: "sa",
+  fil: "tl",
+  fi: "fi",
+  fy: "fy",
+  km: "km",
+  ka: "ka",
+  gu: "gu",
+  gn: "gn",
+  kk: "kk",
+  ht: "ht",
+  ko: "ko",
+  ha: "ha",
+  nl: "nl",
+  ky: "ky",
+  gl: "gl",
+  ca: "ca",
+  cs: "cs",
+  kn: "kn",
+  co: "co",
+  mfe: "kri",
+  hbs: "hr",
+  qu: "qu",
+  ku: "ku",
+  la: "la",
+  lv: "lv",
+  lo: "lo",
+  lt: "lt",
+  ln: "ln",
+  lg: "lg",
+  lb: "lb",
+  rw: "rw",
+  ro: "ro",
+  mg: "mg",
+  mt: "mt",
+  mr: "mr",
+  ml: "ml",
+  ms: "ms",
+  mk: "mk",
+  mai: "mai",
+  mi: "mi",
+  mn: "mn",
+  bn: "bn",
+  my: "my",
+  hmn: "hmn",
+  xh: "xh",
+  zu: "zu",
+  ne: "ne",
+  no: "no",
+  pa: "pa",
+  pt: "pt",
+  ps: "ps",
+  ny: "ny",
+  tw: "ak",
+  ja: "ja",
+  sv: "sv",
+  sm: "sm",
+  si: "si",
+  eo: "eo",
+  sk: "sk",
+  sl: "sl",
+  sw: "sw",
+  sco: "gd",
+  ceb: "ceb",
+  so: "so",
+  tg: "tg",
+  te: "te",
+  ta: "ta",
+  th: "th",
+  tr: "tr",
+  tk: "tk",
+  cy: "cy",
+  ur: "ur",
+  uz: "uz",
+  es: "es",
+  he: "iw",
+  el: "el",
+  haw: "haw",
+  sd: "sd",
+  hu: "hu",
+  sn: "sn",
+  hy: "hy",
+  ig: "ig",
+  ilo: "ilo",
+  it: "it",
+  yi: "yi",
+  hi: "hi",
+  su: "su",
+  id: "id",
+  jv: "jw",
+  en: "en",
+  yo: "yo",
+  vi: "vi",
+  "zh-tw": "zh-TW",
+  ts: "ts",
+};
+
 async function lookupAliYun(word) {
   let data = [];
   const api = options.aliYun.api;
@@ -76,13 +205,11 @@ async function lookupAliYun(word) {
   }
   const errorCode = res.Code;
   if (errorCode == "200") {
-    let phoneticHtml = "";
-    if (speak) {
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
-      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-    }
-    const dataTitle = `<span class="translation">${res.Data.Translated}</span>${phoneticHtml}`;
+    const tran = res.Data.Translated;
+    let langSource = getLangAliYun(word, source);
+    let langTarget = getLangAliYun(tran, target);
+    let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
+    const dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
     data.push({
       title: dataTitle,
       description: "基本释义",
@@ -129,4 +256,12 @@ function getSignature(string, appId, appSecret) {
   const authHeader = "acs " + appId + ":" + signature;
 
   return { date, payloadMd5, uuid, authHeader };
+}
+
+function getLangAliYun(word, lang) {
+  let l = LANG_MAP_ALIYUN[lang];
+  if (!l) {
+    l = isChinese(word) ? "zh-CN" : "en";
+  }
+  return l;
 }

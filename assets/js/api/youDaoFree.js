@@ -5,6 +5,7 @@ const errorCodeMsgYouDaoFree = {
   9999: "其他错误，可进入设置页面切换其他API",
 };
 
+// Map to a list of languages that support Google Voice.
 const LANG_MAP_YOUDAOFREE = {
   ZH_CN: "zh-CN",
   EN: "en",
@@ -26,8 +27,8 @@ async function lookupYouDaoFree(word) {
     const trans = response.translateResult;
     if (trans.length != 0 && trans[0].length != 0) {
       let tran = trans[0][0]?.tgt;
-      let langSource = getLang(word, source);
-      let langTarget = getLang(tran, target);
+      let langSource = getLangYouDaoFree(word, source);
+      let langTarget = getLangYouDaoFree(tran, target);
       let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
       let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
@@ -54,7 +55,7 @@ async function lookupYouDaoFree(word) {
   return data;
 }
 
-function getLang(word, lang) {
+function getLangYouDaoFree(word, lang) {
   if ("auto" == lang) {
     return isChinese(word) ? "zh-CN" : "en";
   } else {
