@@ -37,12 +37,9 @@ async function lookupCaiYun(word) {
     if (!message) {
       const tran = response?.target;
       if (tran) {
-        let phoneticHtml = "";
-        if (speak) {
-          const phoneticEn = getPhoneticEn(word);
-          const phoneticUs = getPhoneticUs(word);
-          phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-        }
+        let langSource = "zh" == source ? "zh-CN" : "en";
+        let langTarget = "zh" == source ? "en" : "zh-CN";
+        let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
         let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
         data.push({
           title: dataTitle,
