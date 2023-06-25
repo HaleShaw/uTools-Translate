@@ -153,12 +153,9 @@ async function lookupTencent(word) {
     const errorCode = response.Response?.Error?.Code;
     if (!errorCode) {
       const tran = response.Response.TargetText;
-      let phoneticHtml = "";
-      if (speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
-        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-      }
+      let langSource = isChinese(word) ? "zh-CN" : "en";
+      let langTarget = isChinese(word) ? "en" : "zh-CN";
+      let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
       let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
         title: dataTitle,
