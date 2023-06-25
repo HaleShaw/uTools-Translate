@@ -16,9 +16,21 @@ async function lookupYouDaoOld(word) {
     const basic = response.basic;
     if (trans != null) {
       let dataTitle = `<span class="translation">${trans.join(", ")}</span>`;
-      if (speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
+      const speakSwitch = speak["speakSwitch"];
+      const speakContent = speak["speakContent"];
+      const speakEngine = speak["speakEngine"];
+      if (speakSwitch) {
+        const str = speakContent == "Source" ? word : trans[0];
+        let phoneticEn;
+        let phoneticUs;
+        if ("YouDao" == speakEngine) {
+          phoneticEn = getPhoneticEn(str);
+          phoneticUs = getPhoneticUs(str);
+        } else {
+          let lang = isChinese(str) ? "zh-CN" : "en";
+          phoneticEn = getPhoneticGoogle(str, lang);
+          phoneticUs = getPhoneticGoogle(str, lang);
+        }
         if (basic && basic.phonetic && basic.phonetic != "") {
           if (basic["us-phonetic"] && basic["us-phonetic"] != "") {
             dataTitle += `<span>英[${basic.phonetic}]</span>${phoneticEn}<span>美[${basic["us-phonetic"]}]</span>${phoneticUs}`;
