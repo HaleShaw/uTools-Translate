@@ -63,22 +63,22 @@ function getPhoneticEn(word) {
   if (isChinese(word)) {
     return "";
   }
-  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE.YouDao}${word}&type=1"></audio></button>`;
+  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE["YouDao"]}${word}&type=1"></audio></button>`;
 }
 
 function getPhoneticUs(word) {
   if (isChinese(word)) {
     return "";
   }
-  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE.YouDao}${word}&type=2"></audio></button>`;
+  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE["YouDao"]}${word}&type=2"></audio></button>`;
 }
 
 function getPhoneticGoogle(word, lang) {
-  let langs = options.googleAPI.langs.values();
+  let langs = Object.values(options.googleAPI.langs);
   if ("auto" == lang || langs.indexOf(lang) == -1) {
     return "";
   }
-  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE.Google}${lang}&q=${word}"></audio></button>`;
+  return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE["Google"]}${lang}&q=${word}"></audio></button>`;
 }
 
 function getPhoneticHtml(word, result, langSource, langTarget) {
