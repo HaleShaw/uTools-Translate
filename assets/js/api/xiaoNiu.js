@@ -17,9 +17,8 @@ async function lookupXiaoNiu(word) {
     return data;
   }
 
-  const flag = isChinese(word);
-  const source = flag ? "zh" : "en";
-  const target = flag ? "en" : "zh";
+  const source = isChinese(word) ? "zh" : "en";
+  const target = isChinese(word) ? "en" : "zh";
   const url =
     api + `?from=${source}&to=${target}&apikey=${token}&src_text=${encodeURIComponent(word)}`;
 
@@ -28,12 +27,9 @@ async function lookupXiaoNiu(word) {
     let resData = JSON.parse(response);
     const tran = resData?.tgt_text;
     if (tran) {
-      let phoneticHtml = "";
-      if (speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
-        phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-      }
+      let langSource = isChinese(word) ? "zh-CN" : "en";
+      let langTarget = isChinese(word) ? "en" : "zh-CN";
+      let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
       let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
         title: dataTitle,
