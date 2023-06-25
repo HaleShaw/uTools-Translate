@@ -6,24 +6,20 @@ async function lookupGoogleAPI(word) {
 
   const transData = await get(url);
 
-  let basic = undefined;
+  let tran = undefined;
   let basicArr = transData[0];
   let extendArr = transData[1];
   if (basicArr && basicArr[0] && basicArr[0][0]) {
-    basic = basicArr[0][0];
-    let phoneticHtml = "";
-    if (speak) {
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
-      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-    }
-    let dataTitle = `<span class="translation">${basic}</span>` + phoneticHtml;
+    tran = basicArr[0][0];
+    let langSource = tl == "en" ? "zh-CN" : "en";
+    let phoneticHtml = getPhoneticHtml(word, tran, langSource, tl);
+    let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
     data.push({
       title: dataTitle,
       description: "基本释义",
     });
   }
-  if (!basic) {
+  if (!tran) {
     data.push({
       title: errTitle,
       description: "翻译错误",
