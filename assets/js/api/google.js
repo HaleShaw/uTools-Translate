@@ -38,16 +38,13 @@ async function lookupGoogle(word) {
 
   if (trans && trans.length != 0) {
     let phoneticHtml = "";
-    if (speak) {
-      const phoneticEn = getPhoneticEn(word);
-      const phoneticUs = getPhoneticUs(word);
-      phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-    }
     for (let i = 0; i < trans.length; i++) {
-      let dataTitle = `<span class="translation">${trans[i]}</span>`;
+      let tran = trans[i];
       if (i == 0) {
-        dataTitle += phoneticHtml;
+        let langSource = tl == "en" ? "zh-CN" : "en";
+        phoneticHtml = getPhoneticHtml(word, tran, langSource, tl);
       }
+      let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
         title: dataTitle,
         description: "基本释义",
