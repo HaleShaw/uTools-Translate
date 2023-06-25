@@ -15,11 +15,12 @@ async function lookupBing(word) {
       for (let j = 0; j < tranNodes.length; j++) {
         tranStr += tranNodes[j].innerText.trim() + " ";
       }
-      let dataTitle = `<span class="translation">${tranStr.trim()}</span>`;
-      if (i == 0 && speak) {
-        const phoneticEn = getPhoneticEn(word);
-        const phoneticUs = getPhoneticUs(word);
-        dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+      const tran = tranStr.trim();
+      let dataTitle = `<span class="translation">${tran}</span>`;
+      if (i == 0) {
+        let langSource = isChinese(word) ? "zh-CN" : "en";
+        let langTarget = isChinese(word) ? "en" : "zh-CN";
+        dataTitle += getPhoneticHtml(word, tran, langSource, langTarget);
       }
       data.push({
         title: dataTitle,
