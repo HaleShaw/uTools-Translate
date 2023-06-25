@@ -45,21 +45,18 @@ async function lookupDeepL(word) {
       });
     } else {
       let trans = response.result.translations;
-      let dataTitle = "";
       for (let i = 0; i < trans.length; i++) {
         let beams = trans[i].beams;
         for (let j = 0; j < beams.length; j++) {
+          let phoneticHtml = "";
           if (i == 0 && j == 0) {
-            let phoneticHtml = "";
-            if (speak) {
-              const phoneticEn = getPhoneticEn(word);
-              const phoneticUs = getPhoneticUs(word);
-              phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-            }
-            dataTitle = `<span class="translation">${beams[j].postprocessed_sentence}</span>${phoneticHtml}`;
-          } else {
-            dataTitle = beams[j].postprocessed_sentence;
+            let tran = beams[j].postprocessed_sentence;
+            let langSource =
+              param["params"]["lang"]["source_lang_computed"] == "ZH" ? "zh-CN" : "en";
+            let langTarget = langSource == "en" ? "zh-CN" : "en";
+            phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
           }
+          let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
           data.push({
             title: dataTitle,
             description: "基本释义",
