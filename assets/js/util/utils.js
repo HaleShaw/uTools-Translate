@@ -104,6 +104,70 @@ function getPhoneticHtml(word, result, langSource, langTarget) {
   }
 }
 
+/**
+ * Unformat the formatted text.
+ * @param {String} text Unformatted text is required.
+ * @param {String} changeCase Unformatted formatter.
+ */
+function UnChangeCase(text, changeCase) {
+  if (isChinese(text) || Object.keys(variableNameMap).indexOf(changeCase) == -1) {
+    return text;
+  }
+  let result = "";
+  switch (changeCase) {
+    case "camelCase":
+    case "pascalCase":
+      result = UnPascalCase(text);
+      break;
+    case "snakeCase":
+      result = text.replaceAll("_", " ");
+      break;
+    case "paramCase":
+      result = text.replaceAll("-", " ");
+      break;
+    case "constantCase":
+      result = text
+        .split("_")
+        .map(s => s.toLowerCase())
+        .join(" ");
+      break;
+    default:
+      result = text;
+      break;
+  }
+  return result;
+}
+
+/**
+ * Unformat the formatted text for camelCase and pascalCase.
+ * @param {String} text Unformatted text is required.
+ */
+function UnPascalCase(text) {
+  let arr = [];
+  let temp = "";
+  let flag = false;
+  let isUpper = function (charCode) {
+    return charCode >= 65 && charCode <= 90;
+  };
+  for (let i = 0; i < text.length; i++) {
+    let now = isUpper(text.charCodeAt(i));
+    if (
+      (!flag && now) ||
+      (flag && now && i + 1 < text.length && !isUpper(text.charCodeAt(i + 1)))
+    ) {
+      arr.push(temp.toLowerCase());
+      temp = text.substring(i, i + 1);
+    } else {
+      temp += text.substring(i, i + 1);
+    }
+    flag = now;
+    if (i == text.length - 1) {
+      arr.push(temp.toLowerCase());
+    }
+  }
+  return arr.join(" ");
+}
+
 function isChinese(word) {
   return /[\u4e00-\u9fa5]/.test(word);
 }

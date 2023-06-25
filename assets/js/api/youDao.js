@@ -186,7 +186,7 @@ async function lookupYouDao(word) {
             } else {
               dataTitle += `<span>[${basic.phonetic}]</span>${phoneticEn}`;
             }
-          } else {
+          } else if (phoneticEn != "" && phoneticUs != "") {
             dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
           }
         }

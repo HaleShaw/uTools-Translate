@@ -764,6 +764,7 @@ function updateSpeakStatus(speakSwitch) {
  */
 function updateVariableStatus(variableSwitch) {
   document.getElementById("variableRadioResult").disabled = !variableSwitch;
+  document.getElementById("variableRadioSource").disabled = !variableSwitch;
   document.getElementById("variableSelect").disabled = !variableSwitch;
 }
 

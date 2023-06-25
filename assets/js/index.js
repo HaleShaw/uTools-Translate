@@ -107,6 +107,20 @@ async function switchApi(word) {
     utools.dbStorage.setItem("speak", speak);
   }
 
+  let variable = utools.dbStorage.getItem("variable");
+  if (variable === null || typeof variable == "boolean") {
+    // Choose the default variable setting.
+    variable = DEFAULT_VARIABLE;
+    utools.dbStorage.setItem("variable", variable);
+    utools.dbStorage.removeItem("variableCase");
+  }
+  const variableSwitch = variable["variableSwitch"];
+  const variableContent = variable["variableContent"];
+  const variableCase = variable["variableCase"];
+  if (variableSwitch && variableContent == "Source") {
+    word = UnChangeCase(word, variableCase);
+  }
+
   if (option == Object.keys(options)[1]) {
     $("#root").addClass("hide");
     $("#setting").addClass("hide");

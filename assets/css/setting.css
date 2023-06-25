@@ -132,7 +132,6 @@
   margin-left: 32px;
 }
 
-
 #setting > .body > .content > .services > .service > .api > label {
   cursor: pointer;
 }
@@ -221,7 +220,8 @@
   #setting > .body > .side a:hover,
   #setting > .body > .content label:hover,
   #setting > .body > .content > .services > .service > .api > label > strong:hover,
-  #setting > .body > .content > .services > .service > .api > a:hover {
+  #setting > .body > .content > .services > .service > .api > a:hover,
+  #setting > .footer a:hover {
     color: #0000cc;
   }
 }
@@ -260,7 +260,8 @@
   #setting > .body > .side a:hover,
   #setting > .body > .content label:hover,
   #setting > .body > .content > .services > .service > .api > label > strong:hover,
-  #setting > .body > .content > .services > .service > .api > a:hover {
-    color: #D94235;
+  #setting > .body > .content > .services > .service > .api > a:hover,
+  #setting > .footer a:hover {
+    color: #d94235;
   }
 }
