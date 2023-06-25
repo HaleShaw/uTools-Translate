@@ -634,6 +634,7 @@ function loadVariable() {
     // Choose the default variable setting.
     variable = DEFAULT_VARIABLE;
     utools.dbStorage.setItem("variable", variable);
+    utools.dbStorage.removeItem("variableCase");
   }
 
   let variableSwitch = document.getElementById("funcSwitchVariable");

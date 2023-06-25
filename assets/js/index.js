@@ -258,10 +258,11 @@ function bindPhoneticHotkey() {
  * @param {Array} data data array.
  */
 function formatVariableCase(data) {
-  const dev = utools.dbStorage.getItem("variable");
-  const variableCase = utools.dbStorage.getItem("variableCase");
+  const variable = utools.dbStorage.getItem("variable");
+  const variableSwitch = variable["variableSwitch"];
+  const variableCase = variable["variableCase"];
   text = data[0]["title"];
-  if (dev && variableCase && text) {
+  if (variable && variableSwitch && variableCase && text) {
     const tempDom = new DOMParser().parseFromString(text, "text/html");
     let resultDom = tempDom.querySelector(".translation");
     if (!resultDom) {
@@ -269,11 +270,11 @@ function formatVariableCase(data) {
     }
     translationValue = resultDom.innerText;
     if (!variableReg.test(translationValue)) {
-      variableValue = {
+      variableItem = {
         title: changeCase[variableCase](translationValue),
         description: `变量模式：${variableNameMap[variableCase]}`,
       };
-      data.unshift(variableValue);
+      data.unshift(variableItem);
     }
   }
 }
