@@ -44,12 +44,9 @@ async function lookupDeepLAPI(word, type) {
     for (let i = 0; i < translations.length; ++i) {
       const tran = translations[i]?.text;
       if (tran) {
-        let phoneticHtml = "";
-        if (speak) {
-          const phoneticEn = getPhoneticEn(tran);
-          const phoneticUs = getPhoneticUs(tran);
-          phoneticHtml = `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
-        }
+        let langSource = targetLang == "EN-US" ? "zh-CN" : "en";
+        let langTarget = langSource == "en" ? "zh-CN" : "en";
+        let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
         let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
         data.push({
           title: dataTitle,
