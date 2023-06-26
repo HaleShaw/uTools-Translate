@@ -31,9 +31,14 @@
   cursor: pointer;
 }
 
-#setting > .body,
+#setting > .header {
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(240, 240, 240, 0.8);
+}
+
 #setting > .footer {
-  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px solid rgba(240, 240, 240, 0.8);
 }
 
 #setting .split {
@@ -268,5 +273,13 @@
   #setting span.input-group-text {
     color: #ffffff;
     background-color: #888888;
+  }
+
+  #setting > .header {
+    border-bottom: 1px solid rgba(80, 80, 80, 0.8);
+  }
+
+  #setting > .footer {
+    border-top: 1px solid rgba(80, 80, 80, 0.8);
   }
 }
