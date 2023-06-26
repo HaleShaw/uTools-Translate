@@ -483,6 +483,7 @@ function initSetting() {
     addLangListener();
     addExchangeListener();
     addBadgeListener();
+    addSettingResizeListener();
   }
   isFirstEnter && (isFirstEnter = false);
 }
@@ -1044,7 +1045,7 @@ function addBadgeListener() {
       $("#tooltip")
         .css({
           padding: "5px",
-          top: $(this).offset().top - 5,
+          top: $(this).offset().top - 8,
           left: $(this).offset().left + $(this).outerWidth() + 5,
           position: "absolute",
           color: "white",
@@ -1056,4 +1057,16 @@ function addBadgeListener() {
     .mouseout(function () {
       $("#tooltip").hide();
     });
+}
+
+/**
+ * Content size according to the window size changes.
+ */
+function addSettingResizeListener() {
+  window.onresize = function () {
+    const winHeight = window.innerHeight;
+    const height = winHeight - 81 + "px";
+    document.querySelector("#setting > .body > .side").style.maxHeight = height;
+    document.querySelector("#setting > .body > .content").style.maxHeight = height;
+  };
 }

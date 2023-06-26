@@ -1,6 +1,5 @@
 #setting {
   padding: 10px 20px;
-  max-height: 544px;
 }
 
 .floatL {
@@ -99,7 +98,6 @@
 #setting > .body > .side,
 #setting > .body > .content {
   margin-left: 5px;
-  max-height: 470px;
   overflow-y: scroll;
 }
 
@@ -132,6 +130,7 @@
   margin-left: 32px;
 }
 
+#setting input.form-check-input,
 #setting > .body > .content > .services > .service > .api > label {
   cursor: pointer;
 }
@@ -263,5 +262,11 @@
   #setting > .body > .content > .services > .service > .api > a:hover,
   #setting > .footer a:hover {
     color: #d94235;
+  }
+
+  /* input输入框提示文案 */
+  #setting span.input-group-text {
+    color: #ffffff;
+    background-color: #888888;
   }
 }
