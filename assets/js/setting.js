@@ -424,6 +424,12 @@ const options = {
   caiYun: {
     name: "彩云小译",
     api: "http://api.interpreter.caiyunai.com/v1/translator",
+    langs: {
+      自动: "auto",
+      中文: "zh",
+      英语: "en",
+      日语: "ja",
+    },
   },
   xiaoNiu: {
     name: "小牛",
@@ -691,6 +697,7 @@ function loadProxy() {
 function loadLang() {
   loadLangAliYun();
   loadLangYouDaoFree();
+  loadLangCaiYun();
 }
 
 function loadLangAliYun() {
@@ -743,6 +750,34 @@ function loadLangYouDaoFree() {
   }
   for (let i = 0; i < targetElement.length; i++) {
     if (youDaoFreeTarget == targetElement.options[i].value) {
+      targetElement.options[i].selected = true;
+      break;
+    }
+  }
+}
+
+function loadLangCaiYun() {
+  let caiYunSource = utools.dbStorage.getItem("caiYunSource") || "auto";
+  let caiYunTarget = utools.dbStorage.getItem("caiYunTarget") || "auto";
+  utools.dbStorage.setItem("caiYunSource", caiYunSource);
+  utools.dbStorage.setItem("caiYunTarget", caiYunTarget);
+  let names = Object.keys(options.caiYun.langs);
+  let htmlStr = "";
+  for (let i = 0; i < names.length; i++) {
+    htmlStr += `<option value=${options.caiYun.langs[names[i]]}>${names[i]}</option>`;
+  }
+  let sourceElement = document.querySelector(".service.caiYun .lang>select.source");
+  let targetElement = document.querySelector(".service.caiYun .lang>select.target");
+  sourceElement.innerHTML = htmlStr;
+  targetElement.innerHTML = htmlStr;
+  for (let i = 0; i < sourceElement.length; i++) {
+    if (caiYunSource == sourceElement.options[i].value) {
+      sourceElement.options[i].selected = true;
+      break;
+    }
+  }
+  for (let i = 0; i < targetElement.length; i++) {
+    if (caiYunTarget == targetElement.options[i].value) {
       targetElement.options[i].selected = true;
       break;
     }
@@ -941,6 +976,7 @@ function addEyeListener() {
 function addLangListener() {
   addLangListenerAliYun();
   addLangListenerYouDaoFree();
+  addLangListenerCaiYun();
 }
 
 function addLangListenerAliYun() {
@@ -1014,6 +1050,62 @@ function changeBrotherYouDaoFree(thisValue, brother) {
   }
 }
 
+function addLangListenerCaiYun() {
+  $(".service.caiYun .lang>select.source").change(function () {
+    changeBrotherCaiYun($(this).val(), $(".service.caiYun .lang>select.target"));
+    utools.dbStorage.setItem("caiYunSource", $(this).val());
+    let caiYunTarget = $(".service.caiYun .lang>select.target").val();
+    utools.dbStorage.setItem("caiYunTarget", caiYunTarget);
+  });
+  $(".service.caiYun .lang>select.target").change(function () {
+    changeBrotherCaiYun($(this).val(), $(".service.caiYun .lang>select.source"));
+    utools.dbStorage.setItem("caiYunTarget", $(this).val());
+    let caiYunSource = $(".service.caiYun .lang>select.source").val();
+    utools.dbStorage.setItem("caiYunSource", caiYunSource);
+  });
+}
+
+/**
+ * Change the value of the brother select element for CaiYun.
+ * @param {String} thisValue The value of the current select element.
+ * @param {Object} brother The brother jquery object of the current select element.
+ */
+function changeBrotherCaiYun(thisValue, brother) {
+  switch (thisValue) {
+    case "auto":
+      if (brother[0].className.indexOf("source") != -1) {
+        brother[0].selectedIndex = 0;
+      }
+      break;
+    case "zh":
+      if (
+        (brother[0].className.indexOf("target") != -1 && brother[0].selectedIndex == 0) ||
+        "zh" == brother.val()
+      ) {
+        brother[0].selectedIndex = 2;
+      }
+      break;
+    case "en":
+      if (
+        brother[0].className.indexOf("target") != -1 ||
+        ("auto" != brother.val() && "en" != brother.val())
+      ) {
+        brother[0].selectedIndex = 1;
+      }
+      break;
+    case "ja":
+      if (
+        brother[0].className.indexOf("target") != -1 ||
+        ("auto" != brother.val() && "zh" != brother.val())
+      ) {
+        brother[0].selectedIndex = 1;
+      }
+      break;
+    default:
+      break;
+  }
+}
+
 /**
  * Add the exchange button listener.
  */
@@ -1024,6 +1116,9 @@ function addExchangeListener() {
     let temp = sourceEle[0].selectedIndex;
     sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
     targetEle[0].selectedIndex = temp;
+    changeBrotherYouDaoFree(sourceEle.val(), targetEle);
+    utools.dbStorage.setItem("youDaoFreeSource", sourceEle.val());
+    utools.dbStorage.setItem("youDaoFreeTarget", targetEle.val());
   });
 
   $(".service.aliYun .lang>.exchange").click(function () {
@@ -1032,6 +1127,20 @@ function addExchangeListener() {
     let temp = sourceEle[0].selectedIndex;
     sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
     targetEle[0].selectedIndex = temp;
+    changeBrotherAliYun(sourceEle.val(), targetEle);
+    utools.dbStorage.setItem("aliYunSource", sourceEle.val());
+    utools.dbStorage.setItem("aliYunTarget", targetEle.val());
+  });
+
+  $(".service.caiYun .lang>.exchange").click(function () {
+    let sourceEle = $(".service.caiYun .lang>select.source");
+    let targetEle = $(".service.caiYun .lang>select.target");
+    let temp = sourceEle[0].selectedIndex;
+    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
+    targetEle[0].selectedIndex = temp;
+    changeBrotherCaiYun(sourceEle.val(), targetEle);
+    utools.dbStorage.setItem("caiYunSource", sourceEle.val());
+    utools.dbStorage.setItem("caiYunTarget", targetEle.val());
   });
 }
 
