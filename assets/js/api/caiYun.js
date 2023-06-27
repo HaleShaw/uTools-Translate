@@ -2,6 +2,14 @@ const errorCodeMsgCaiYun = {
   "API rate limit exceeded": "API请求太过频繁，请稍后再试。可进入设置页面切换其他API。",
   9999: "其他错误，可进入设置页面切换其他API",
 };
+
+// Map to a list of languages that support Google Voice.
+const LANG_MAP_CAIYUN = {
+  zh: "zh-CN",
+  en: "en",
+  ja: "ja",
+};
+
 async function lookupCaiYun(word) {
   let data = [];
   const api = options.caiYun.api;
@@ -14,9 +22,14 @@ async function lookupCaiYun(word) {
     return data;
   }
 
-  const flag = isChinese(word);
-  const source = flag ? "zh" : "en";
-  const target = flag ? "en" : "zh";
+  let source = utools.dbStorage.getItem("caiYunSource") || "auto";
+  let target = utools.dbStorage.getItem("caiYunTarget") || "auto";
+  utools.dbStorage.setItem("caiYunSource", source);
+  utools.dbStorage.setItem("caiYunTarget", target);
+
+  if ("auto" == target) {
+    target = isChinese(word) ? "en" : "zh";
+  }
   let type = source + "2" + target;
 
   let body = {
@@ -37,9 +50,21 @@ async function lookupCaiYun(word) {
     if (!message) {
       const tran = response?.target;
       if (tran) {
-        let langSource = "zh" == source ? "zh-CN" : "en";
-        let langTarget = "zh" == source ? "en" : "zh-CN";
-        let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
+        let langSource = "";
+        if ("auto" == source) {
+          switch (target) {
+            case "zh":
+              langSource = "en";
+              break;
+            case "en":
+            case "ja":
+              langSource = "zh-CN";
+              break;
+          }
+        } else {
+          langSource = LANG_MAP_CAIYUN[source];
+        }
+        let phoneticHtml = getPhoneticHtml(word, tran, langSource, target);
         let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
         data.push({
           title: dataTitle,
