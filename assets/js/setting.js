@@ -485,6 +485,7 @@ function initSetting() {
     addBadgeListener();
     addSettingResizeListener();
   }
+  setWindowHeight();
   isFirstEnter && (isFirstEnter = false);
 }
 
@@ -1064,9 +1065,13 @@ function addBadgeListener() {
  */
 function addSettingResizeListener() {
   window.onresize = function () {
-    const winHeight = window.innerHeight;
-    const height = winHeight - 81 + "px";
-    document.querySelector("#setting > .body > .side").style.maxHeight = height;
-    document.querySelector("#setting > .body > .content").style.maxHeight = height;
+    setWindowHeight();
   };
+}
+
+function setWindowHeight() {
+  const winHeight = window.innerHeight;
+  const height = winHeight - 81 + "px";
+  document.querySelector("#setting > .body > .side").style.maxHeight = height;
+  document.querySelector("#setting > .body > .content").style.maxHeight = height;
 }
