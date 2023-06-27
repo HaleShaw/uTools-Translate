@@ -1003,10 +1003,21 @@ function changeBrotherAliYun(thisValue, brother) {
   let brotherValue = brother.val();
   if ("mn" == thisValue || "yue" == thisValue || "zh-tw" == thisValue) {
     brother[0].selectedIndex = 2;
+  } else if (
+    ("mn" == brotherValue || "yue" == brotherValue || "zh-tw" == brotherValue) &&
+    "zh" != thisValue
+  ) {
+    if ("en" == thisValue) {
+      brother[0].selectedIndex = 2;
+    } else if ("auto" == thisValue) {
+      brother[0].selectedIndex = 0;
+    } else {
+      brother[0].selectedIndex = 1;
+    }
   } else if ("auto" != brotherValue && thisValue == brotherValue) {
     if ("en" == thisValue) {
       brother[0].selectedIndex = 2;
-    } else if ("zh" == thisValue) {
+    } else {
       brother[0].selectedIndex = 1;
     }
   }
@@ -1087,8 +1098,8 @@ function changeBrotherCaiYun(thisValue, brother) {
       break;
     case "en":
       if (
-        brother[0].className.indexOf("target") != -1 ||
-        ("auto" != brother.val() && "en" != brother.val())
+        (brother[0].className.indexOf("source") != -1 && "en" == brother.val()) ||
+        brother[0].className.indexOf("target")
       ) {
         brother[0].selectedIndex = 1;
       }
