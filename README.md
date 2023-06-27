@@ -1,12 +1,8 @@
 # uTools-Translate
 
-uTools plugin - Translate
+## uTools 插件 - 翻译
 
-uTools 插件 - 翻译
-
-自v3.0.0起，将插件《词典》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/logoDictionary.png" height="28px" witdh="28px">和《Translate》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/logoTranslate.png" height="28px" witdh="28px">合并为《翻译》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/logo.png" height="28px" witdh="28px">
-
-**朗读功能为朗读输入框中的内容，而非翻译结果。**
+> 自v3.0.0起，将插件《词典》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/logoDictionary.png" height="28px" witdh="28px">和《Translate》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/logoTranslate.png" height="28px" witdh="28px">合并为《翻译》<img src="https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/logo.png" height="28px" witdh="28px">
 
 ![Translate](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/Translate.gif)
 
@@ -54,19 +50,22 @@ uTools 插件 - 翻译
 
 ## Features
 
-1. 支持中英文翻译
+1. 支持中英文等214种语言互译
 2. 支持切换翻译API
-3. 支持单词句子翻译
-4. 支持查询音标，朗读
-5. 支持句子朗读
-6. 支持快捷键朗读（**Windows**：英式 `Alt+S`，美式 `Alt+D` | **Mac OS**：英式 `Ctrl+S`，美式 `Ctrl+D`）
-7. 支持自动复制翻译结果
-8. 支持自动翻译剪贴板文本
-9. 支持单词变形
-10. 支持自动即时查询
-11. 支持源语言和目标语言设置
-12. 支持变量命名
-13. 支持暗黑模式
+3. 支持单词、句子及段落翻译
+4. 支持查询音标
+5. 支持多个朗读引擎
+6. 支持朗读源文本及翻译结果
+7. 支持快捷键朗读（**Windows**：英式 `Alt+S`，美式 `Alt+D` | **Mac OS**：英式 `Ctrl+S`，美式 `Ctrl+D`）
+8. 支持自动复制翻译结果
+9. 支持自动翻译剪贴板文本
+10. 支持单词变形
+11. 支持自动即时查询
+12. 支持源语言和目标语言设置
+13. 支持按变量格式化内容
+14. 支持翻译变量
+15. 支持代理设置
+16. 支持暗黑模式
 
 ## API
 
@@ -77,6 +76,7 @@ uTools 插件 - 翻译
 2. 有道翻译
      - <https://m.youdao.com>
      - 属于移动端网页API，精准度不是非常高。
+     - 为页面模式，翻译结果较多时显示效果更好。
 3. 有道翻译免费版
      - <http://fanyi.youdao.com>
      - 翻译内容较少，仅有基本翻译。
@@ -84,21 +84,21 @@ uTools 插件 - 翻译
 4. 谷歌
      - <https://translate.googleapis.com>
      - 翻译内容较少，仅有基本翻译。
-     - 不太稳定。若不能直接访问谷歌，可修改hosts。
+     - 若不能直接访问谷歌，可修改hosts。
 5. 谷歌
      - <https://translate.google.com>
      - 翻译内容较少，仅有基本翻译。
-     - 不太稳定。若不能直接访问谷歌，可修改hosts，或设置代理。
-6. 必应
-     - <http://cn.bing.com/dict>
-     - 必应词典，仅支持单词，不支持句子。
-7. DeepL
+     - 若不能直接访问谷歌，可修改hosts，或设置代理。
+6. DeepL
      - <https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs>
      - 免费API，响应相对较慢。
-8. DeepL API
+7. DeepL API
      - <https://api-free.deepl.com/v2/translate>
      - <https://api.deepl.com/v2/translate>
-     - 官方API，需要到[DeepL API](https://www.deepl.com/pro-api)订阅方案并获取密钥。
+     - 官方API，分别对应Free和Pro版，需要到[DeepL API](https://www.deepl.com/pro-api)订阅方案并获取密钥。
+8. 必应
+     - <http://cn.bing.com/dict>
+     - 必应词典，仅支持单词，不支持句子。
 9. 有道翻译
      - <http://openapi.youdao.com/api>
      - 需要到[有道智云](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
