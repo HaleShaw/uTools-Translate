@@ -18,8 +18,8 @@ async function lookupYouDaoFree(word) {
   const api = options.youDaoFree.api;
   let source = utools.dbStorage.getItem("youDaoFreeSource") || "auto";
   let target = utools.dbStorage.getItem("youDaoFreeTarget") || "auto";
-  utools.dbStorage.setItem("youDaoFreeTarget", source);
-  utools.dbStorage.setItem("youDaoFreeSource", target);
+  utools.dbStorage.setItem("youDaoFreeSource", source);
+  utools.dbStorage.setItem("youDaoFreeTarget", target);
   let lang = "AUTO" == source || "AUTO" == target ? "AUTO" : `${source}2${target}`;
   let url = `${api}${lang}&i=${word}`;
 

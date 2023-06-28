@@ -182,6 +182,121 @@ const options = {
   youDao: {
     name: "有道",
     api: "http://openapi.youdao.com/api",
+    langs: {
+      自动: "auto",
+      中文: "zh-CHS",
+      中文繁体: "zh-CHT",
+      英文: "en",
+      日文: "ja",
+      韩文: "ko",
+      法文: "fr",
+      阿尔巴尼亚语: "sq",
+      阿拉伯文: "ar",
+      阿姆哈拉语: "am",
+      阿塞拜疆语: "az",
+      爱尔兰语: "ga",
+      爱沙尼亚语: "et",
+      巴斯克语: "eu",
+      白俄罗斯语: "be",
+      白苗语: "mww",
+      保加利亚语: "bg",
+      冰岛语: "is",
+      波兰语: "pl",
+      波斯尼亚语: "bs",
+      波斯语: "fa",
+      丹麦语: "da",
+      德文: "de",
+      俄文: "ru",
+      菲律宾语: "tl",
+      斐济语: "fj",
+      芬兰语: "fi",
+      弗里西语: "fy",
+      高棉语: "km",
+      格鲁吉亚语: "ka",
+      古吉拉特语: "gu",
+      哈萨克语: "kk",
+      海地克里奥尔语: "ht",
+      豪萨语: "ha",
+      荷兰语: "nl",
+      加利西亚语: "gl",
+      加泰隆语: "ca",
+      捷克语: "cs",
+      卡纳达语: "kn",
+      柯尔克孜语: "ky",
+      科西嘉语: "co",
+      克雷塔罗奥托米语: "otq",
+      克林贡语: "tlh",
+      克罗地亚语: "hr",
+      库尔德语: "ku",
+      拉丁语: "la",
+      拉脱维亚语: "lv",
+      老挝语: "lo",
+      立陶宛语: "lt",
+      卢森堡语: "lb",
+      罗马尼亚语: "ro",
+      马尔加什语: "mg",
+      马耳他语: "mt",
+      马拉地语: "mr",
+      马拉雅拉姆语: "ml",
+      马来语: "ms",
+      马其顿语: "mk",
+      毛利语: "mi",
+      蒙古语: "mn",
+      孟加拉语: "bn",
+      缅甸语: "my",
+      南非荷兰语: "af",
+      南非科萨语: "xh",
+      南非祖鲁语: "zu",
+      尼泊尔语: "ne",
+      挪威语: "no",
+      旁遮普语: "pa",
+      葡萄牙文: "pt",
+      普什图语: "ps",
+      齐切瓦语: "ny",
+      瑞典语: "sv",
+      萨摩亚语: "sm",
+      "塞尔维亚语(拉丁文)": "sr-Latn",
+      "塞尔维亚语(西里尔文)": "sr-Cyrl",
+      塞索托语: "st",
+      僧伽罗语: "si",
+      世界语: "eo",
+      斯洛伐克语: "sk",
+      斯洛文尼亚语: "sl",
+      斯瓦希里语: "sw",
+      苏格兰盖尔语: "gd",
+      宿务语: "ceb",
+      索马里语: "so",
+      塔吉克语: "tg",
+      塔希提语: "ty",
+      泰卢固语: "te",
+      泰米尔语: "ta",
+      泰语: "th",
+      汤加语: "to",
+      土耳其语: "tr",
+      威尔士语: "cy",
+      乌尔都语: "ur",
+      乌克兰语: "uk",
+      乌兹别克语: "uz",
+      西班牙文: "es",
+      希伯来语: "he",
+      希腊语: "el",
+      夏威夷语: "haw",
+      信德语: "sd",
+      匈牙利语: "hu",
+      修纳语: "sn",
+      巽他语: "su",
+      亚美尼亚语: "hy",
+      伊博语: "ig",
+      意大利文: "it",
+      意第绪语: "yi",
+      印地语: "hi",
+      印尼文: "id",
+      尤卡坦玛雅语: "yua",
+      约鲁巴语: "yo",
+      越南文: "vi",
+      粤语: "yue",
+      爪哇语: "jw",
+    },
   },
   baiDu: {
     name: "百度",
@@ -195,6 +310,9 @@ const options = {
       自动: "auto",
       英语: "en",
       中文: "zh",
+      日语: "ja",
+      韩语: "ko",
+      法语: "fr",
       阿布哈兹语: "ab",
       阿尔巴尼亚语: "sq",
       阿肯语: "ak",
@@ -249,7 +367,6 @@ const options = {
       杜順語: "dtp",
       俄语: "ru",
       法罗语: "fo",
-      法语: "fr",
       梵语: "sa",
       菲律宾语: "fil",
       斐济语: "fj",
@@ -266,7 +383,6 @@ const options = {
       瓜拉尼语: "gn",
       哈萨克语: "kk",
       海地克里奥尔语: "ht",
-      韩语: "ko",
       豪萨语: "ha",
       荷兰语: "nl",
       黑山语: "cnr",
@@ -339,7 +455,6 @@ const options = {
       齐切瓦语: "ny",
       契维语: "tw",
       切罗基语: "chr",
-      日语: "ja",
       瑞典语: "sv",
       萨摩亚语: "sm",
       桑戈语: "sg",
@@ -695,37 +810,10 @@ function loadProxy() {
 }
 
 function loadLang() {
-  loadLangAliYun();
   loadLangYouDaoFree();
+  loadLangYouDao();
+  loadLangAliYun();
   loadLangCaiYun();
-}
-
-function loadLangAliYun() {
-  let aliYunSource = utools.dbStorage.getItem("aliYunSource") || "auto";
-  let aliYunTarget = utools.dbStorage.getItem("aliYunTarget") || "auto";
-  utools.dbStorage.setItem("aliYunSource", aliYunSource);
-  utools.dbStorage.setItem("aliYunTarget", aliYunTarget);
-  let names = Object.keys(options.aliYun.langs);
-  let htmlStr = "";
-  for (let i = 0; i < names.length; i++) {
-    htmlStr += `<option value=${options.aliYun.langs[names[i]]}>${names[i]}</option>`;
-  }
-  let sourceElement = document.querySelector(".service.aliYun .lang>select.source");
-  let targetElement = document.querySelector(".service.aliYun .lang>select.target");
-  sourceElement.innerHTML = htmlStr;
-  targetElement.innerHTML = htmlStr;
-  for (let i = 0; i < sourceElement.length; i++) {
-    if (aliYunSource == sourceElement.options[i].value) {
-      sourceElement.options[i].selected = true;
-      break;
-    }
-  }
-  for (let i = 0; i < targetElement.length; i++) {
-    if (aliYunTarget == targetElement.options[i].value) {
-      targetElement.options[i].selected = true;
-      break;
-    }
-  }
 }
 
 function loadLangYouDaoFree() {
@@ -750,6 +838,62 @@ function loadLangYouDaoFree() {
   }
   for (let i = 0; i < targetElement.length; i++) {
     if (youDaoFreeTarget == targetElement.options[i].value) {
+      targetElement.options[i].selected = true;
+      break;
+    }
+  }
+}
+
+function loadLangYouDao() {
+  let youDaoSource = utools.dbStorage.getItem("youDaoSource") || "auto";
+  let youDaoTarget = utools.dbStorage.getItem("youDaoTarget") || "auto";
+  utools.dbStorage.setItem("youDaoSource", youDaoSource);
+  utools.dbStorage.setItem("youDaoTarget", youDaoTarget);
+  let names = Object.keys(options.youDao.langs);
+  let htmlStr = "";
+  for (let i = 0; i < names.length; i++) {
+    htmlStr += `<option value=${options.youDao.langs[names[i]]}>${names[i]}</option>`;
+  }
+  let sourceElement = document.querySelector(".service.youDao .lang>select.source");
+  let targetElement = document.querySelector(".service.youDao .lang>select.target");
+  sourceElement.innerHTML = htmlStr;
+  targetElement.innerHTML = htmlStr;
+  for (let i = 0; i < sourceElement.length; i++) {
+    if (youDaoSource == sourceElement.options[i].value) {
+      sourceElement.options[i].selected = true;
+      break;
+    }
+  }
+  for (let i = 0; i < targetElement.length; i++) {
+    if (youDaoTarget == targetElement.options[i].value) {
+      targetElement.options[i].selected = true;
+      break;
+    }
+  }
+}
+
+function loadLangAliYun() {
+  let aliYunSource = utools.dbStorage.getItem("aliYunSource") || "auto";
+  let aliYunTarget = utools.dbStorage.getItem("aliYunTarget") || "auto";
+  utools.dbStorage.setItem("aliYunSource", aliYunSource);
+  utools.dbStorage.setItem("aliYunTarget", aliYunTarget);
+  let names = Object.keys(options.aliYun.langs);
+  let htmlStr = "";
+  for (let i = 0; i < names.length; i++) {
+    htmlStr += `<option value=${options.aliYun.langs[names[i]]}>${names[i]}</option>`;
+  }
+  let sourceElement = document.querySelector(".service.aliYun .lang>select.source");
+  let targetElement = document.querySelector(".service.aliYun .lang>select.target");
+  sourceElement.innerHTML = htmlStr;
+  targetElement.innerHTML = htmlStr;
+  for (let i = 0; i < sourceElement.length; i++) {
+    if (aliYunSource == sourceElement.options[i].value) {
+      sourceElement.options[i].selected = true;
+      break;
+    }
+  }
+  for (let i = 0; i < targetElement.length; i++) {
+    if (aliYunTarget == targetElement.options[i].value) {
       targetElement.options[i].selected = true;
       break;
     }
@@ -974,9 +1118,81 @@ function addEyeListener() {
 }
 
 function addLangListener() {
-  addLangListenerAliYun();
   addLangListenerYouDaoFree();
+  addLangListenerYouDao();
+  addLangListenerAliYun();
   addLangListenerCaiYun();
+}
+
+function addLangListenerYouDaoFree() {
+  $(".service.youDaoFree .lang>select.source").change(function () {
+    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.target"));
+    utools.dbStorage.setItem("youDaoFreeSource", $(this).val());
+    let youDaoFreeTarget = $(".service.youDaoFree .lang>select.target").val();
+    utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
+  });
+  $(".service.youDaoFree .lang>select.target").change(function () {
+    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.source"));
+    utools.dbStorage.setItem("youDaoFreeTarget", $(this).val());
+    let youDaoFreeSource = $(".service.youDaoFree .lang>select.source").val();
+    utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
+  });
+}
+
+/**
+ * Change the value of the brother select element for YouDaoFree.
+ * @param {String} thisValue The value of the current select element.
+ * @param {Object} brother The brother jquery object of the current select element.
+ */
+function changeBrotherYouDaoFree(thisValue, brother) {
+  switch (thisValue) {
+    case "AUTO":
+      brother[0].selectedIndex = 0;
+      break;
+    case "ZH_CN":
+      brother[0].selectedIndex = 2;
+      break;
+    case "EN":
+    case "KR":
+    case "JA":
+      brother[0].selectedIndex = 1;
+      break;
+    default:
+      break;
+  }
+}
+
+function addLangListenerYouDao() {
+  $(".service.youDao .lang>select.source").change(function () {
+    changeBrotherYouDao($(this).val(), $(".service.youDao .lang>select.target"));
+    utools.dbStorage.setItem("youDaoSource", $(this).val());
+    let youDaoTarget = $(".service.youDao .lang>select.target").val();
+    utools.dbStorage.setItem("youDaoTarget", youDaoTarget);
+  });
+  $(".service.youDao .lang>select.target").change(function () {
+    changeBrotherYouDao($(this).val(), $(".service.youDao .lang>select.source"));
+    utools.dbStorage.setItem("youDaoTarget", $(this).val());
+    let youDaoSource = $(".service.youDao .lang>select.source").val();
+    utools.dbStorage.setItem("youDaoSource", youDaoSource);
+  });
+}
+
+/**
+ * Change the value of the brother select element for YouDao.
+ * @param {String} thisValue The value of the current select element.
+ * @param {Object} brother The brother jquery object of the current select element.
+ */
+function changeBrotherYouDao(thisValue, brother) {
+  if ("auto" == thisValue && brother[0].className.indexOf("source") != -1) {
+    brother[0].selectedIndex = 0;
+  }
+  if (thisValue == brother.val() && "auto" != thisValue) {
+    if ("en" == thisValue) {
+      brother[0].selectedIndex = 1;
+    } else {
+      brother[0].selectedIndex = 3;
+    }
+  }
 }
 
 function addLangListenerAliYun() {
@@ -1020,44 +1236,6 @@ function changeBrotherAliYun(thisValue, brother) {
     } else {
       brother[0].selectedIndex = 1;
     }
-  }
-}
-
-function addLangListenerYouDaoFree() {
-  $(".service.youDaoFree .lang>select.source").change(function () {
-    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.target"));
-    utools.dbStorage.setItem("youDaoFreeSource", $(this).val());
-    let youDaoFreeTarget = $(".service.youDaoFree .lang>select.target").val();
-    utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
-  });
-  $(".service.youDaoFree .lang>select.target").change(function () {
-    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.source"));
-    utools.dbStorage.setItem("youDaoFreeTarget", $(this).val());
-    let youDaoFreeSource = $(".service.youDaoFree .lang>select.source").val();
-    utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
-  });
-}
-
-/**
- * Change the value of the brother select element for YouDaoFree.
- * @param {String} thisValue The value of the current select element.
- * @param {Object} brother The brother jquery object of the current select element.
- */
-function changeBrotherYouDaoFree(thisValue, brother) {
-  switch (thisValue) {
-    case "AUTO":
-      brother[0].selectedIndex = 0;
-      break;
-    case "ZH_CN":
-      brother[0].selectedIndex = 2;
-      break;
-    case "EN":
-    case "KR":
-    case "JA":
-      brother[0].selectedIndex = 1;
-      break;
-    default:
-      break;
   }
 }
 
@@ -1130,6 +1308,17 @@ function addExchangeListener() {
     changeBrotherYouDaoFree(sourceEle.val(), targetEle);
     utools.dbStorage.setItem("youDaoFreeSource", sourceEle.val());
     utools.dbStorage.setItem("youDaoFreeTarget", targetEle.val());
+  });
+
+  $(".service.youDao .lang>.exchange").click(function () {
+    let sourceEle = $(".service.youDao .lang>select.source");
+    let targetEle = $(".service.youDao .lang>select.target");
+    let temp = sourceEle[0].selectedIndex;
+    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
+    targetEle[0].selectedIndex = temp;
+    changeBrotherYouDao(targetEle.val(), sourceEle);
+    utools.dbStorage.setItem("youDaoSource", sourceEle.val());
+    utools.dbStorage.setItem("youDaoTarget", targetEle.val());
   });
 
   $(".service.aliYun .lang>.exchange").click(function () {

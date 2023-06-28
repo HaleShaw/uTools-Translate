@@ -130,6 +130,15 @@ const errorCodeMsgYouDao = {
   9999: "其他错误，可进入设置页面切换其他API",
 };
 
+// Map to a list of languages that support Google Voice.
+const LANG_MAP_YOUDAO = {
+  he: "iw",
+  "sr-Cyrl": "sr",
+  "sr-Latn": "sr",
+  "zh-CHS": "zh-CN",
+  "zh-CHT": "zh-TW",
+};
+
 async function lookupYouDao(word) {
   let data = [];
   const api = options.youDao.api;
@@ -142,6 +151,10 @@ async function lookupYouDao(word) {
     });
     return data;
   }
+  let source = utools.dbStorage.getItem("youDaoSource") || "auto";
+  let target = utools.dbStorage.getItem("youDaoTarget") || "auto";
+  utools.dbStorage.setItem("youDaoSource", source);
+  utools.dbStorage.setItem("youDaoTarget", target);
 
   const salt = new Date().getTime();
   const curtime = Math.round(new Date().getTime() / 1000);
@@ -150,8 +163,8 @@ async function lookupYouDao(word) {
     q: word,
     appKey: appId,
     salt: salt,
-    from: "auto",
-    to: "auto",
+    from: source,
+    to: target,
     sign: sign,
     signType: "v3",
     curtime: curtime,
@@ -176,7 +189,8 @@ async function lookupYouDao(word) {
             phoneticEn = getPhoneticEn(str);
             phoneticUs = getPhoneticUs(str);
           } else {
-            let lang = isChinese(str) ? "zh-CN" : "en";
+            let langArr = response.l.split("2");
+            let lang = getLangYouDao(speakContent, langArr);
             phoneticEn = getPhoneticGoogle(str, lang);
             phoneticUs = getPhoneticGoogle(str, lang);
           }
@@ -252,4 +266,12 @@ function truncate(str) {
 function getSignYouDao(appId, query, salt, curtime, appSecret) {
   const str = appId + truncate(query) + salt + curtime + appSecret;
   return window.SHA256(str);
+}
+
+function getLangYouDao(speakContent, langArr) {
+  if ("Source" == speakContent) {
+    return LANG_MAP_YOUDAO[langArr[0]] ? LANG_MAP_YOUDAO[langArr[0]] : langArr[0];
+  } else {
+    return LANG_MAP_YOUDAO[langArr[1]] ? LANG_MAP_YOUDAO[langArr[1]] : langArr[1];
+  }
 }
