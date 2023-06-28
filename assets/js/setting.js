@@ -167,6 +167,11 @@ const options = {
     name: "必应",
     api: "http://cn.bing.com/dict/search?q=",
   },
+  iCiBa: {
+    name: "爱词霸",
+    api: "https://ifanyi.iciba.com/index.php?c=trans&m=fy&client=6&auth_user=key_web_fanyi&sign=",
+    secret: "NmtleV93ZWJfZmFueWlpZmFueWl3ZWI4aGM5czk4ZQ==",
+  },
   deepL: {
     name: "DeepL",
     api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",
@@ -577,6 +582,7 @@ const BADGE_TOAST = {
   列表: "列表模式，快速复制",
   页面: "页面模式，显示更多内容",
   多语言: "支持多种语言互译",
+  推荐: "翻译内容多，翻译准确",
 };
 
 const SPEAK_ENGINE = {

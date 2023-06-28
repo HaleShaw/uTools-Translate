@@ -166,33 +166,36 @@ async function switchApi(word) {
         data = await lookupBing(word);
         break;
       case Object.keys(options)[6]:
-        data = await lookupDeepL(word);
+        data = await lookupICiBa(word);
         break;
       case Object.keys(options)[7]:
-        data = await lookupDeepLAPI(word, "free");
+        data = await lookupDeepL(word);
         break;
       case Object.keys(options)[8]:
-        data = await lookupDeepLAPI(word, "pro");
+        data = await lookupDeepLAPI(word, "free");
         break;
       case Object.keys(options)[9]:
-        data = await lookupYouDao(word);
+        data = await lookupDeepLAPI(word, "pro");
         break;
       case Object.keys(options)[10]:
-        data = await lookupBaiDu(word);
+        data = await lookupYouDao(word);
         break;
       case Object.keys(options)[11]:
-        data = await lookupAliYun(word);
+        data = await lookupBaiDu(word);
         break;
       case Object.keys(options)[12]:
-        data = await lookupTencent(word);
+        data = await lookupAliYun(word);
         break;
       case Object.keys(options)[13]:
-        data = await lookupHuoShan(word);
+        data = await lookupTencent(word);
         break;
       case Object.keys(options)[14]:
-        data = await lookupCaiYun(word);
+        data = await lookupHuoShan(word);
         break;
       case Object.keys(options)[15]:
+        data = await lookupCaiYun(word);
+        break;
+      case Object.keys(options)[16]:
         data = await lookupXiaoNiu(word);
         break;
       default:

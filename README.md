@@ -89,43 +89,46 @@
      - <https://translate.google.com>
      - 翻译内容较少，仅有基本翻译。
      - 若不能直接访问谷歌，可修改hosts，或设置代理。
-6. DeepL
+6. 必应
+     - <http://cn.bing.com/dict>
+     - 必应词典，仅支持单词，不支持句子。
+7. 爱词霸
+     - <https://ifanyi.iciba.com>
+     - 翻译内容较少，仅有基本翻译。
+8. DeepL
      - <https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs>
      - 免费API，响应相对较慢。
-7. DeepL API
+9. DeepL API
      - <https://api-free.deepl.com/v2/translate>
      - <https://api.deepl.com/v2/translate>
      - 官方API，分别对应Free和Pro版，需要到[DeepL API](https://www.deepl.com/pro-api)订阅方案并获取密钥。
-8. 必应
-     - <http://cn.bing.com/dict>
-     - 必应词典，仅支持单词，不支持句子。
-9. 有道翻译
+10. 有道翻译
      - <http://openapi.youdao.com/api>
      - 需要到[有道智云](https://ai.youdao.com/doc.s)申请获取应用ID和应用密钥。
-10. 百度翻译
+11. 百度翻译
     - <https://fanyi-api.baidu.com/api/trans/vip/translate>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[百度翻译开放平台](http://api.fanyi.baidu.com)申请获取应用ID和应用密钥。
-11. 阿里翻译
+12. 阿里翻译
     - <https://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general>
     - 翻译内容较少，仅有基本翻译。
     - 支持214种语言互译。
       - 除繁体中文、蒙语、粤语外，其他212种语言，可支持任意两种语言之间互译。
       - 繁体中文、蒙语、粤语仅支持与中文之间的互译。
     - 需要到[阿里云](https://www.aliyun.com/product/ai/base_alimt)申请获取应用ID和应用密钥。
-12. 腾讯翻译
+13. 腾讯翻译
     - <https://tmt.tencentcloudapi.com>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[腾讯云](https://cloud.tencent.com/product/tmt)申请获取应用ID和应用密钥。
-13. 火山翻译
+14. 火山翻译
     - <https://www.volcengine.com/product/machine-translation>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[火山引擎](https://www.volcengine.com/docs/4640/130262)开通服务并获取密钥。
-14. 彩云小译
+15. 彩云小译
     - <http://api.interpreter.caiyunai.com/v1/translator>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[彩云科技](https://fanyi.caiyunapp.com/#/api)申请获取应用Token。
-15. 小牛翻译
+16. 小牛翻译
     - <https://niutrans.com/text_trans>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[小牛翻译](https://niutrans.com/cloud/account_info/info)获取API-KEY。
