@@ -108,7 +108,7 @@
 11. 百度翻译
     - <https://fanyi-api.baidu.com/api/trans/vip/translate>
     - 翻译内容较少，仅有基本翻译。
-    - 需要到[百度翻译开放平台](http://api.fanyi.baidu.com)申请获取应用ID和应用密钥。
+    - 需要到[百度翻译开放平台](https://fanyi-api.baidu.com)申请获取应用ID和应用密钥。
 12. 阿里翻译
     - <https://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general>
     - 翻译内容较少，仅有基本翻译。
