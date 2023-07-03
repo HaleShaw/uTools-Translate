@@ -26,7 +26,7 @@
 
 - 语言设置
 
-  ![translateAliYun](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateAliYun.png)
+  ![translateYouDao](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateYouDao.png)
 
 - 有道WAP API，页面模式
 
