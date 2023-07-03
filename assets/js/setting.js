@@ -632,6 +632,7 @@ function loadConfiguration() {
       break;
     }
   }
+  updateMenuClass(option);
 
   loadVersion();
   loadSpeak();
@@ -639,6 +640,17 @@ function loadConfiguration() {
   loadProxy();
   loadIdSecret();
   loadLang();
+}
+
+function updateMenuClass(service) {
+  let menus = document.querySelectorAll("#setting > .body > .side > .services > .service");
+  for (let i = 0; i < menus.length; i++) {
+    if (menus[i].className.replaceAll(/(service|active|\s)/g, "") == service) {
+      $(menus[i]).addClass("active");
+    } else {
+      $(menus[i]).removeClass("active");
+    }
+  }
 }
 
 /**
@@ -1104,6 +1116,7 @@ function addProxyListener() {
 function addApiListener() {
   $("input[type=radio][name=service]").change(function () {
     utools.dbStorage.setItem("option", this.value);
+    updateMenuClass(this.value);
     utools.showNotification(`翻译引擎切换至${options[this.value]["name"]}！`);
   });
 }

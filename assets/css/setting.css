@@ -116,8 +116,17 @@
 }
 
 #setting > .body > .side > div,
-#setting > .body > .side > .services > div {
-  margin: 0.5rem 0;
+#setting > .body > .side > .services > .service {
+  padding: 0.25rem;
+}
+
+#setting > .body > .side > div:not(:nth-last-child(2)):hover,
+#setting > .body > .side > .services > .service:hover {
+  background-color: rgba(200, 200, 200, 0.6) !important;
+}
+
+#setting > .body > .side > .services > .service.active {
+  background-color: rgba(230, 230, 230, 0.8);
 }
 
 #setting > .body > .side > .services > div,
@@ -154,6 +163,10 @@
 
 #setting > div.body > div.content > div.ext > div.switch {
   margin-left: 10px;
+}
+
+.varFormatter > div.form-check-inline:last-child {
+  margin-right: 0px !important;
 }
 
 #variable > div.switch {
@@ -229,7 +242,9 @@
   #setting > .body > .content label:hover,
   #setting > .body > .content > .services > .service > .api > label > strong:hover,
   #setting > .body > .content > .services > .service > .api > a:hover,
-  #setting > .footer a:hover {
+  #setting > .footer a:hover,
+  #setting > .body > .side > div:not(:nth-last-child(2)):hover,
+  #setting > .body > .side > .services > .service:hover {
     color: #0000cc;
   }
 }
@@ -269,7 +284,9 @@
   #setting > .body > .content label:hover,
   #setting > .body > .content > .services > .service > .api > label > strong:hover,
   #setting > .body > .content > .services > .service > .api > a:hover,
-  #setting > .footer a:hover {
+  #setting > .footer a:hover,
+  #setting > .body > .side > div:not(:nth-last-child(2)):hover,
+  #setting > .body > .side > .services > .service:hover {
     color: #cc3333;
   }
 
