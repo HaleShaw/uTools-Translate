@@ -116,9 +116,9 @@ async function switchApi(word) {
   }
   const variableSwitch = variable["variableSwitch"];
   const variableContent = variable["variableContent"];
-  const variableCase = variable["variableCase"];
-  if (variableSwitch && variableContent == "Source") {
-    word = UnChangeCase(word, variableCase);
+  const variableSource = variable["variableSource"];
+  if (variableSwitch && variableContent == "Source" && variableSource) {
+    word = UnChangeCase(word, variableSource);
   }
 
   if (option == Object.keys(options)[1]) {
@@ -277,9 +277,9 @@ function bindPhoneticHotkey() {
 function formatVariableCase(data) {
   const variable = utools.dbStorage.getItem("variable");
   const variableSwitch = variable["variableSwitch"];
-  const variableCase = variable["variableCase"];
+  const variableResult = variable["variableResult"];
   text = data[0]["title"];
-  if (variable && variableSwitch && variableCase && text) {
+  if (variable && variableSwitch && variableResult && text) {
     const tempDom = new DOMParser().parseFromString(text, "text/html");
     let resultDom = tempDom.querySelector(".translation");
     if (!resultDom) {
@@ -287,11 +287,13 @@ function formatVariableCase(data) {
     }
     translationValue = resultDom.innerText;
     if (!variableReg.test(translationValue)) {
-      variableItem = {
-        title: changeCase[variableCase](translationValue),
-        description: `变量模式：${variableNameMap[variableCase]}`,
-      };
-      data.unshift(variableItem);
+      for (let i = variableResult.length - 1; i >= 0; i--) {
+        variableItem = {
+          title: changeCase[variableResult[i]](translationValue),
+          description: `变量模式：${variableNameMap[variableResult[i]]}`,
+        };
+        data.unshift(variableItem);
+      }
     }
   }
 }

@@ -156,6 +156,10 @@
   margin-left: 10px;
 }
 
+#variable > div.switch {
+  margin-left: 0px !important;
+}
+
 #setting > div.body > div.content > div.ext {
   padding: 1rem;
   margin: 10px 5px 10px 5px;

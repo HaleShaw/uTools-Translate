@@ -568,7 +568,8 @@ const DEFAULT_SPEAK = {
 const DEFAULT_VARIABLE = {
   variableSwitch: false,
   variableContent: "Result",
-  variableCase: "camelCase",
+  variableSource: "camelCase",
+  variableResult: ["camelCase"],
 };
 
 const DEFAULT_PROXY = {
@@ -766,20 +767,41 @@ function loadVariable() {
     utools.dbStorage.removeItem("variableCase");
   }
 
-  let variableSwitch = document.getElementById("funcSwitchVariable");
-  variableSwitch.checked = variable["variableSwitch"];
+  document.getElementById("funcSwitchVariable").checked = variable["variableSwitch"];
 
-  let variableContentResult = document.getElementById("variableRadioResult");
-  let variableContentSource = document.getElementById("variableRadioSource");
+  const variableSource = variable["variableSource"];
+  const variableResult = variable["variableResult"];
+
+  // Init Result.
+  let varChecks = document.querySelectorAll('.varFormatter > div > input[type="checkbox"]');
+  varChecks.forEach(check => {
+    check.checked = false;
+  });
+  let valueArr = [];
+  for (let i = 0; i < variableResult.length; i++) {
+    for (let j = 0; j < varChecks.length; j++) {
+      const value = varChecks[j].getAttribute("value");
+      if (variableResult[i] == value) {
+        varChecks[j].checked = true;
+      }
+    }
+    valueArr.push(variableNameMap[variableResult[i]]);
+  }
+  document.querySelector(".varSequence > .varSequenceValue").textContent = valueArr.join(" > ");
+
+  // Init Source.
+  $("#variableSelect").val(variableSource);
+
   const variableContent = variable["variableContent"];
   if ("Result" == variableContent) {
-    variableContentResult.setAttribute("checked", true);
+    document.getElementById("variableRadioResult").checked = true;
+    $(".varSource").addClass("hide");
+    $(".varResult").removeClass("hide");
   } else if ("Source" == variableContent) {
-    variableContentSource.setAttribute("checked", true);
+    document.getElementById("variableRadioSource").checked = true;
+    $(".varSource").removeClass("hide");
+    $(".varResult").addClass("hide");
   }
-
-  const variableCase = variable["variableCase"];
-  $("#variableSelect").val(variableCase);
 
   updateVariableStatus(variable["variableSwitch"]);
 }
@@ -953,6 +975,9 @@ function updateVariableStatus(variableSwitch) {
   document.getElementById("variableRadioResult").disabled = !variableSwitch;
   document.getElementById("variableRadioSource").disabled = !variableSwitch;
   document.getElementById("variableSelect").disabled = !variableSwitch;
+  document.querySelectorAll('.varFormatter > div > input[type="checkbox"]').forEach(check => {
+    check.disabled = !variableSwitch;
+  });
 }
 
 /**
@@ -1006,13 +1031,44 @@ function addVariableListener() {
     let variable = utools.dbStorage.getItem("variable");
     variable["variableContent"] = this.value;
     utools.dbStorage.setItem("variable", variable);
+    if ("Source" == this.value) {
+      $(".varSource").removeClass("hide");
+      $(".varResult").addClass("hide");
+    } else {
+      $(".varSource").addClass("hide");
+      $(".varResult").removeClass("hide");
+    }
+  });
+
+  $('.varFormatter > div > input[type="checkbox"]').click(function () {
+    let variable = utools.dbStorage.getItem("variable");
+    let variableResult = variable["variableResult"];
+    if (this.checked) {
+      variableResult.push(this.value);
+      variable["variableResult"] = variableResult;
+    } else {
+      let temp = [];
+      for (let i = 0; i < variableResult.length; i++) {
+        if (this.value != variableResult[i]) {
+          temp.push(variableResult[i]);
+        }
+      }
+      variable["variableResult"] = temp;
+    }
+
+    let valueArr = [];
+    for (let i = 0; i < variable["variableResult"].length; i++) {
+      valueArr.push(variableNameMap[variable["variableResult"][i]]);
+    }
+    utools.dbStorage.setItem("variable", variable);
+    document.querySelector(".varSequence > .varSequenceValue").textContent = valueArr.join(" > ");
   });
 
   const variableSelect = document.getElementById("variableSelect");
   variableSelect.addEventListener("change", e => {
     let variable = utools.dbStorage.getItem("variable");
     const { value } = e.target;
-    variable["variableCase"] = value;
+    variable["variableSource"] = value;
     utools.dbStorage.setItem("variable", variable);
   });
 }

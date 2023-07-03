@@ -377,14 +377,90 @@
                   </div>
                 </li>
                 <li>
-                  <span>格式化样式</span>
-                  <select class="form-select-sm ms-2" id="variableSelect" aria-label="变量模式">
-                    <option value="camelCase">小驼峰 camelCase</option>
-                    <option value="pascalCase">大驼峰 PascalCase</option>
-                    <option value="snakeCase">下划线 snake_case</option>
-                    <option value="paramCase">中横线 param-case</option>
-                    <option value="constantCase">常量&nbsp;&nbsp;&nbsp;CONSTANT_CASE</option>
-                  </select>
+                  <span style="line-height: 25px">格式化样式</span>
+                  <span class="ms-3">
+                    <span class="varSource">
+                      <select class="form-select-sm ms-2" id="variableSelect" aria-label="变量模式">
+                        <option value="camelCase">小驼峰 camelCase</option>
+                        <option value="pascalCase">大驼峰 PascalCase</option>
+                        <option value="snakeCase">下划线 snake_case</option>
+                        <option value="paramCase">中横线 param-case</option>
+                        <option value="constantCase">常量&nbsp;&nbsp;&nbsp;CONSTANT_CASE</option>
+                      </select>
+                    </span>
+                    <span class="varResult">
+                      <span class="varFormatter">
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="varCamelCase"
+                            value="camelCase"
+                            title="camelCase"
+                          />
+                          <label class="form-check-label" for="varCamelCase" title="camelCase">
+                            小驼峰
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="varPascalCase"
+                            value="pascalCase"
+                            title="PascalCase"
+                          />
+                          <label class="form-check-label" for="varPascalCase" title="PascalCase">
+                            大驼峰
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="varSnakeCase"
+                            value="snakeCase"
+                            title="snake_case"
+                          />
+                          <label class="form-check-label" for="varSnakeCase" title="snake_case">
+                            下划线
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="varParamCase"
+                            value="paramCase"
+                            title="param-case"
+                          />
+                          <label class="form-check-label" for="varParamCase" title="param-case">
+                            中横线
+                          </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            id="varConstantCase"
+                            value="constantCase"
+                            title="CONSTANT_CASE"
+                          />
+                          <label
+                            class="form-check-label"
+                            for="varConstantCase"
+                            title="CONSTANT_CASE"
+                          >
+                            常量
+                          </label>
+                        </div>
+                      </span>
+                      <div class="varSequence ms-3">
+                        <span class="varSequenceKey">显示顺序：</span>
+                        <span class="varSequenceValue"></span>
+                      </div>
+                    </span>
+                  </span>
                 </li>
               </ul>
             </div>
