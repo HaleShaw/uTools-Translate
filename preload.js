@@ -1,5 +1,6 @@
 const https = require("https");
 const crypto = require("crypto");
+const CryptoJS = require("crypto-js");
 const HttpsProxyAgent = require("https-proxy-agent");
 const fs = require("fs");
 const path = require("path");
@@ -89,4 +90,13 @@ window.hmacSHA1 = function (str, secret = "", encoding) {
 
 window.hmacSHA256 = function (str, secret = "", encoding) {
   return crypto.createHmac("sha256", secret).update(str).digest(encoding);
+};
+
+window.AESPkcs7 = function (str) {
+  const n = options.cnki.secret;
+  let e = { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 },
+    i = CryptoJS.enc.Utf8.parse(n),
+    s = CryptoJS.AES.encrypt(str, i, e),
+    r = s.toString().replace(/\//g, "_");
+  return (r = r.replace(/\+/g, "-")), r;
 };

@@ -172,6 +172,12 @@ const options = {
     api: "https://ifanyi.iciba.com/index.php?c=trans&m=fy&client=6&auth_user=key_web_fanyi&sign=",
     secret: "NmtleV93ZWJfZmFueWlpZmFueWl3ZWI4aGM5czk4ZQ==",
   },
+  cnki: {
+    name: "CNKI",
+    api: "https://dict.cnki.net/fyzs-front-api/translate/literaltranslation",
+    tokenApi: "https://dict.cnki.net/fyzs-front-api/getToken",
+    secret: "4e87183cfd3a45fe",
+  },
   deepL: {
     name: "DeepL",
     api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",

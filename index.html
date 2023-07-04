@@ -163,6 +163,12 @@
                 <span class="vm" title="爱词霸">爱词霸</span>
               </a>
             </div>
+            <div class="service cnki">
+              <a href="#cnki">
+                <img src="./assets/images/cnki.png" />
+                <span class="vm" title="CNKI学术翻译">CNKI</span>
+              </a>
+            </div>
             <div class="service deepL">
               <a href="#deepL">
                 <img src="./assets/images/deepL.png" class="compatible" />
@@ -676,6 +682,22 @@
                 <a class="comment">翻译结果较少</a>
               </div>
             </div>
+            <div class="service border-bottom cnki" id="cnki">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="cnki" />
+                  <img src="./assets/images/cnki.png" />
+                  <strong>CNKI</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-primary">内置</span>
+                    <span class="badge rounded-pill text-bg-success">列表</span>
+                  </span>
+                </label>
+              </div>
+              <div class="detail">
+                <a class="comment">学术翻译</a>
+              </div>
+            </div>
             <div class="service border-bottom deepL" id="deepL">
               <div class="api mb-1">
                 <label>
@@ -1139,6 +1161,7 @@
       <a id="tooltip"></a>
     </div>
     <script src="assets/js/util/utils.js"></script>
+    <script src="assets/js/api/cnki.js"></script>
     <script src="assets/js/api/youDaoOld.js"></script>
     <script src="assets/js/api/youDaoWap.js"></script>
     <script src="assets/js/api/youDaoFree.js"></script>
