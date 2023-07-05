@@ -2,10 +2,12 @@ const options = {
   youDaoOld: {
     name: "内置有道",
     api: "http://fanyi.youdao.com/openapi.do?keyfrom=WoxLauncher&key=1247918016&type=data&doctype=json&version=1.1&q=",
+    logo: "youDaoOld.png",
   },
   youDaoWap: {
     name: "有道移动版",
     api: "https://m.youdao.com/dict?le=eng&q=",
+    logo: "youDaoWap.png",
   },
   youDaoFree: {
     name: "有道免费版",
@@ -17,6 +19,7 @@ const options = {
       韩语: "KR",
       日语: "JA",
     },
+    logo: "youDao.png",
   },
   googleAPI: {
     name: "谷歌",
@@ -157,38 +160,46 @@ const options = {
       "中文（简体）": "zh-CN",
       宗加语: "ts",
     },
+    logo: "google.png",
   },
   google: {
     name: "谷歌",
     api: "translate.google.com",
     path: "/_/TranslateWebserverUi/data/batchexecute",
+    logo: "google.png",
   },
   bing: {
     name: "必应",
     api: "http://cn.bing.com/dict/search?q=",
+    logo: "bing.png",
   },
   iCiBa: {
     name: "爱词霸",
     api: "https://ifanyi.iciba.com/index.php?c=trans&m=fy&client=6&auth_user=key_web_fanyi&sign=",
     secret: "NmtleV93ZWJfZmFueWlpZmFueWl3ZWI4aGM5czk4ZQ==",
+    logo: "iCiBa.png",
   },
   cnki: {
     name: "CNKI",
     api: "https://dict.cnki.net/fyzs-front-api/translate/literaltranslation",
     tokenApi: "https://dict.cnki.net/fyzs-front-api/getToken",
     secret: "4e87183cfd3a45fe",
+    logo: "cnki.png",
   },
   deepL: {
     name: "DeepL",
     api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",
+    logo: "deepL.png",
   },
   deepLFree: {
     name: "DeepL Free",
     api: "https://api-free.deepl.com/v2/translate",
+    logo: "deepL.png",
   },
   deepLPro: {
     name: "DeepL Pro",
     api: "https://api.deepl.com/v2/translate",
+    logo: "deepL.png",
   },
   youDao: {
     name: "有道",
@@ -308,10 +319,12 @@ const options = {
       粤语: "yue",
       爪哇语: "jw",
     },
+    logo: "youDao.png",
   },
   baiDu: {
     name: "百度",
     api: "https://fanyi-api.baidu.com/api/trans/vip/translate",
+    logo: "baiDu.png",
   },
   aliYun: {
     name: "阿里",
@@ -534,10 +547,12 @@ const options = {
       中文粤语: "yue",
       祖鲁语: "zu",
     },
+    logo: "aliYun.png",
   },
   tencent: {
     name: "腾讯",
     api: "tmt.tencentcloudapi.com",
+    logo: "tencent.png",
   },
   huoShan: {
     name: "火山",
@@ -546,6 +561,7 @@ const options = {
     version: "2020-06-01",
     region: "cn-north-1",
     service: "translate",
+    logo: "huoShan.png",
   },
   caiYun: {
     name: "彩云小译",
@@ -556,10 +572,12 @@ const options = {
       英语: "en",
       日语: "ja",
     },
+    logo: "caiYun.png",
   },
   xiaoNiu: {
     name: "小牛",
     api: "https://api.niutrans.com/NiuTransServer/translation",
+    logo: "xiaoNiu.png",
   },
 };
 

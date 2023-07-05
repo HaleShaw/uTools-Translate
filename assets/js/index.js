@@ -204,7 +204,7 @@ async function switchApi(word) {
       default:
         break;
     }
-    initList(data);
+    initList(data, option);
   }
   console.debug(option);
 }
@@ -301,7 +301,7 @@ function formatVariableCase(data) {
   }
 }
 
-function initList(data) {
+function initList(data, option) {
   formatVariableCase(data);
   let contentFather = $("#root>.list").children(":first");
   contentFather.html("");
@@ -310,6 +310,7 @@ function initList(data) {
     <div class="list-item">
       <div class="list-item-icon">
         <img src="./logo.png"/>
+        <img class="minLogo" src="./assets/images/${options[option]["logo"]}"/>
       </div>
       <div class="list-item-content">
         <div class="list-item-title">${data[i].title}</div>
