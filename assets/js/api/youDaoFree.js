@@ -28,7 +28,14 @@ async function lookupYouDaoFree(word) {
   if ("0" == errorCode) {
     const trans = response.translateResult;
     if (trans.length != 0 && trans[0].length != 0) {
-      let tran = trans[0][0]?.tgt;
+      let transList = trans[0];
+      let tran = "";
+      for (let i = 0; i < transList.length; i++) {
+        const str = transList[i]?.tgt;
+        if (str) {
+          tran += " " + str;
+        }
+      }
       let langSource = getLangYouDaoFree(word, source);
       let langTarget = getLangYouDaoFree(tran, target);
       let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
