@@ -29,28 +29,23 @@ async function lookupGoogle(word) {
     return data;
   }
   console.debug(transData);
+
+  // 基本释义
   var transList = transData[1][0][0][5];
-  let trans = [];
+  let tran = "";
   for (let index = 0; index < transList.length; index++) {
     var transItem = transList[index];
-    trans.push(transItem[0]);
+    tran += " " + transItem[0];
   }
 
-  if (trans && trans.length != 0) {
-    let phoneticHtml = "";
-    for (let i = 0; i < trans.length; i++) {
-      let tran = trans[i];
-      if (i == 0) {
-        let langSource = tl == "en" ? "zh-CN" : "en";
-        phoneticHtml = getPhoneticHtml(word, tran, langSource, tl);
-      }
-      let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
-      data.push({
-        title: dataTitle,
-        description: "基本释义",
-      });
-    }
-  }
+  let phoneticHtml = "";
+  let langSource = tl == "en" ? "zh-CN" : "en";
+  phoneticHtml = getPhoneticHtml(word, tran, langSource, tl);
+  let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
+  data.push({
+    title: dataTitle,
+    description: "基本释义",
+  });
 
   // Add the deformation list.
   if (transData[3] && transData[3][5] && transData[3][5][0]) {
