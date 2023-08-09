@@ -210,10 +210,10 @@ async function switchApi(word) {
 }
 
 function bindHotkey() {
-  Mousetrap.bind("down", () => {
+  Mousetrap.bind(["down", "ctrl+n", "ctrl+j"], () => {
     moveDown();
   });
-  Mousetrap.bind("up", () => {
+  Mousetrap.bind(["up", "ctrl+k", "ctrl+p"], () => {
     moveUp();
   });
   Mousetrap.bind("enter", () => {
