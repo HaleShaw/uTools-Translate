@@ -11,9 +11,12 @@ function get(url) {
     $.get(url, function (data) {
       try {
         console.debug(data);
+        // The status will be Success and the status code will be 200 while the real status code is 302.
+        // So we can only judge by the content of the translation results.
         if (
           new String(data).indexOf("frequent-error") != -1 ||
-          new String(data).indexOf("请求异常频繁") != -1
+          new String(data).indexOf("请求异常频繁") != -1 ||
+          new String(data).indexOf("doesn't work properly without JavaScript enabled") != -1
         ) {
           resolve({
             errorCode: errorCodeFrequently,
