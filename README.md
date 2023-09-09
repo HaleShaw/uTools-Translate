@@ -103,38 +103,42 @@
 9. DeepL
    - <https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs>
    - 免费 API，响应相对较慢。
-10. DeepL API
+10. DeepL X
+    - <https://github.com/OwO-Network/DeepLX>
+    - 将DeepL API逆向之后的三方包，不再需要Auth Key，基于DeepL Free版。
+    - 需要配置API的地址。
+11. DeepL API
     - <https://api-free.deepl.com/v2/translate>
     - <https://api.deepl.com/v2/translate>
     - 官方 API，分别对应 Free 和 Pro 版，需要到[DeepL API](https://www.deepl.com/pro-api)订阅方案并获取 Auth Key。
-11. 有道翻译
+12. 有道翻译
     - <http://openapi.youdao.com/api>
     - 支持 112 种语言互译，其中自动可以识别中文、英文、日文、韩文、法文、西班牙文、葡萄牙文、俄文、越南文、德文、阿拉伯文、印尼文、意大利文
     - 需要到[有道智云](https://ai.youdao.com/doc.s)申请获取应用 ID 和应用密钥。
-12. 百度翻译
+13. 百度翻译
     - <https://fanyi-api.baidu.com/api/trans/vip/translate>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[百度翻译开放平台](https://fanyi-api.baidu.com)申请获取 APP ID 和密钥。
-13. 阿里翻译
+14. 阿里翻译
     - <https://mt.cn-hangzhou.aliyuncs.com/api/translate/web/general>
     - 翻译内容较少，仅有基本翻译。
     - 支持 214 种语言互译。
       - 除繁体中文、蒙语、粤语外，其他 212 种语言，可支持任意两种语言之间互译。
       - 繁体中文、蒙语、粤语仅支持与中文之间的互译。
     - 需要到[阿里云](https://www.aliyun.com/product/ai/base_alimt)申请获取 AccessKey ID 和 AccessKey Secret。
-14. 腾讯翻译
+15. 腾讯翻译
     - <https://tmt.tencentcloudapi.com>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[腾讯云](https://cloud.tencent.com/product/tmt)申请获取 Secret ID 和 Secret Key。
-15. 火山翻译
+16. 火山翻译
     - <https://www.volcengine.com/product/machine-translation>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[火山引擎](https://www.volcengine.com/docs/4640/130262)开通服务并获取 AccessKey ID 和 AccessKey Secret。
-16. 彩云小译
+17. 彩云小译
     - <http://api.interpreter.caiyunai.com/v1/translator>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[彩云科技](https://fanyi.caiyunapp.com/#/api)申请获取应用 Token。
-17. 小牛翻译
+18. 小牛翻译
     - <https://niutrans.com/text_trans>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[小牛翻译](https://niutrans.com/cloud/account_info/info)获取 API-KEY。

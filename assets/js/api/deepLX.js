@@ -1,11 +1,11 @@
-const ERROR_MESSAGES = {
+const errorCodeMsgDeepLX = {
   9999: "其他错误，可进入设置页面切换其他API",
 };
 
 async function lookupDeepLX(word) {
 
   const api = utools.dbStorage.getItem("deepLXApi") || options.deepLX.api;
-  if (!api) {
+  if (!api || "" == api) {
     return [{
       title: errTitle,
       description: errMsgEmptyConf,
@@ -18,7 +18,7 @@ async function lookupDeepLX(word) {
 
   const param = {
     text: word,
-    source_lang: sourceLang,
+    source_lang: "auto",
     target_lang: targetLang,
   };
 
@@ -35,8 +35,9 @@ async function lookupDeepLX(word) {
     if (!translations) {
       data.push({
         title: errTitle,
-        description: ERROR_MESSAGES[errorCodeOther],
+        description: errorCodeMsgDeepLX[errorCodeOther],
       });
+      return data;
     } else {
       const phoneticHtml = getPhoneticHtml(word, translations, sourceLang, targetLang);
       const dataTitle = `<span class="translation">${translations}</span>${phoneticHtml}`;
@@ -45,10 +46,20 @@ async function lookupDeepLX(word) {
         description: "基本释义",
       });
     }
+
+    const alternatives = response?.alternatives;
+    if(alternatives){
+      for (let i = 0; i < alternatives.length; i++) {
+      data.push({
+        title: alternatives[i],
+        description: "变形",
+      });
+      }
+    }
   } catch (error) {
     data.push({
       title: errTitle,
-      description: ERROR_MESSAGES[errorCodeOther],
+      description: errorCodeMsgDeepLX[errorCodeOther],
     });
   }
 
