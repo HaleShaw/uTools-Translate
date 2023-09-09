@@ -191,6 +191,11 @@ const options = {
     api: "https://www2.deepl.com/jsonrpc?method=LMT_handle_jobs",
     logo: "deepL.png",
   },
+  deepLX: {
+    name: "DeepL X",
+    api: "",
+    logo: "deepL.png",
+  },
   deepLFree: {
     name: "DeepL Free",
     api: "https://api-free.deepl.com/v2/translate",
@@ -685,6 +690,12 @@ function loadVersion() {
 }
 
 function loadIdSecret() {
+
+  let deepLXApi = utools.dbStorage.getItem("deepLXApi");
+  if (deepLXApi) {
+    document.getElementById("deepLXApi").value = deepLXApi;
+  }
+
   let deepLFreeSecret = utools.dbStorage.getItem("deepLFreeSecret");
   if (deepLFreeSecret) {
     document.getElementById("deepLFreeSecret").value = deepLFreeSecret;
@@ -1155,6 +1166,9 @@ function addSiteListener() {
 }
 
 function addKeyPasswordListener() {
+  $("#deepLXApi").blur(function () {
+    utools.dbStorage.setItem("deepLXApi", this.value.trim());
+  });
   $("#deepLFreeSecret").blur(function () {
     utools.dbStorage.setItem("deepLFreeSecret", this.value.trim());
   });

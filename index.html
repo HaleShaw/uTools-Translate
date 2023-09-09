@@ -175,6 +175,12 @@
                 <span class="vm" title="DeepL">DeepL</span>
               </a>
             </div>
+            <div class="service deepLX">
+              <a href="#deepLX">
+                <img src="./assets/images/deepL.png" class="compatible" />
+                <span class="vm" title="DeepLX">DeepL X</span>
+              </a>
+            </div>
             <div class="split"></div>
             <div class="service deepLFree">
               <a href="#deepLFree">
@@ -714,6 +720,34 @@
                 <a class="comment">国外API，响应相对较慢</a>
               </div>
             </div>
+            <div class="service border-bottom deepLX" id="deepLX">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="deepLX" />
+                  <img src="./assets/images/deepL.png" class="compatible" />
+                  <strong>DeepL X</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-primary">内置</span>
+                    <span class="badge rounded-pill text-bg-success">列表</span>
+                  </span>
+                </label>
+              </div>
+              <div class="detail">
+                <div class="private">
+                  <div>
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">API</span>
+                      <input
+                              id="deepLXApi"
+                              type="text"
+                              class="form-control secret"
+                              name="deepLXApi"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="service border-bottom deepLFree" id="deepLFree">
               <div class="api mb-1">
                 <label>
@@ -1172,6 +1206,7 @@
     <script src="assets/js/api/baiDu.js"></script>
     <script src="assets/js/api/aliYun.js"></script>
     <script src="assets/js/api/deepL.js"></script>
+    <script src="assets/js/api/deepLX.js"></script>
     <script src="assets/js/api/deepLAPI.js"></script>
     <script src="assets/js/api/bing.js"></script>
     <script src="assets/js/api/huoShan.js"></script>
