@@ -358,6 +358,22 @@ function initList(data, option) {
     let title = list[i].querySelector("div.list-item-title");
     if (title.scrollWidth > title.offsetWidth) {
       list[i].setAttribute("title", getContent(title));
+      // 当横向溢出时，通常就只有一个翻译结果，此时直接将结果行展开到自适应高度。
+      let itemList = document.querySelectorAll("div.list-item");
+      if (itemList.length != 1) {
+        return;
+      }
+      let spanEle = list[i].querySelector("div.list-item-title > span.translation");
+      title.style.height = "unset";
+      title.parentElement.parentElement.style.height = "unset";
+      spanEle.style.display = "block";
+      spanEle.style.wordBreak = "normal";
+      spanEle.style.whiteSpace = "pre-wrap";
+      let newHeight = title.parentElement.parentElement.scrollHeight;
+      let identity = document.querySelector("div.quick-index-identity > div:nth-child(1)");
+      identity.style.lineHeight = newHeight + "px";
+      identity.style.height = newHeight + "px";
+      utools.setExpendHeight(newHeight);
     }
   }
   addPhoneticListener();

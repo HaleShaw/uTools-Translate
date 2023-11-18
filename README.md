@@ -16,9 +16,9 @@
 
   ![translateBaidu](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateBaidu.png)
 
-- 结果过长提示
+- 结果过长自动展开
 
-  ![translatePrompt](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translatePrompt.png)
+  ![translateExpand](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateExpand.png)
 
 - 设置页面
 
