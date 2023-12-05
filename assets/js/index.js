@@ -143,7 +143,9 @@ async function switchApi(word) {
     option == Object.keys(options)[13] ||
     option == Object.keys(options)[14] ||
     option == Object.keys(options)[15] ||
-    option == Object.keys(options)[16]
+    option == Object.keys(options)[16] ||
+    option == Object.keys(options)[17] ||
+    option == Object.keys(options)[18]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
