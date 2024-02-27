@@ -202,9 +202,12 @@ async function switchApi(word) {
         data = await lookupHuoShan(word);
         break;
       case Object.keys(options)[17]:
-        data = await lookupCaiYun(word);
+        data = await lookupHuaWei(word);
         break;
       case Object.keys(options)[18]:
+        data = await lookupCaiYun(word);
+        break;
+      case Object.keys(options)[19]:
         data = await lookupXiaoNiu(word);
         break;
       default:

@@ -226,6 +226,12 @@
                 <span class="vm" title="火山">火山</span>
               </a>
             </div>
+            <div class="service huaWei">
+              <a href="#huaWei">
+                <img src="./assets/images/huaWei.png" class="compatible" />
+                <span class="vm" title="华为">华为</span>
+              </a>
+            </div>
             <div class="service caiYun">
               <a href="#caiYun">
                 <img src="./assets/images/caiYun.png" class="compatible" />
@@ -746,12 +752,12 @@
                     <div class="input-group input-group-sm private-father">
                       <span class="input-group-text private-id">API</span>
                       <input
-                              id="deepLXApi"
-                              type="text"
-                              class="form-control secret"
-                              name="deepLXApi"
-                              placeholder="http://127.0.0.1:1188/translate"
-                              title="DeepLX version 0.8.0的API地址"
+                        id="deepLXApi"
+                        type="text"
+                        class="form-control secret"
+                        name="deepLXApi"
+                        placeholder="http://127.0.0.1:1188/translate"
+                        title="DeepLX version 0.8.0的API地址"
                       />
                     </div>
                   </div>
@@ -1090,6 +1096,64 @@
                 </div>
               </div>
             </div>
+            <div class="service border-bottom huaWei" id="huaWei">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="huaWei" />
+                  <img src="./assets/images/huaWei.png" class="compatible" />
+                  <strong>华为</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-success">列表</span>
+                  </span>
+                </label>
+                <a
+                  class="comment site floatR"
+                  href="https://www.huaweicloud.com/product/nlpf.html"
+                  title="https://www.huaweicloud.com/product/nlpf.html"
+                  target="_blank"
+                >
+                  华为翻译
+                </a>
+              </div>
+              <div class="detail">
+                <div class="lang mb-1">
+                  <a>源语言</a>
+                  <select class="form-select-sm ms-1 source"></select>
+                  <i class="exchange"></i>
+                  <a>目标语言</a>
+                  <select class="form-select-sm ms-1 target"></select>
+                  <div>
+                    <a class="comment">支持14种语言互译</a>
+                  </div>
+                </div>
+                <div class="private">
+                  <div class="key mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">Project ID</span>
+                      <input
+                        id="huaWeiProjectId"
+                        type="input"
+                        class="form-control secret"
+                        name="projectId"
+                      />
+                    </div>
+                  </div>
+                  <div class="key mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">AK</span>
+                      <input id="huaWeiAK" type="input" class="form-control secret" name="ak" />
+                    </div>
+                  </div>
+                  <div class="pwd">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">SK</span>
+                      <input id="huaWeiSK" type="password" class="form-control secret" name="sk" />
+                      <i class="eye closed ms-1"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="service border-bottom caiYun" id="caiYun">
               <div class="api mb-1">
                 <label>
@@ -1220,6 +1284,7 @@
     <script src="assets/js/api/deepLAPI.js"></script>
     <script src="assets/js/api/bing.js"></script>
     <script src="assets/js/api/huoShan.js"></script>
+    <script src="assets/js/api/huaWei.js"></script>
     <script src="assets/js/api/caiYun.js"></script>
     <script src="assets/js/api/xiaoNiu.js"></script>
     <script src="assets/js/api/iCiBa.js"></script>

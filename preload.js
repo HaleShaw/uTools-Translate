@@ -1,6 +1,7 @@
 const https = require("https");
 const crypto = require("crypto");
 const CryptoJS = require("crypto-js");
+const signer = require("./assets/js/util/signer");
 const HttpsProxyAgent = require("https-proxy-agent");
 const fs = require("fs");
 const path = require("path");
@@ -41,6 +42,28 @@ window.doPost = function (host, path, agent, headers, payload) {
       }
     );
     req.write(payload);
+    req.end();
+  });
+};
+
+window.huaWeiPost = function (opt, body) {
+  return new Promise((resolve, reject) => {
+    var req = https.request(opt, function (res) {
+      let response = "";
+      res.on("data", function (chunk) {
+        response += chunk;
+      });
+
+      res.on("end", () => {
+        resolve(response);
+      });
+
+      res.on("error", e => {
+        console.error(e);
+        reject(e);
+      });
+    });
+    req.write(body);
     req.end();
   });
 };
@@ -100,3 +123,5 @@ window.AESPkcs7 = function (str) {
     r = s.toString().replace(/\//g, "_");
   return (r = r.replace(/\+/g, "-")), r;
 };
+
+window.huaWeiSigner = signer;

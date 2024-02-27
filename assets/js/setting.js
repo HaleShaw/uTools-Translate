@@ -568,6 +568,28 @@ const options = {
     service: "translate",
     logo: "huoShan.png",
   },
+  huaWei: {
+    name: "华为",
+    api: "https://nlp-ext.cn-north-4.myhuaweicloud.com/v1/project_id/machine-translation/text-translation",
+    langs: {
+      自动: "auto",
+      "中文（简体）": "zh",
+      "中文（繁体）": "zh-tw",
+      英语: "en",
+      阿拉伯语: "ar",
+      德语: "de",
+      俄语: "ru",
+      法语: "fr",
+      韩语: "ko",
+      葡萄牙语: "pt",
+      日语: "ja",
+      泰语: "th",
+      土耳其语: "tr",
+      西班牙语: "es",
+      越南语: "vi",
+    },
+    logo: "huaWei.png",
+  },
   caiYun: {
     name: "彩云小译",
     api: "http://api.interpreter.caiyunai.com/v1/translator",
@@ -690,7 +712,6 @@ function loadVersion() {
 }
 
 function loadIdSecret() {
-
   let deepLXApi = utools.dbStorage.getItem("deepLXApi");
   if (deepLXApi) {
     document.getElementById("deepLXApi").value = deepLXApi;
@@ -754,6 +775,21 @@ function loadIdSecret() {
   let huoShanAppSecret = utools.dbStorage.getItem("huoShanAppSecret");
   if (huoShanAppSecret) {
     document.getElementById("huoShanAppSecret").value = huoShanAppSecret;
+  }
+
+  let huaWeiAK = utools.dbStorage.getItem("huaWeiAK");
+  if (huaWeiAK) {
+    document.getElementById("huaWeiAK").value = huaWeiAK;
+  }
+
+  let huaWeiSK = utools.dbStorage.getItem("huaWeiSK");
+  if (huaWeiSK) {
+    document.getElementById("huaWeiSK").value = huaWeiSK;
+  }
+
+  let huaWeiProjectId = utools.dbStorage.getItem("huaWeiProjectId");
+  if (huaWeiProjectId) {
+    document.getElementById("huaWeiProjectId").value = huaWeiProjectId;
   }
 
   let caiYunToken = utools.dbStorage.getItem("caiYunToken");
@@ -888,6 +924,7 @@ function loadLang() {
   loadLangYouDaoFree();
   loadLangYouDao();
   loadLangAliYun();
+  loadLangHuaWei();
   loadLangCaiYun();
 }
 
@@ -969,6 +1006,34 @@ function loadLangAliYun() {
   }
   for (let i = 0; i < targetElement.length; i++) {
     if (aliYunTarget == targetElement.options[i].value) {
+      targetElement.options[i].selected = true;
+      break;
+    }
+  }
+}
+
+function loadLangHuaWei() {
+  let huaWeiSource = utools.dbStorage.getItem("huaWeiSource") || "auto";
+  let huaWeiTarget = utools.dbStorage.getItem("huaWeiTarget") || "auto";
+  utools.dbStorage.setItem("huaWeiSource", huaWeiSource);
+  utools.dbStorage.setItem("huaWeiTarget", huaWeiTarget);
+  let names = Object.keys(options.huaWei.langs);
+  let htmlStr = "";
+  for (let i = 0; i < names.length; i++) {
+    htmlStr += `<option value=${options.huaWei.langs[names[i]]}>${names[i]}</option>`;
+  }
+  let sourceElement = document.querySelector(".service.huaWei .lang>select.source");
+  let targetElement = document.querySelector(".service.huaWei .lang>select.target");
+  sourceElement.innerHTML = htmlStr;
+  targetElement.innerHTML = htmlStr;
+  for (let i = 0; i < sourceElement.length; i++) {
+    if (huaWeiSource == sourceElement.options[i].value) {
+      sourceElement.options[i].selected = true;
+      break;
+    }
+  }
+  for (let i = 0; i < targetElement.length; i++) {
+    if (huaWeiTarget == targetElement.options[i].value) {
       targetElement.options[i].selected = true;
       break;
     }
@@ -1205,6 +1270,15 @@ function addKeyPasswordListener() {
   $("#huoShanAppSecret").blur(function () {
     utools.dbStorage.setItem("huoShanAppSecret", this.value.trim());
   });
+  $("#huaWeiAK").blur(function () {
+    utools.dbStorage.setItem("huaWeiAK", this.value.trim());
+  });
+  $("#huaWeiSK").blur(function () {
+    utools.dbStorage.setItem("huaWeiSK", this.value.trim());
+  });
+  $("#huaWeiProjectId").blur(function () {
+    utools.dbStorage.setItem("huaWeiProjectId", this.value.trim());
+  });
   $("#caiYunToken").blur(function () {
     utools.dbStorage.setItem("caiYunToken", this.value.trim());
   });
@@ -1234,6 +1308,7 @@ function addLangListener() {
   addLangListenerYouDaoFree();
   addLangListenerYouDao();
   addLangListenerAliYun();
+  addLangListenerHuaWei();
   addLangListenerCaiYun();
 }
 
@@ -1352,6 +1427,39 @@ function changeBrotherAliYun(thisValue, brother) {
   }
 }
 
+function addLangListenerHuaWei() {
+  $(".service.huaWei .lang>select.source").change(function () {
+    changeBrotherHuaWei($(this).val(), $(".service.huaWei .lang>select.target"));
+    utools.dbStorage.setItem("huaWeiSource", $(this).val());
+    let huaWeiTarget = $(".service.huaWei .lang>select.target").val();
+    utools.dbStorage.setItem("huaWeiTarget", huaWeiTarget);
+  });
+  $(".service.huaWei .lang>select.target").change(function () {
+    changeBrotherHuaWei($(this).val(), $(".service.huaWei .lang>select.source"));
+    utools.dbStorage.setItem("huaWeiTarget", $(this).val());
+    let huaWeiSource = $(".service.huaWei .lang>select.source").val();
+    utools.dbStorage.setItem("huaWeiSource", huaWeiSource);
+  });
+}
+
+/**
+ * Change the value of the brother select element for HuaWei.
+ * @param {String} thisValue The value of the current select element.
+ * @param {Object} brother The brother jquery object of the current select element.
+ */
+function changeBrotherHuaWei(thisValue, brother) {
+  if ("auto" == thisValue && brother[0].className.indexOf("source") != -1) {
+    brother[0].selectedIndex = 0;
+  }
+  if (thisValue == brother.val() && "auto" != thisValue) {
+    if ("en" == thisValue) {
+      brother[0].selectedIndex = 1;
+    } else {
+      brother[0].selectedIndex = 3;
+    }
+  }
+}
+
 function addLangListenerCaiYun() {
   $(".service.caiYun .lang>select.source").change(function () {
     changeBrotherCaiYun($(this).val(), $(".service.caiYun .lang>select.target"));
@@ -1443,6 +1551,17 @@ function addExchangeListener() {
     changeBrotherAliYun(sourceEle.val(), targetEle);
     utools.dbStorage.setItem("aliYunSource", sourceEle.val());
     utools.dbStorage.setItem("aliYunTarget", targetEle.val());
+  });
+
+  $(".service.huaWei .lang>.exchange").click(function () {
+    let sourceEle = $(".service.huaWei .lang>select.source");
+    let targetEle = $(".service.huaWei .lang>select.target");
+    let temp = sourceEle[0].selectedIndex;
+    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
+    targetEle[0].selectedIndex = temp;
+    changeBrotherHuaWei(targetEle.val(), sourceEle);
+    utools.dbStorage.setItem("huaWeiSource", sourceEle.val());
+    utools.dbStorage.setItem("huaWeiTarget", targetEle.val());
   });
 
   $(".service.caiYun .lang>.exchange").click(function () {

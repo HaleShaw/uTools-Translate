@@ -46,6 +46,8 @@ async function lookupAliYun(word) {
 
   let source = utools.dbStorage.getItem("aliYunSource") || "auto";
   let target = utools.dbStorage.getItem("aliYunTarget") || "auto";
+  utools.dbStorage.setItem("aliYunSource", source);
+  utools.dbStorage.setItem("aliYunTarget", target);
   if ("auto" == target) {
     target = isChinese(word) ? "en" : "zh";
   }
