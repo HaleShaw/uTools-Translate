@@ -43,6 +43,11 @@ const errorCodeMsgHuaWei = {
   9999: "其他错误，可进入设置页面切换其他API",
 };
 
+const LANG_MAP_HUAWEI = {
+  zh: "zh-CN",
+  "zh-tw": "zh-TW",
+};
+
 async function lookupHuaWei(word) {
   let data = [];
   const api = options.huaWei.api;
@@ -80,28 +85,13 @@ async function lookupHuaWei(word) {
   try {
     response = await window.huaWeiPost(opt, r.body);
     let resData = JSON.parse(response);
-    console.log(resData);
     const errorCode = resData?.error_code;
     if (!errorCode) {
       const tran = resData.translated_text;
       if (tran) {
-        let langSource = "";
-        if ("auto" == source) {
-          switch (target) {
-            case "en":
-              langSource = "zh";
-              break;
-            case "zh":
-              langSource = "en";
-              break;
-            default:
-              langSource = "en";
-              break;
-          }
-        } else {
-          langSource = source;
-        }
-        let phoneticHtml = getPhoneticHtml(word, tran, langSource, target);
+        let langSource = getLangHuaWei(word, source);
+        let langTarget = target == "zh" ? "zh-CN" : target;
+        let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
         let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
         data.push({ title: dataTitle, description: "翻译结果" });
       }
@@ -122,4 +112,12 @@ async function lookupHuaWei(word) {
     });
   }
   return data;
+}
+
+function getLangHuaWei(word, lang) {
+  if ("auto" == lang) {
+    return isChinese(word) ? "zh-CN" : "en";
+  } else {
+    return LANG_MAP_HUAWEI[lang] ? LANG_MAP_HUAWEI[lang] : lang;
+  }
 }
