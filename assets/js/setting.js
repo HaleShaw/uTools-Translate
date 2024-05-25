@@ -211,6 +211,12 @@ const options = {
     },
     logo: "tranSmart.png",
   },
+  microsoft: {
+    name: "微软",
+    api: "https://api-edge.cognitive.microsofttranslator.com/translate?from=&to=lang&api-version=3.0&includeSentenceLength=true",
+    authApi: "https://edge.microsoft.com/translate/auth",
+    logo: "microsoft.png",
+  },
   cnki: {
     name: "CNKI",
     api: "https://dict.cnki.net/fyzs-front-api/translate/literaltranslation",
