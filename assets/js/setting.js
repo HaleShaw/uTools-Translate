@@ -1,25 +1,8 @@
 const options = {
-  youDaoOld: {
-    name: "内置有道",
-    api: "http://fanyi.youdao.com/openapi.do?keyfrom=WoxLauncher&key=1247918016&type=data&doctype=json&version=1.1&q=",
-    logo: "youDaoOld.png",
-  },
   youDaoWap: {
     name: "有道移动版",
     api: "https://m.youdao.com/dict?le=eng&q=",
     logo: "youDaoWap.png",
-  },
-  youDaoFree: {
-    name: "有道免费版",
-    api: "http://fanyi.youdao.com/translate?doctype=json&type=",
-    langs: {
-      自动: "AUTO",
-      中文: "ZH_CN",
-      英语: "EN",
-      韩语: "KR",
-      日语: "JA",
-    },
-    logo: "youDao.png",
   },
   googleAPI: {
     name: "谷歌",
@@ -647,7 +630,7 @@ const options = {
 };
 
 // Set the default API.
-const defaultAPI = Object.keys(options)[6];
+const defaultAPI = Object.keys(options)[4];
 
 const DEFAULT_SPEAK = {
   speakSwitch: true,
@@ -959,40 +942,11 @@ function loadProxy() {
 }
 
 function loadLang() {
-  loadLangYouDaoFree();
   loadLangTranSmart();
   loadLangYouDao();
   loadLangAliYun();
   loadLangHuaWei();
   loadLangCaiYun();
-}
-
-function loadLangYouDaoFree() {
-  let youDaoFreeSource = utools.dbStorage.getItem("youDaoFreeSource") || "AUTO";
-  let youDaoFreeTarget = utools.dbStorage.getItem("youDaoFreeTarget") || "AUTO";
-  utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
-  utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
-  let names = Object.keys(options.youDaoFree.langs);
-  let htmlStr = "";
-  for (let i = 0; i < names.length; i++) {
-    htmlStr += `<option value=${options.youDaoFree.langs[names[i]]}>${names[i]}</option>`;
-  }
-  let sourceElement = document.querySelector(".service.youDaoFree .lang>select.source");
-  let targetElement = document.querySelector(".service.youDaoFree .lang>select.target");
-  sourceElement.innerHTML = htmlStr;
-  targetElement.innerHTML = htmlStr;
-  for (let i = 0; i < sourceElement.length; i++) {
-    if (youDaoFreeSource == sourceElement.options[i].value) {
-      sourceElement.options[i].selected = true;
-      break;
-    }
-  }
-  for (let i = 0; i < targetElement.length; i++) {
-    if (youDaoFreeTarget == targetElement.options[i].value) {
-      targetElement.options[i].selected = true;
-      break;
-    }
-  }
 }
 
 function loadLangTranSmart() {
@@ -1372,50 +1326,11 @@ function addEyeListener() {
 }
 
 function addLangListener() {
-  addLangListenerYouDaoFree();
   addLangListenerTranSmart();
   addLangListenerYouDao();
   addLangListenerAliYun();
   addLangListenerHuaWei();
   addLangListenerCaiYun();
-}
-
-function addLangListenerYouDaoFree() {
-  $(".service.youDaoFree .lang>select.source").change(function () {
-    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.target"));
-    utools.dbStorage.setItem("youDaoFreeSource", $(this).val());
-    let youDaoFreeTarget = $(".service.youDaoFree .lang>select.target").val();
-    utools.dbStorage.setItem("youDaoFreeTarget", youDaoFreeTarget);
-  });
-  $(".service.youDaoFree .lang>select.target").change(function () {
-    changeBrotherYouDaoFree($(this).val(), $(".service.youDaoFree .lang>select.source"));
-    utools.dbStorage.setItem("youDaoFreeTarget", $(this).val());
-    let youDaoFreeSource = $(".service.youDaoFree .lang>select.source").val();
-    utools.dbStorage.setItem("youDaoFreeSource", youDaoFreeSource);
-  });
-}
-
-/**
- * Change the value of the brother select element for YouDaoFree.
- * @param {String} thisValue The value of the current select element.
- * @param {Object} brother The brother jquery object of the current select element.
- */
-function changeBrotherYouDaoFree(thisValue, brother) {
-  switch (thisValue) {
-    case "AUTO":
-      brother[0].selectedIndex = 0;
-      break;
-    case "ZH_CN":
-      brother[0].selectedIndex = 2;
-      break;
-    case "EN":
-    case "KR":
-    case "JA":
-      brother[0].selectedIndex = 1;
-      break;
-    default:
-      break;
-  }
 }
 
 function addLangListenerTranSmart() {

@@ -120,22 +120,10 @@
               </svg>
               <span class="vm">翻译引擎</span>
             </a>
-            <div class="service youDaoOld">
-              <a href="#youDaoOld">
-                <img src="./assets/images/youDaoOld.png" />
-                <span class="vm" title="有道旧API">有道</span>
-              </a>
-            </div>
             <div class="service youDaoWap">
               <a href="#youDaoWap">
                 <img src="./assets/images/youDaoWap.png" />
                 <span class="vm" title="有道移动版，页面模式">有道</span>
-              </a>
-            </div>
-            <div class="service youDaoFree">
-              <a href="#youDaoFree">
-                <img src="./assets/images/youDao.png" />
-                <span class="vm" title="有道，支持多语言互译">有道</span>
               </a>
             </div>
             <div class="service googleAPI">
@@ -586,22 +574,6 @@
               </svg>
               <span class="vm">翻译引擎</span>
             </div>
-            <div class="service border-bottom youDaoOld" id="youDaoOld">
-              <div class="api mb-1">
-                <label>
-                  <input class="form-check-input" name="service" type="radio" value="youDaoOld" />
-                  <img src="./assets/images/youDaoOld.png" />
-                  <strong>有道</strong>
-                  <span class="tags">
-                    <span class="badge rounded-pill text-bg-primary">内置</span>
-                    <span class="badge rounded-pill text-bg-success">列表</span>
-                  </span>
-                </label>
-              </div>
-              <div class="detail">
-                <a class="comment">旧API，可请求频率相对稍低</a>
-              </div>
-            </div>
             <div class="service border-bottom youDaoWap" id="youDaoWap">
               <div class="api mb-1">
                 <label>
@@ -616,30 +588,6 @@
               </div>
               <div class="detail">
                 <a class="comment">移动版API，精度相对稍低，非列表模式</a>
-              </div>
-            </div>
-            <div class="service border-bottom youDaoFree" id="youDaoFree">
-              <div class="api mb-1">
-                <label>
-                  <input class="form-check-input" name="service" type="radio" value="youDaoFree" />
-                  <img src="./assets/images/youDao.png" />
-                  <strong>有道</strong>
-                  <span class="tags">
-                    <span class="badge rounded-pill text-bg-primary">内置</span>
-                    <span class="badge rounded-pill text-bg-success">列表</span>
-                    <span class="badge rounded-pill text-bg-danger">多语言</span>
-                  </span>
-                </label>
-              </div>
-              <div class="detail">
-                <div class="lang">
-                  <a>源语言</a>
-                  <select class="form-select-sm ms-1 source"></select>
-                  <i class="exchange"></i>
-                  <a>目标语言</a>
-                  <select class="form-select-sm ms-1 target"></select>
-                </div>
-                <a class="comment">支持中、英、日、韩，其中英语、日语和韩语只能与中文互译</a>
               </div>
             </div>
             <div class="service border-bottom googleAPI" id="googleAPI">
@@ -1333,9 +1281,7 @@
     </div>
     <script src="assets/js/util/utils.js"></script>
     <script src="assets/js/api/cnki.js"></script>
-    <script src="assets/js/api/youDaoOld.js"></script>
     <script src="assets/js/api/youDaoWap.js"></script>
-    <script src="assets/js/api/youDaoFree.js"></script>
     <script src="assets/js/api/googleAPI.js"></script>
     <script src="assets/js/api/google.js"></script>
     <script src="assets/js/api/tencent.js"></script>

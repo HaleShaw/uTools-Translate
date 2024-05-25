@@ -121,14 +121,14 @@ async function switchApi(word) {
     word = UnChangeCase(word, variableSource);
   }
 
-  if (option == Object.keys(options)[1]) {
+  if (option == Object.keys(options)[0]) {
     $("#root").addClass("hide");
     $("#setting").addClass("hide");
     $("#page").removeClass("hide");
     bindPhoneticHotkey();
     await lookupYouDaoWap(word);
   } else if (
-    option == Object.keys(options)[0] ||
+    option == Object.keys(options)[1] ||
     option == Object.keys(options)[2] ||
     option == Object.keys(options)[3] ||
     option == Object.keys(options)[4] ||
@@ -146,8 +146,7 @@ async function switchApi(word) {
     option == Object.keys(options)[16] ||
     option == Object.keys(options)[17] ||
     option == Object.keys(options)[18] ||
-    option == Object.keys(options)[19] ||
-    option == Object.keys(options)[20]
+    option == Object.keys(options)[19]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -155,67 +154,61 @@ async function switchApi(word) {
     bindHotkey();
     let data = [];
     switch (option) {
-      case Object.keys(options)[0]:
-        data = await lookupYouDaoOld(word);
-        break;
-      case Object.keys(options)[2]:
-        data = await lookupYouDaoFree(word);
-        break;
-      case Object.keys(options)[3]:
+      case Object.keys(options)[1]:
         data = await lookupGoogleAPI(word);
         break;
-      case Object.keys(options)[4]:
+      case Object.keys(options)[2]:
         data = await lookupGoogle(word);
         break;
-      case Object.keys(options)[5]:
+      case Object.keys(options)[3]:
         data = await lookupBing(word);
         break;
-      case Object.keys(options)[6]:
+      case Object.keys(options)[4]:
         data = await lookupICiBa(word);
         break;
-      case Object.keys(options)[7]:
+      case Object.keys(options)[5]:
         data = await lookupTranSmart(word);
         break;
-      case Object.keys(options)[8]:
+      case Object.keys(options)[6]:
         data = await lookupMicrosoft(word);
         break;
-      case Object.keys(options)[9]:
+      case Object.keys(options)[7]:
         data = await lookupCNKI(word);
         break;
-      case Object.keys(options)[10]:
+      case Object.keys(options)[8]:
         data = await lookupDeepL(word);
         break;
-      case Object.keys(options)[11]:
+      case Object.keys(options)[9]:
         data = await lookupDeepLX(word);
         break;
-      case Object.keys(options)[12]:
+      case Object.keys(options)[10]:
         data = await lookupDeepLAPI(word, "free");
         break;
-      case Object.keys(options)[13]:
+      case Object.keys(options)[11]:
         data = await lookupDeepLAPI(word, "pro");
         break;
-      case Object.keys(options)[14]:
+      case Object.keys(options)[12]:
         data = await lookupYouDao(word);
         break;
-      case Object.keys(options)[15]:
+      case Object.keys(options)[13]:
         data = await lookupBaiDu(word);
         break;
-      case Object.keys(options)[16]:
+      case Object.keys(options)[14]:
         data = await lookupAliYun(word);
         break;
-      case Object.keys(options)[17]:
+      case Object.keys(options)[15]:
         data = await lookupTencent(word);
         break;
-      case Object.keys(options)[18]:
+      case Object.keys(options)[16]:
         data = await lookupHuoShan(word);
         break;
-      case Object.keys(options)[19]:
+      case Object.keys(options)[17]:
         data = await lookupHuaWei(word);
         break;
-      case Object.keys(options)[20]:
+      case Object.keys(options)[18]:
         data = await lookupCaiYun(word);
         break;
-      case Object.keys(options)[21]:
+      case Object.keys(options)[19]:
         data = await lookupXiaoNiu(word);
         break;
       default:
