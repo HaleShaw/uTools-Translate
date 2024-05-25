@@ -5,14 +5,6 @@ const errorCodeMsgTranSmart = {
 async function lookupTranSmart(word) {
   let data = [];
   const api = options.tranSmart.api;
-  let token = utools.dbStorage.getItem("tranSmartToken");
-  if (!token) {
-    data.push({
-      title: errTitle,
-      description: errMsgEmptyConf,
-    });
-    return data;
-  }
   let source = utools.dbStorage.getItem("tranSmartSource") || "auto";
   let target = utools.dbStorage.getItem("tranSmartTarget") || "auto";
   utools.dbStorage.setItem("tranSmartSource", source);
@@ -21,7 +13,6 @@ async function lookupTranSmart(word) {
   let body = {
     header: {
       fn: "auto_translation_block",
-      token: token,
     },
     source: {
       text_block: word,
