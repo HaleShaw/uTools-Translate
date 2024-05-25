@@ -217,7 +217,13 @@
             <div class="service tencent">
               <a href="#tencent">
                 <img src="./assets/images/tencent.png" class="compatible" />
-                <span class="vm" title="腾讯">腾讯</span>
+                <span class="vm" title="腾讯翻译君">腾讯</span>
+              </a>
+            </div>
+            <div class="service tranSmart">
+              <a href="#tranSmart">
+                <img src="./assets/images/tranSmart.png" class="compatible" />
+                <span class="vm" title="腾讯交互翻译">腾讯</span>
               </a>
             </div>
             <div class="service huoShan">
@@ -1018,7 +1024,7 @@
                   title="https://cloud.tencent.com/product/tmt"
                   target="_blank"
                 >
-                  腾讯云
+                  腾讯翻译君
                 </a>
               </div>
               <div class="detail">
@@ -1039,6 +1045,54 @@
                       <span class="input-group-text private-id">Secret Key</span>
                       <input
                         id="tencentAppSecret"
+                        type="password"
+                        class="form-control secret"
+                        name="appSecret"
+                      />
+                      <i class="eye closed ms-1"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="service border-bottom tranSmart" id="tranSmart">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="tranSmart" />
+                  <img src="./assets/images/tranSmart.png" class="compatible" />
+                  <strong>腾讯</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-success">列表</span>
+                  </span>
+                </label>
+                <a
+                  class="comment site floatR"
+                  href="https://transmart.qq.com"
+                  title="https://transmart.qq.com"
+                  target="_blank"
+                >
+                  腾讯交互翻译
+                </a>
+              </div>
+              <div class="detail">
+                <div class="lang mb-1">
+                  <a>源语言</a>
+                  <select class="form-select-sm ms-1 source"></select>
+                  <i class="exchange"></i>
+                  <a>目标语言</a>
+                  <select class="form-select-sm ms-1 target"></select>
+                  <div>
+                    <a class="comment">
+                      支持21种语言互译，法语、西班牙语、英语和中文能互译，其他语言都只能与英语和中文互译。
+                    </a>
+                  </div>
+                </div>
+                <div class="private">
+                  <div class="pwd">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">Token</span>
+                      <input
+                        id="tranSmartToken"
                         type="password"
                         class="form-control secret"
                         name="appSecret"
@@ -1276,6 +1330,7 @@
     <script src="assets/js/api/googleAPI.js"></script>
     <script src="assets/js/api/google.js"></script>
     <script src="assets/js/api/tencent.js"></script>
+    <script src="assets/js/api/tranSmart.js"></script>
     <script src="assets/js/api/youDao.js"></script>
     <script src="assets/js/api/baiDu.js"></script>
     <script src="assets/js/api/aliYun.js"></script>

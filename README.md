@@ -126,23 +126,29 @@
       - 除繁体中文、蒙语、粤语外，其他 212 种语言，可支持任意两种语言之间互译。
       - 繁体中文、蒙语、粤语仅支持与中文之间的互译。
     - 需要到[阿里云](https://www.aliyun.com/product/ai/base_alimt)申请获取 Access Key ID 和 Secret Access Key。
-15. 腾讯翻译
+15. 腾讯翻译君
     - <https://tmt.tencentcloudapi.com>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[腾讯云](https://cloud.tencent.com/product/tmt)申请获取 Secret ID 和 Secret Key。
-16. 火山翻译
+16. 腾讯交互翻译
+    - <https://transmart.qq.com>
+    - 翻译内容较少，仅有基本翻译。
+    - 支持21种语言互译。
+      - 法语、西班牙语、英语和中文能互译，其他语言都只能与英语和中文互译。
+    - 需要到[腾讯交互翻译](https://transmart.qq.com)申请获取 Token。
+17. 火山翻译
     - <https://www.volcengine.com/product/machine-translation>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[火山引擎](https://www.volcengine.com/docs/4640/130262)开通服务并获取 Access Key ID 和 Secret Access Key。
-17. 华为翻译
+18. 华为翻译
     - <https://support.huaweicloud.com/api-nlp/nlp_03_0024.html>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[华为云](https://www.huaweicloud.com/product/nlpf.html)开通服务并获取 AK、SK 和 Project ID。
-18. 彩云小译
+19. 彩云小译
     - <http://api.interpreter.caiyunai.com/v1/translator>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[彩云科技](https://fanyi.caiyunapp.com/#/api)申请获取应用 Token。
-19. 小牛翻译
+20. 小牛翻译
     - <https://niutrans.com/text_trans>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[小牛翻译](https://niutrans.com/cloud/account_info/info)获取 API-KEY。

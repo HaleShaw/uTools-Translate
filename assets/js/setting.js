@@ -559,6 +559,34 @@ const options = {
     api: "tmt.tencentcloudapi.com",
     logo: "tencent.png",
   },
+  tranSmart: {
+    name: "腾讯",
+    api: "https://transmart.qq.com/api/imt",
+    langs: {
+      自动: "auto",
+      中文: "zh",
+      英语: "en",
+      阿拉伯语: "ar",
+      德语: "de",
+      俄语: "ru",
+      法语: "fr",
+      菲律宾语: "fil",
+      高棉语: "km",
+      韩语: "ko",
+      老挝语: "lo",
+      马来语: "ms",
+      葡萄牙语: "pt",
+      日语: "ja",
+      泰语: "th",
+      土耳其语: "tr",
+      西班牙语: "es",
+      意大利语: "it",
+      印地语: "hi",
+      印度尼西亚语: "id",
+      越南语: "vi",
+    },
+    logo: "tranSmart.png",
+  },
   huoShan: {
     name: "火山",
     api: "open.volcengineapi.com",
@@ -767,6 +795,11 @@ function loadIdSecret() {
     document.getElementById("tencentAppSecret").value = tencentAppSecret;
   }
 
+  let tranSmartToken = utools.dbStorage.getItem("tranSmartToken");
+  if (tranSmartToken) {
+    document.getElementById("tranSmartToken").value = tranSmartToken;
+  }
+
   let huoShanAppId = utools.dbStorage.getItem("huoShanAppId");
   if (huoShanAppId) {
     document.getElementById("huoShanAppId").value = huoShanAppId;
@@ -924,6 +957,7 @@ function loadLang() {
   loadLangYouDaoFree();
   loadLangYouDao();
   loadLangAliYun();
+  loadLangTranSmart();
   loadLangHuaWei();
   loadLangCaiYun();
 }
@@ -1006,6 +1040,34 @@ function loadLangAliYun() {
   }
   for (let i = 0; i < targetElement.length; i++) {
     if (aliYunTarget == targetElement.options[i].value) {
+      targetElement.options[i].selected = true;
+      break;
+    }
+  }
+}
+
+function loadLangTranSmart() {
+  let tranSmartSource = utools.dbStorage.getItem("tranSmartSource") || "auto";
+  let tranSmartTarget = utools.dbStorage.getItem("tranSmartTarget") || "auto";
+  utools.dbStorage.setItem("tranSmartSource", tranSmartSource);
+  utools.dbStorage.setItem("tranSmartTarget", tranSmartTarget);
+  let names = Object.keys(options.tranSmart.langs);
+  let htmlStr = "";
+  for (let i = 0; i < names.length; i++) {
+    htmlStr += `<option value=${options.tranSmart.langs[names[i]]}>${names[i]}</option>`;
+  }
+  let sourceElement = document.querySelector(".service.tranSmart .lang>select.source");
+  let targetElement = document.querySelector(".service.tranSmart .lang>select.target");
+  sourceElement.innerHTML = htmlStr;
+  targetElement.innerHTML = htmlStr;
+  for (let i = 0; i < sourceElement.length; i++) {
+    if (tranSmartSource == sourceElement.options[i].value) {
+      sourceElement.options[i].selected = true;
+      break;
+    }
+  }
+  for (let i = 0; i < targetElement.length; i++) {
+    if (tranSmartTarget == targetElement.options[i].value) {
       targetElement.options[i].selected = true;
       break;
     }
@@ -1264,6 +1326,9 @@ function addKeyPasswordListener() {
   $("#tencentAppSecret").blur(function () {
     utools.dbStorage.setItem("tencentAppSecret", this.value.trim());
   });
+  $("#tranSmartToken").blur(function () {
+    utools.dbStorage.setItem("tranSmartToken", this.value.trim());
+  });
   $("#huoShanAppId").blur(function () {
     utools.dbStorage.setItem("huoShanAppId", this.value.trim());
   });
@@ -1308,6 +1373,7 @@ function addLangListener() {
   addLangListenerYouDaoFree();
   addLangListenerYouDao();
   addLangListenerAliYun();
+  addLangListenerTranSmart();
   addLangListenerHuaWei();
   addLangListenerCaiYun();
 }
@@ -1424,6 +1490,61 @@ function changeBrotherAliYun(thisValue, brother) {
     } else {
       brother[0].selectedIndex = 1;
     }
+  }
+}
+
+function addLangListenerTranSmart() {
+  $(".service.tranSmart .lang>select.source").change(function () {
+    changeBrotherTranSmart($(this).val(), $(".service.tranSmart .lang>select.target"));
+    utools.dbStorage.setItem("tranSmartSource", $(this).val());
+    let tranSmartTarget = $(".service.tranSmart .lang>select.target").val();
+    utools.dbStorage.setItem("tranSmartTarget", tranSmartTarget);
+  });
+  $(".service.tranSmart .lang>select.target").change(function () {
+    changeBrotherTranSmart($(this).val(), $(".service.tranSmart .lang>select.source"));
+    utools.dbStorage.setItem("tranSmartTarget", $(this).val());
+    let tranSmartSource = $(".service.tranSmart .lang>select.source").val();
+    utools.dbStorage.setItem("tranSmartSource", tranSmartSource);
+  });
+}
+
+/**
+ * Change the value of the brother select element for TranSmart.
+ * @param {String} thisValue The value of the current select element.
+ * @param {Object} brother The brother jquery object of the current select element.
+ */
+function changeBrotherTranSmart(thisValue, brother) {
+  if ("auto" == thisValue && brother[0].className.indexOf("source") != -1) {
+    brother[0].selectedIndex = 0;
+  }
+  if (thisValue == brother.val() && "auto" != thisValue) {
+    if ("en" == thisValue) {
+      brother[0].selectedIndex = 1;
+    } else {
+      brother[0].selectedIndex = 2;
+    }
+  }
+  if (
+    (thisValue == "fr" &&
+      brother.val() != "auto" &&
+      brother.val() != "en" &&
+      brother.val() != "zh" &&
+      brother.val() != "es") ||
+    (thisValue == "es" &&
+      brother.val() != "auto" &&
+      brother.val() != "en" &&
+      brother.val() != "zh" &&
+      brother.val() != "fr") ||
+    (thisValue != "auto" &&
+      thisValue != "en" &&
+      thisValue != "zh" &&
+      thisValue != "fr" &&
+      thisValue != "es" &&
+      brother.val() != "auto" &&
+      brother.val() != "en" &&
+      brother.val() != "zh")
+  ) {
+    brother[0].selectedIndex = 2;
   }
 }
 
@@ -1551,6 +1672,17 @@ function addExchangeListener() {
     changeBrotherAliYun(sourceEle.val(), targetEle);
     utools.dbStorage.setItem("aliYunSource", sourceEle.val());
     utools.dbStorage.setItem("aliYunTarget", targetEle.val());
+  });
+
+  $(".service.tranSmart .lang>.exchange").click(function () {
+    let sourceEle = $(".service.tranSmart .lang>select.source");
+    let targetEle = $(".service.tranSmart .lang>select.target");
+    let temp = sourceEle[0].selectedIndex;
+    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
+    targetEle[0].selectedIndex = temp;
+    changeBrotherTranSmart(targetEle.val(), sourceEle);
+    utools.dbStorage.setItem("tranSmartSource", sourceEle.val());
+    utools.dbStorage.setItem("tranSmartTarget", targetEle.val());
   });
 
   $(".service.huaWei .lang>.exchange").click(function () {
