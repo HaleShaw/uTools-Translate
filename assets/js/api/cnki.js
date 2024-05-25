@@ -1,6 +1,7 @@
 async function lookupCNKI(word) {
   let data = [];
   const api = options.cnki.api;
+  const secret = options.cnki.secret;
   let token = (await get(options.cnki.tokenApi))["data"];
   if (!token) {
     data.push({
@@ -8,7 +9,7 @@ async function lookupCNKI(word) {
       description: "获取Token失败，可进入设置页面切换其他API",
     });
   }
-  let encryptedWord = window.AESPkcs7(word);
+  let encryptedWord = window.AES_ECB_Encrypt(word, secret).replace(/\//g, "_").replace(/\+/g, "-");
   const payload = { translateType: null, words: encryptedWord };
   const headers = {
     Token: token,

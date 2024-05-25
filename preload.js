@@ -99,6 +99,14 @@ window.base64 = function (str) {
   return Buffer.from(str).toString("base64");
 };
 
+/**
+ * MD5 Encrypt.
+ * When coded as hex, the same result as in the following statement.
+ * CryptoJS.MD5(str).toString()
+ * @param {String} str String that requires encryption.
+ * @param {String} encoding Encrypted encoding mode.
+ * @returns
+ */
 window.MD5 = function (str, encoding = "hex") {
   return crypto.createHash("md5").update(str).digest(encoding);
 };
@@ -115,13 +123,18 @@ window.hmacSHA256 = function (str, secret = "", encoding) {
   return crypto.createHmac("sha256", secret).update(str).digest(encoding);
 };
 
-window.AESPkcs7 = function (str) {
-  const n = options.cnki.secret;
-  let e = { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 },
-    i = CryptoJS.enc.Utf8.parse(n),
-    s = CryptoJS.AES.encrypt(str, i, e),
-    r = s.toString().replace(/\//g, "_");
-  return (r = r.replace(/\+/g, "-")), r;
+window.AES_ECB_Encrypt = function (str, t) {
+  let e = { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 };
+  return CryptoJS.AES.encrypt(
+    CryptoJS.enc.Utf8.parse(str),
+    CryptoJS.enc.Utf8.parse(t),
+    e
+  ).toString();
+};
+
+window.AES_ECB_Decrypt = function (str, t) {
+  let e = { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 };
+  return CryptoJS.AES.decrypt(str, CryptoJS.enc.Utf8.parse(t), e).toString(CryptoJS.enc.Utf8);
 };
 
 window.huaWeiSigner = signer;

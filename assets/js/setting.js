@@ -175,8 +175,12 @@ const options = {
   },
   iCiBa: {
     name: "爱词霸",
-    api: "https://ifanyi.iciba.com/index.php?c=trans&m=fy&client=6&auth_user=key_web_fanyi&sign=",
-    secret: "NmtleV93ZWJfZmFueWlpZmFueWl3ZWI4aGM5czk4ZQ==",
+    api: "https://ifanyi.iciba.com/index.php?c=trans&m=fy&client=param_client&auth_user=param_user&sign=",
+    client: "6",
+    auth_user: "key_web_new_fanyi",
+    dict: "6dVjYLFyzfkFkk",
+    encrypt: "L4fBtD5fLC9FQw22",
+    decrypt: "aahc3TfyfCEmER33",
     logo: "iCiBa.png",
   },
   cnki: {
