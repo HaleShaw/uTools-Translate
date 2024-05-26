@@ -33,7 +33,7 @@ async function lookupMicrosoft(word) {
     }
     const tran = trans[0]["text"];
     if (tran) {
-      let langSource = langTarget == "en" ? "zh-Hans" : "en";
+      let langSource = langTarget == "en" ? "zh-CN" : "en";
       let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
       let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({

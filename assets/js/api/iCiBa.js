@@ -39,8 +39,8 @@ async function lookupICiBa(word) {
     let res = window.AES_ECB_Decrypt(response.content, decrypt);
     let obj = JSON.parse(res);
     let tran = obj.out;
-    let langSource = obj.from;
-    let langTarget = obj.to;
+    let langSource = obj.from == "zh" ? "zh-CN" : obj.from;
+    let langTarget = obj.to == "zh" ? "zh-CN" : obj.to;
     let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
     let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
     data.push({

@@ -78,7 +78,7 @@ function getPhoneticUs(word) {
 
 function getPhoneticGoogle(word, lang) {
   let langs = Object.values(options.googleAPI.langs);
-  if ("auto" == lang || langs.indexOf(lang) == -1) {
+  if (!lang || "auto" == lang || langs.indexOf(lang) == -1) {
     return "";
   }
   return `<button type="button" class="phonetic"><audio src="${SPEAK_ENGINE["Google"]}${lang}&q=${word}"></audio></button>`;

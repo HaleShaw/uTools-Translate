@@ -33,7 +33,9 @@ async function lookupTranSmart(word) {
       let resSource = response?.src_lang;
       let resTarget = response?.tgt_lang;
       let langSource = getLangTranSmartSource(word, source, resSource);
+      langSource = langSource == "zh" ? "zh-CN" : langSource;
       let langTarget = getLangTranSmartTarget(target, resTarget, source);
+      langTarget = langTarget == "zh" ? "zh-CN" : langTarget;
       let phoneticHtml = getPhoneticHtml(word, tran, langSource, langTarget);
       let dataTitle = `<span class="translation">${tran}</span>${phoneticHtml}`;
       data.push({
@@ -60,7 +62,7 @@ function getLangTranSmartSource(word, lang, resLang) {
     return resLang;
   }
   if ("auto" == lang) {
-    return isChinese(word) ? "zh" : "en";
+    return isChinese(word) ? "zh-CN" : "en";
   } else return lang;
 }
 
@@ -70,7 +72,7 @@ function getLangTranSmartTarget(lang, resLang, source) {
   }
   if ("auto" == lang) {
     if ("en" == source) {
-      return "zh";
+      return "zh-CN";
     } else {
       return "en";
     }
