@@ -12,7 +12,6 @@ async function lookupMicrosoft(word) {
       description: "获取Token失败，可进入设置页面切换其他API",
     });
   }
-  ("zh-Hans");
 
   let langTarget = isChinese(word) ? "en" : "zh-Hans";
   let url = api.replace("lang", langTarget);

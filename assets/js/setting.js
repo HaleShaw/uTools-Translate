@@ -200,6 +200,11 @@ const options = {
     authApi: "https://edge.microsoft.com/translate/auth",
     logo: "microsoft.png",
   },
+  foxIT: {
+    name: "福昕",
+    api: "https://fanyi.pdf365.cn/api/wordTranslateResult",
+    logo: "foxIT.png",
+  },
   cnki: {
     name: "CNKI",
     api: "https://dict.cnki.net/fyzs-front-api/translate/literaltranslation",

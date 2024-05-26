@@ -146,7 +146,8 @@ async function switchApi(word) {
     option == Object.keys(options)[16] ||
     option == Object.keys(options)[17] ||
     option == Object.keys(options)[18] ||
-    option == Object.keys(options)[19]
+    option == Object.keys(options)[19] ||
+    option == Object.keys(options)[20]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -173,42 +174,45 @@ async function switchApi(word) {
         data = await lookupMicrosoft(word);
         break;
       case Object.keys(options)[7]:
-        data = await lookupCNKI(word);
+        data = await lookupFoxIT(word);
         break;
       case Object.keys(options)[8]:
-        data = await lookupDeepL(word);
+        data = await lookupCNKI(word);
         break;
       case Object.keys(options)[9]:
-        data = await lookupDeepLX(word);
+        data = await lookupDeepL(word);
         break;
       case Object.keys(options)[10]:
-        data = await lookupDeepLAPI(word, "free");
+        data = await lookupDeepLX(word);
         break;
       case Object.keys(options)[11]:
-        data = await lookupDeepLAPI(word, "pro");
+        data = await lookupDeepLAPI(word, "free");
         break;
       case Object.keys(options)[12]:
-        data = await lookupYouDao(word);
+        data = await lookupDeepLAPI(word, "pro");
         break;
       case Object.keys(options)[13]:
-        data = await lookupBaiDu(word);
+        data = await lookupYouDao(word);
         break;
       case Object.keys(options)[14]:
-        data = await lookupAliYun(word);
+        data = await lookupBaiDu(word);
         break;
       case Object.keys(options)[15]:
-        data = await lookupTencent(word);
+        data = await lookupAliYun(word);
         break;
       case Object.keys(options)[16]:
-        data = await lookupHuoShan(word);
+        data = await lookupTencent(word);
         break;
       case Object.keys(options)[17]:
-        data = await lookupHuaWei(word);
+        data = await lookupHuoShan(word);
         break;
       case Object.keys(options)[18]:
-        data = await lookupCaiYun(word);
+        data = await lookupHuaWei(word);
         break;
       case Object.keys(options)[19]:
+        data = await lookupCaiYun(word);
+        break;
+      case Object.keys(options)[20]:
         data = await lookupXiaoNiu(word);
         break;
       default:
