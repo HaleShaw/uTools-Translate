@@ -379,6 +379,8 @@ function initList(data, option) {
       spanEle.style.display = "block";
       spanEle.style.wordBreak = "normal";
       spanEle.style.whiteSpace = "pre-wrap";
+      spanEle.style.maxHeight = "460px";
+      spanEle.style.overflowY = "scroll";
       let newHeight = title.parentElement.parentElement.scrollHeight;
       let identity = document.querySelector("div.quick-index-identity > div:nth-child(1)");
       identity.style.lineHeight = newHeight + "px";
