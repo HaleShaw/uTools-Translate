@@ -2,7 +2,17 @@ async function lookupBing(word) {
   let data = [];
   const api = options.bing.api;
   let url = api + encodeURIComponent(word);
-  let response = await get(url);
+
+  let response;
+  try {
+    response = await get(url);
+  } catch (error) {
+    data.push({
+      title: errTitle,
+      description: "翻译错误",
+    });
+    return data;
+  }
 
   var parser = new DOMParser();
   let doc = parser.parseFromString(response, "text/html");

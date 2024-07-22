@@ -21,9 +21,9 @@ async function lookupXiaoNiu(word) {
   const target = isChinese(word) ? "en" : "zh";
   const url =
     api + `?from=${source}&to=${target}&apikey=${token}&src_text=${encodeURIComponent(word)}`;
-
-  let response = await get(url);
+  let response;
   try {
+    response = await get(url);
     let resData = JSON.parse(response);
     const tran = resData?.tgt_text;
     if (tran) {

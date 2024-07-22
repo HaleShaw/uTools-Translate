@@ -4,7 +4,16 @@ async function lookupGoogleAPI(word) {
   let param = `&tl=${tl}&hl=${tl}&q=${word}`;
   const url = options.googleAPI.api + param;
 
-  const transData = await get(url);
+  let transData;
+  try {
+    transData = await get(url);
+  } catch (error) {
+    data.push({
+      title: errTitle,
+      description: "其他错误，可进入设置页面切换其他API",
+    });
+    return data;
+  }
 
   let tran = "";
   let basicArr = transData[0];

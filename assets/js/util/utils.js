@@ -28,6 +28,9 @@ function get(url) {
         console.error(e);
         reject({ errorCode: errorCodeOther, message: e });
       }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+      console.error("Do GET Request failed: " + textStatus);
+      reject({ errorCode: errorCodeOther, message: textStatus });
     });
   });
 }

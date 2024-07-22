@@ -75,9 +75,10 @@ async function lookupAliYun(word) {
     "x-acs-version": "2019-01-02",
   };
 
-  const response = await window.doPost(api, path, null, headers, payload);
+  let response;
   let res = "";
   try {
+    response = await window.doPost(api, path, null, headers, payload);
     res = JSON.parse(response);
   } catch (error) {
     console.error(error);

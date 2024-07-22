@@ -16,15 +16,16 @@ async function lookupGoogle(word) {
     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
   };
   let agent = getAgent();
-  const response = await window.doPost(api, path, agent, headers, param);
+  let response;
   let transData;
   try {
+    response = await window.doPost(api, path, agent, headers, param);
     transData = JSON.parse(JSON.parse(response.match(/\[{2}.*\]{2}/g)[0])[0][2]);
   } catch (error) {
     console.error(error);
     data.push({
       title: errTitle,
-      description: "翻译错误",
+      description: "其他错误，可进入设置页面切换其他API",
     });
     return data;
   }
