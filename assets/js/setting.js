@@ -763,6 +763,11 @@ function loadIdSecret() {
     document.getElementById("youDaoAppSecret").value = youDaoAppSecret;
   }
 
+  let youDaoVocab = utools.dbStorage.getItem("youDaoVocab");
+  if (youDaoVocab) {
+    document.getElementById("youDaoVocab").value = youDaoVocab;
+  }
+
   let baiDuAppId = utools.dbStorage.getItem("baiDuAppId");
   if (baiDuAppId) {
     document.getElementById("baiDuAppId").value = baiDuAppId;
@@ -1271,6 +1276,9 @@ function addKeyPasswordListener() {
   });
   $("#youDaoAppSecret").blur(function () {
     utools.dbStorage.setItem("youDaoAppSecret", this.value.trim());
+  });
+  $("#youDaoVocab").blur(function () {
+    utools.dbStorage.setItem("youDaoVocab", this.value.trim());
   });
   $("#baiDuAppId").blur(function () {
     utools.dbStorage.setItem("baiDuAppId", this.value.trim());

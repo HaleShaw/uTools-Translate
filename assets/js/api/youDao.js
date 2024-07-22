@@ -144,6 +144,7 @@ async function lookupYouDao(word) {
   const api = options.youDao.api;
   let appId = utools.dbStorage.getItem("youDaoAppId");
   let appSecret = utools.dbStorage.getItem("youDaoAppSecret");
+  let vocab = utools.dbStorage.getItem("youDaoVocab");
   if (!appId || !appSecret) {
     data.push({
       title: errTitle,
@@ -169,6 +170,9 @@ async function lookupYouDao(word) {
     signType: "v3",
     curtime: curtime,
   };
+  if (vocab && vocab != "") {
+    param.vocabId = vocab;
+  }
   let response;
   try {
     response = await post(api, stringify(param), formHeaders);
