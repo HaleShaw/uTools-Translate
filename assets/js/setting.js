@@ -642,12 +642,15 @@ const DEFAULT_SPEAK = {
   speakEngine: "Google",
   speakContent: "Source",
 };
+
 const DEFAULT_VARIABLE = {
   variableSwitch: false,
   variableContent: "Result",
   variableSource: "camelCase",
   variableResult: ["camelCase"],
 };
+
+const DEFAULT_DEBOUNCING = 500;
 
 const DEFAULT_PROXY = {
   proxySwitch: false,
@@ -680,6 +683,7 @@ function initSetting() {
   if (isFirstEnter) {
     addSpeakListener();
     addVariableListener();
+    addDebouncingListener();
     addProxyListener();
     addApiListener();
     addSiteListener();
@@ -714,6 +718,7 @@ function loadConfiguration() {
   loadVersion();
   loadSpeak();
   loadVariable();
+  loadDebouncing();
   loadProxy();
   loadIdSecret();
   loadLang();
@@ -918,6 +923,22 @@ function loadVariable() {
   }
 
   updateVariableStatus(variable["variableSwitch"]);
+}
+
+/**
+ * Loads the debouncing time setting from the database and applies it to the corresponding element on the page.
+ * If the debouncing time setting is not found in the database, it defaults to the DEFAULT_DEBOUNCING value.
+ */
+function loadDebouncing() {
+  let debouncingTime = utools.dbStorage.getItem("debouncingTime");
+
+  // Check if the debouncing time setting is null or an empty string
+  if (debouncingTime === null || "" == debouncingTime) {
+    debouncingTime = DEFAULT_DEBOUNCING;
+    utools.dbStorage.setItem("debouncingTime", debouncingTime);
+  }
+
+  document.getElementById("debouncingTime").value = debouncingTime;
 }
 
 /**
@@ -1213,6 +1234,18 @@ function addVariableListener() {
     const { value } = e.target;
     variable["variableSource"] = value;
     utools.dbStorage.setItem("variable", variable);
+  });
+}
+
+/**
+ * Add the debouncing listener.
+ */
+function addDebouncingListener() {
+  $("#debouncingTime").blur(function () {
+    let temp = this.value.trim();
+    temp = temp.replace(/^(0+)|[^\d]+/g, "");
+    this.value = temp;
+    utools.dbStorage.setItem("debouncingTime", parseInt(temp));
   });
 }
 

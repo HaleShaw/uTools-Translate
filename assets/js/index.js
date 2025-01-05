@@ -12,9 +12,6 @@ const maxHeight = itemHeight * 10;
 // 延时ID。
 let delayId = null;
 
-// 延迟查询的时间毫秒数。
-const DELAY_TIME = 300;
-
 // 朗读配置。
 var speak;
 
@@ -34,7 +31,12 @@ utools.onPluginEnter(({ code, type, payload }) => {
   checkSystem();
   if (code == "translate_text") {
     utools.setSubInput(({ text }) => {
-      delayLookUp(DELAY_TIME, text);
+      let debouncingTime = utools.dbStorage.getItem("debouncingTime");
+      if (debouncingTime === null || "" == debouncingTime) {
+        debouncingTime = DEFAULT_DEBOUNCING;
+        utools.dbStorage.setItem("debouncingTime", debouncingTime);
+      }
+      delayLookUp(debouncingTime, text);
     }, "请输入需要查询的内容");
     if (type == "over" || type == "regex") {
       utools.setSubInputValue(payload);
@@ -68,10 +70,10 @@ function checkSystem() {
 
 /**
  * 延迟查询，避免频繁调用API.
- * @param {Number} timeout 延时查询的毫秒数.
+ * @param {Number} debouncingTime 延时查询的毫秒数.
  * @param {String} word 所查询的内容.
  */
-function delayLookUp(timeout, word) {
+function delayLookUp(debouncingTime, word) {
   let contentFather = $("#root>.list").children(":first");
   word = word.trim();
   if (word == "") {
@@ -80,7 +82,7 @@ function delayLookUp(timeout, word) {
     utools.setExpendHeight(0);
     return;
   }
-  timeout = typeof timeout == "number" ? timeout : DELAY_TIME;
+  debouncingTime = typeof debouncingTime == "number" ? debouncingTime : DEFAULT_DEBOUNCING;
 
   delayId && clearTimeout(delayId);
   delayId = setTimeout(() => {
@@ -89,7 +91,7 @@ function delayLookUp(timeout, word) {
     } catch (error) {
       console.error(error);
     }
-  }, timeout);
+  }, debouncingTime);
 }
 
 async function switchApi(word) {
