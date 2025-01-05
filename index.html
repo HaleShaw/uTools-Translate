@@ -148,6 +148,12 @@
                 <span class="vm" title="有道移动版，页面模式">有道</span>
               </a>
             </div>
+            <div class="service youDaoWeb">
+              <a href="#youDaoWeb">
+                <img src="./assets/images/youDaoWeb.png" />
+                <span class="vm" title="有道移动版，页面模式">有道</span>
+              </a>
+            </div>
             <div class="service googleAPI">
               <a href="#googleAPI">
                 <img src="./assets/images/google.png" />
@@ -650,6 +656,22 @@
                 <a class="comment">移动版API，精度相对稍低，非列表模式</a>
               </div>
             </div>
+            <div class="service border-bottom youDaoWeb" id="youDaoWeb">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="youDaoWeb" />
+                  <img src="./assets/images/youDaoWeb.png" />
+                  <strong>有道</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-primary">内置</span>
+                    <span class="badge rounded-pill text-bg-secondary">列表</span>
+                  </span>
+                </label>
+              </div>
+              <div class="detail">
+                <a class="comment">网页版API，单次翻译字数限制为 5000 字</a>
+              </div>
+            </div>
             <div class="service border-bottom googleAPI" id="googleAPI">
               <div class="api mb-1">
                 <label>
@@ -663,7 +685,7 @@
                 </label>
               </div>
               <div class="detail">
-                <a class="comment">translate.googleapis.com，可配置hosts。</a>
+                <a class="comment">translate.googleapis.com，可配置hosts</a>
               </div>
             </div>
             <div class="service border-bottom google" id="google">
@@ -1370,6 +1392,7 @@
     <script src="assets/js/util/utils.js"></script>
     <script src="assets/js/api/cnki.js"></script>
     <script src="assets/js/api/youDaoWap.js"></script>
+    <script src="assets/js/api/youDaoWeb.js"></script>
     <script src="assets/js/api/googleAPI.js"></script>
     <script src="assets/js/api/google.js"></script>
     <script src="assets/js/api/tencent.js"></script>

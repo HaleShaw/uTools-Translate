@@ -137,4 +137,18 @@ window.AES_ECB_Decrypt = function (str, t) {
   return CryptoJS.AES.decrypt(str, CryptoJS.enc.Utf8.parse(t), e).toString(CryptoJS.enc.Utf8);
 };
 
+window.AES_CBC_Decrypt = function (str, secretKey, iv) {
+  return CryptoJS.AES.decrypt(
+    {
+      ciphertext: CryptoJS.enc.Base64.parse(str),
+    },
+    CryptoJS.MD5(secretKey),
+    {
+      iv: CryptoJS.MD5(iv),
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    }
+  ).toString(CryptoJS.enc.Utf8);
+};
+
 window.huaWeiSigner = signer;

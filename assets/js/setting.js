@@ -4,6 +4,15 @@ const options = {
     api: "https://m.youdao.com/dict?le=eng&q=",
     logo: "youDaoWap.png",
   },
+  youDaoWeb: {
+    name: "有道网页版",
+    api: "dict.youdao.com",
+    path: "/webtranslate",
+    logo: "youDaoWeb.png",
+    client: "fanyideskweb",
+    product: "webfanyi",
+    key: "asdjnjfenknafdfsdfsd",
+  },
   googleAPI: {
     name: "谷歌",
     api: "https://translate.googleapis.com/translate_a/single?client=gtx&ie=UTF-8&oe=UTF-8&dt=bd&dt=t&sl=auto",
@@ -635,7 +644,7 @@ const options = {
 };
 
 // Set the default API.
-const defaultAPI = Object.keys(options)[4];
+const defaultAPI = Object.keys(options)[1];
 
 const DEFAULT_SPEAK = {
   speakSwitch: true,
