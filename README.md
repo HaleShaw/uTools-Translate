@@ -175,6 +175,8 @@
 
 - [![Jackfruit-monster](https://avatars.githubusercontent.com/u/29976846?s=64&v=4)Jackfruit-monster](https://github.com/Jackfruit-monster)
 
+- kaixinguo kxg12345679@163.com
+
 ## License
 
 Copyright (c) 2021-present, HaleShaw.
