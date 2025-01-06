@@ -378,10 +378,11 @@ function initList(data, option) {
     let title = list[i].querySelector("div.list-item-title");
     if (title.scrollWidth > title.offsetWidth) {
       list[i].setAttribute("title", getContent(title));
-      // 当横向溢出时，通常就只有一个翻译结果，此时直接将结果行展开到自适应高度。
+
+      // 当横向溢出时，通常就只有一个翻译结果，此时直接将结果行展开到自适应高度。若有多个翻译结果，则不展开。
       let itemList = document.querySelectorAll("div.list-item");
       if (itemList.length != 1) {
-        return;
+        continue;
       }
       let spanEle = list[i].querySelector("div.list-item-title > span.translation");
       title.style.height = "unset";
