@@ -57,6 +57,40 @@ function post(url, body, headers) {
   });
 }
 
+/**
+ * 发起一个POST请求并以流的形式处理响应
+ * @param {string} url 请求的URL
+ * @param {Object} body 请求的主体内容
+ * @returns {Promise} 一个Promise，解析为响应对象或拒绝为错误对象
+ */
+function postStream(url, body) {
+  return new Promise((resolve, reject) => {
+    fetch(url, {
+      method: "POST",
+      body: body,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then(res => {
+        if (res.ok) {
+          resolve(res);
+        } else {
+          reject({ errorCode: res.status, message: res.statusText });
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        reject({ errorCode: errorCodeOther, message: e });
+      });
+  });
+}
+
+/**
+ * 将对象序列化为URL编码的字符串
+ * @param {Object} obj 需要序列化的对象
+ * @returns {string} URL编码的字符串
+ */
 function stringify(obj) {
   return Object.keys(obj)
     .map(key => {
@@ -174,6 +208,11 @@ function UnPascalCase(text) {
   return arr.join(" ");
 }
 
+/**
+ * 判断一个字符串是否包含中文字符
+ * @param {string} word 需要判断的字符串
+ * @returns {boolean} 如果字符串包含中文字符，返回true，否则返回false
+ */
 function isChinese(word) {
   return /[\u4e00-\u9fa5]/.test(word);
 }

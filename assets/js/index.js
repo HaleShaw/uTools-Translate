@@ -150,7 +150,8 @@ async function switchApi(word) {
     option == Object.keys(options)[18] ||
     option == Object.keys(options)[19] ||
     option == Object.keys(options)[20] ||
-    option == Object.keys(options)[21]
+    option == Object.keys(options)[21] ||
+    option == Object.keys(options)[22]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -162,63 +163,66 @@ async function switchApi(word) {
         data = await lookupYouDaoWeb(word);
         break;
       case Object.keys(options)[2]:
-        data = await lookupGoogleAPI(word);
+        data = await lookupBaiDuFree(word);
         break;
       case Object.keys(options)[3]:
-        data = await lookupGoogle(word);
+        data = await lookupGoogleAPI(word);
         break;
       case Object.keys(options)[4]:
-        data = await lookupBing(word);
+        data = await lookupGoogle(word);
         break;
       case Object.keys(options)[5]:
-        data = await lookupICiBa(word);
+        data = await lookupBing(word);
         break;
       case Object.keys(options)[6]:
-        data = await lookupTranSmart(word);
+        data = await lookupICiBa(word);
         break;
       case Object.keys(options)[7]:
-        data = await lookupMicrosoft(word);
+        data = await lookupTranSmart(word);
         break;
       case Object.keys(options)[8]:
-        data = await lookupFoxIT(word);
+        data = await lookupMicrosoft(word);
         break;
       case Object.keys(options)[9]:
-        data = await lookupCNKI(word);
+        data = await lookupFoxIT(word);
         break;
       case Object.keys(options)[10]:
-        data = await lookupDeepL(word);
+        data = await lookupCNKI(word);
         break;
       case Object.keys(options)[11]:
-        data = await lookupDeepLX(word);
+        data = await lookupDeepL(word);
         break;
       case Object.keys(options)[12]:
-        data = await lookupDeepLAPI(word, "free");
+        data = await lookupDeepLX(word);
         break;
       case Object.keys(options)[13]:
-        data = await lookupDeepLAPI(word, "pro");
+        data = await lookupDeepLAPI(word, "free");
         break;
       case Object.keys(options)[14]:
-        data = await lookupYouDao(word);
+        data = await lookupDeepLAPI(word, "pro");
         break;
       case Object.keys(options)[15]:
-        data = await lookupBaiDu(word);
+        data = await lookupYouDao(word);
         break;
       case Object.keys(options)[16]:
-        data = await lookupAliYun(word);
+        data = await lookupBaiDu(word);
         break;
       case Object.keys(options)[17]:
-        data = await lookupTencent(word);
+        data = await lookupAliYun(word);
         break;
       case Object.keys(options)[18]:
-        data = await lookupHuoShan(word);
+        data = await lookupTencent(word);
         break;
       case Object.keys(options)[19]:
-        data = await lookupHuaWei(word);
+        data = await lookupHuoShan(word);
         break;
       case Object.keys(options)[20]:
-        data = await lookupCaiYun(word);
+        data = await lookupHuaWei(word);
         break;
       case Object.keys(options)[21]:
+        data = await lookupCaiYun(word);
+        break;
+      case Object.keys(options)[22]:
         data = await lookupXiaoNiu(word);
         break;
       default:

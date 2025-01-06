@@ -13,6 +13,11 @@ const options = {
     product: "webfanyi",
     key: "asdjnjfenknafdfsdfsd",
   },
+  baiDuFree: {
+    name: "百度",
+    api: "https://fanyi.baidu.com/ait/text/translate",
+    logo: "baiDu.png",
+  },
   googleAPI: {
     name: "谷歌",
     api: "https://translate.googleapis.com/translate_a/single?client=gtx&ie=UTF-8&oe=UTF-8&dt=bd&dt=t&sl=auto",
