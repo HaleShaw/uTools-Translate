@@ -31,12 +31,7 @@ utools.onPluginEnter(({ code, type, payload }) => {
   checkSystem();
   if (code == "translate_text") {
     utools.setSubInput(({ text }) => {
-      let debouncingTime = utools.dbStorage.getItem("debouncingTime");
-      if (debouncingTime === null || "" == debouncingTime) {
-        debouncingTime = DEFAULT_DEBOUNCING;
-        utools.dbStorage.setItem("debouncingTime", debouncingTime);
-      }
-      delayLookUp(debouncingTime, text);
+      delayLookUp(getDebouncingTime(), text, false);
     }, "请输入需要查询的内容");
     if (type == "over" || type == "regex") {
       utools.setSubInputValue(payload);
@@ -49,6 +44,32 @@ utools.onPluginEnter(({ code, type, payload }) => {
     initSetting();
   }
 });
+
+/**
+ * 推送内容到搜索框。
+ */
+utools.onMainPush(({ code, type, payload }) => {
+  let word = payload.trim();
+  if (!word || word == "") {
+    return [];
+  }
+  return switchApi(word, true);
+}, null);
+
+
+/**
+ * 获取防抖时间。
+ * 如果防抖时间未设置或为空，则使用默认防抖时间并将其存储到数据库中。
+ * @returns {Number} 防抖时间。
+ */
+function getDebouncingTime() {
+  let debouncingTime = utools.dbStorage.getItem("debouncingTime");
+  if (debouncingTime === null || "" == debouncingTime) {
+    debouncingTime = DEFAULT_DEBOUNCING;
+    utools.dbStorage.setItem("debouncingTime", debouncingTime);
+  }
+  return debouncingTime;
+}
 
 function checkSystem() {
   let listKey = utools.isMacOS() ? "⌘" : "Alt";
@@ -94,12 +115,26 @@ function delayLookUp(debouncingTime, word) {
   }, debouncingTime);
 }
 
-async function switchApi(word) {
+/**
+ * 根据选择的 API 选项，异步调用相应的翻译 API 进行翻译操作，并处理相关配置和界面显示。
+ * @param {string} word - 需要翻译的文本。
+ * @param {boolean} mainPush - 指示是否从主程序推送触发的标志。
+ * @returns {Array} - 如果是主程序推送触发，返回处理后的数据数组；否则不返回。
+ */
+async function switchApi(word, mainPush) {
   let option = utools.dbStorage.getItem("option");
-  if (!option || option.error || Object.keys(options).indexOf(option) == -1) {
-    // Choose the default API.
+
+  const keys = Object.keys(options);
+  const firstKey = keys[0];
+  const isOptionInvalid = !option || option.error || !keys.includes(option);
+  const isFirstKeyPushed = option === firstKey && mainPush;
+
+  if (isOptionInvalid || isFirstKeyPushed) {
     option = defaultAPI;
-    utools.dbStorage.setItem("option", option);
+
+    if (!isFirstKeyPushed) {
+      utools.dbStorage.setItem("option", option);
+    }
   }
 
   speak = utools.dbStorage.getItem("speak");
@@ -228,6 +263,18 @@ async function switchApi(word) {
       default:
         break;
     }
+    formatVariableCase(data);
+    if (mainPush) {
+      return data.map(item => {
+        const textMatch = item.title.match(/<span class="translation">(.*?)<\/span>/);
+        const text = textMatch ? textMatch[1] : item.title;
+        return {
+          title: item.description,
+          icon: `./assets/images/${options[option]["logo"]}`,
+          text: text
+        };
+      });
+    }
     initList(data, option);
   }
   console.debug(option);
@@ -326,7 +373,6 @@ function formatVariableCase(data) {
 }
 
 function initList(data, option) {
-  formatVariableCase(data);
   let contentFather = $("#root>.list").children(":first");
   contentFather.html("");
   for (let i = 0; i < data.length; i++) {
