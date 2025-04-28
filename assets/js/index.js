@@ -85,8 +85,8 @@ function checkSystem() {
   <div>${listKey}+8</div>
   <div>${listKey}+9</div>
   <div>${listKey}+0</div>`;
-  document.getElementById("shortcutEn").innerHTML = `${speakKey}+S`;
-  document.getElementById("shortcutUs").innerHTML = `${speakKey}+D`;
+  document.getElementById("shortcutEn").innerHTML = `<span class="key">${speakKey}</span>+<span class="key">S</span>`;
+  document.getElementById("shortcutUs").innerHTML = `<span class="key">${speakKey}</span>+<span class="key">D</span>`;
 }
 
 /**

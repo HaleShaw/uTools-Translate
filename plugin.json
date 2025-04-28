@@ -13,6 +13,7 @@
       "explain": "快速翻译，实时输入翻译，列表翻译，自动复制，多语言翻译，多API切换，音标朗读，句子朗读，变量格式化",
       "icon": "logo.png",
       "mainPush": true,
+      "mainHide": true,
       "cmds": [
         "翻译",
         "translate",
