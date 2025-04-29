@@ -45,6 +45,7 @@
   border-top: 1px solid rgba(240, 240, 240, 0.8);
 }
 
+#setting .header .engine .engine-logo,
 #setting .body .side.floatL svg,
 #setting .body .side .services .service img,
 #setting .services .service img,
@@ -66,11 +67,19 @@
   display: inline-flex;
   background-color: grey;
   color: white;
-  border-radius: 12px;
-  font-size: 12px;
+  border-radius: 11px;
+  font-size: 11px;
   transform: scale(0.7);
-  padding: 3px 9px;
+  padding: 3px 8px;
   opacity: 0.8;
+  margin-left: -7px;
+  margin-top: -6px;
+  font-weight: normal;
+}
+
+#setting .l-badge.ai {
+  background-color: #848ef9;
+  color: white;
 }
 
 #setting .shortcut .key {
@@ -113,11 +122,11 @@
 }
 
 #setting > .body > .side {
-  width: 20%;
+  width: 22%;
 }
 
 #setting > .body > .content {
-  width: calc(80% - 10px);
+  width: calc(78% - 10px);
 }
 
 #setting > .body > .side,
@@ -144,6 +153,7 @@
 #setting > .body > .side > .services > .service:hover {
   background-color: rgba(200, 200, 200, 0.6) !important;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 #setting > .body > .side > .services > .service.active {
@@ -219,17 +229,88 @@
   display: inline-block;
 }
 
-.key > .private-father {
-  width: 35rem;
-}
-
-.pwd > .private-father {
-  width: 36.55rem;
-}
-
 .secret {
   border-top-right-radius: 0.25rem !important;
   border-bottom-right-radius: 0.25rem !important;
+}
+
+#setting .model-item {
+  padding: 10px 5px;
+  border: 1px solid #e6e6e6;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+#setting .model-item.active {
+  background-color: #f5e6e6;
+  color: #cc3333;
+  font-weight: 500;
+}
+
+#setting .model-item:hover {
+  background-color: #e6e6e6;
+  transform: 0.5s;
+}
+
+#setting .model-item:last-child {
+  border-bottom: 1px solid #e6e6e6;
+}
+
+#setting .model-item .model-status.icon {
+  position: relative;
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0.4em;
+  background-color: #405061;
+  border-radius: 0.4em;
+  margin-right: 4px;
+}
+
+#setting .model-item .model-status.icon.active {
+  width: 1rem;
+  height: 1rem;
+  background-color: unset;
+}
+#setting .model-item .model-status.icon.active::after {
+  content: "";
+  position: absolute;
+  vertical-align: middle;
+  width: 6px;
+  height: 12px;
+  border: solid #cc3333;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+#setting .model-item .model-name {
+  font-weight: 500;
+}
+
+.cost-icon::before {
+  display: inline-block;
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  vertical-align: -0.2em;
+  background-repeat: no-repeat;
+  background-size: 1rem 1rem;
+  /* background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='icon' viewBox='0 0 16 16'><path d='M0.351758 489.071763c183.361939 33.576916 308.140154 80.520642 374.142777 140.703267 66.066579 60.24658 104.312285 184.385235 114.737118 372.415964 13.110986-189.181937 50.141528-313.256636 111.155581-372.415964 61.014053-59.095372 186.943476-106.039098 377.724314-140.703267-194.234464-13.68659-320.163887-47.775155-377.724314-102.329648-57.560427-54.490538-94.654925-183.170071-111.155581-386.038599-12.471426 207.729186-50.717132 336.408719-114.737118 386.038599-63.95603 49.629879-188.670289 83.7824-374.142777 102.329648z'></path></svg>"); */
+  background-image: url("..//images/cost.png");
+}
+
+#setting .model-item .model-desc {
+  text-indent: 2em;
+  margin-top: 5px;
+  display: none;
+}
+
+.eye {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
 }
 
 .eye,
@@ -316,7 +397,8 @@
   #setting > .body > .content > .services > .service > .api > a:hover,
   #setting > .footer a:hover,
   #setting > .body > .side > div:not(:nth-last-child(2)):hover,
-  #setting > .body > .side > .services > .service:hover {
+  #setting > .body > .side > .services > .service:hover,
+  #setting .model-item:hover {
     color: #cc3333;
   }
 

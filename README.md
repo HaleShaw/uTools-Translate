@@ -52,24 +52,25 @@
 
 1. 支持中英文等 214 种语言互译
 2. 支持切换翻译 API
-3. 支持单词、句子及段落翻译
-4. 支持查询音标
-5. 支持多个朗读引擎
-6. 支持朗读源文本及翻译结果
-7. 支持快捷键朗读（**Windows**：英式 `Alt+S`，美式 `Alt+D` | **Mac OS**：英式 `Ctrl+S`，美式 `Ctrl+D`）
-8. 支持自动复制翻译结果
-9. 支持自动翻译剪贴板文本
-10. 支持单词变形
-11. 支持术语表
-12. 支持自动即时查询
-13. 支持源语言和目标语言设置
-14. 支持按变量格式化内容
-15. 支持翻译变量
-16. 支持代理设置
-17. 支持暗黑模式
-18. 支持 LOGO 显示翻译引擎
-19. 支持快捷键上下移动（向下：`Down` / `Ctrl+N` / `Ctrl+J`，向上：`Up` / `Ctrl+P` / `Ctrl+K`）
-20. 支持自定义API防抖时间
+3. 支持AI翻译
+4. 支持单词、句子及段落翻译
+5. 支持查询音标
+6. 支持多个朗读引擎
+7. 支持朗读源文本及翻译结果
+8. 支持快捷键朗读（**Windows**：英式 `Alt+S`，美式 `Alt+D` | **Mac OS**：英式 `Ctrl+S`，美式 `Ctrl+D`）
+9. 支持自动复制翻译结果
+10. 支持自动翻译剪贴板文本
+11. 支持单词变形
+12. 支持术语表
+13. 支持自动即时查询
+14. 支持源语言和目标语言设置
+15. 支持按变量格式化内容
+16. 支持翻译变量
+17. 支持代理设置
+18. 支持暗黑模式
+19. 支持 LOGO 显示翻译引擎
+20. 支持快捷键上下移动（向下：`Down` / `Ctrl+N` / `Ctrl+J`，向上：`Up` / `Ctrl+P` / `Ctrl+K`）
+21. 支持自定义API防抖时间
 
 ## API
 
@@ -159,6 +160,15 @@
     - <https://niutrans.com/text_trans>
     - 翻译内容较少，仅有基本翻译。
     - 需要到[小牛翻译](https://niutrans.com/cloud/account_info/info)获取 API-KEY。
+23. uTools AI
+    - <https://www.u-tools.cn/docs/developer/api-reference/utools/ai.html#utools-allaimodels>
+    - 由uTools团队提供的AI中转服务，每次将自动消耗uTools的AI能量。
+    - 支持模型：`豆包 1.5 Pro`、`DeepSeek-v3`、`DeepSeek-R1`、`QwQ-32B`、`文心一言 3.5`、`文心一言 Speed`、`智普 GLM4-flash`、`通义千问 long`
+24. DeepSeek
+    - <https://platform.deepseek.com>
+    - 服务商原因，响应相对较慢。
+    - 支持模型：`DeepSeek-V3`、`DeepSeek-R1`
+    - 需要到[开放平台](https://platform.deepseek.com/api_keys)创建 API-KEY。
 
 ## Reference
 

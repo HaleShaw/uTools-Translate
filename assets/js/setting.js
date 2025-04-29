@@ -646,10 +646,21 @@ const options = {
     api: "https://api.niutrans.com/NiuTransServer/translation",
     logo: "xiaoNiu.png",
   },
+  uToolsAI: {
+    name: "uTools AI",
+    logo: "uToolsAI.png",
+  },
+  deepSeek: {
+    name: "DeepSeek",
+    api: "https://api.deepseek.com/v1",
+    path: "/chat/completions",
+    logo: "deepSeek.png",
+  },
 };
 
 // Set the default API.
 const defaultAPI = Object.keys(options)[1];
+const defaultAI = "deepseek-r1";
 
 const DEFAULT_SPEAK = {
   speakSwitch: true,
@@ -678,6 +689,7 @@ const BADGE_TOAST = {
   页面: "页面模式，显示更多内容",
   多语言: "支持多种语言互译",
   推荐: "翻译内容多，翻译准确",
+  AI: "AI翻译"
 };
 
 const SPEAK_ENGINE = {
@@ -705,6 +717,7 @@ function initSetting() {
     addEyeListener();
     addLangListener();
     addExchangeListener();
+    addDeepSeekModelListener();
     addBadgeListener();
     addSettingResizeListener();
   }
@@ -736,17 +749,18 @@ function loadConfiguration() {
   loadProxy();
   loadIdSecret();
   loadLang();
+  loadUToolsAI();
 }
 
 function updateMenuClass(service) {
-  let menus = document.querySelectorAll("#setting > .body > .side > .services > .service");
-  for (let i = 0; i < menus.length; i++) {
-    if (menus[i].className.replaceAll(/(service|active|\s)/g, "") == service) {
-      $(menus[i]).addClass("active");
-    } else {
-      $(menus[i]).removeClass("active");
-    }
-  }
+  $('#setting > .body > .side > .services > .service').each(function () {
+    const $el = $(this);
+    const serviceClass = Array.from($el[0].classList)
+      .find(className => className !== 'service' && className !== 'active');
+    $el.toggleClass('active', serviceClass === service);
+  });
+  $('#setting > .header > .engine > .engine-logo').attr('src', `./assets/images/${options[service].logo}`);
+  $('#setting > .header > .engine > .engine-name').text(options[service].name);
 }
 
 /**
@@ -757,100 +771,38 @@ function loadVersion() {
 }
 
 function loadIdSecret() {
-  let deepLXApi = utools.dbStorage.getItem("deepLXApi");
-  if (deepLXApi) {
-    document.getElementById("deepLXApi").value = deepLXApi;
-  }
+  // 配置信息：存储键名 -> 元素ID
+  const configArr = [
+    'deepLXApi',
+    'deepLFreeSecret',
+    'deepLProSecret',
+    'youDaoAppId',
+    'youDaoAppSecret',
+    'youDaoVocab',
+    'baiDuAppId',
+    'baiDuAppSecret',
+    'aliYunAppId',
+    'aliYunAppSecret',
+    'tencentAppId',
+    'tencentAppSecret',
+    'huoShanAppId',
+    'huoShanAppSecret',
+    'huaWeiAK',
+    'huaWeiSK',
+    'huaWeiProjectId',
+    'caiYunToken',
+    'xiaoNiuToken',
+    'deepSeekAPIKey',
+    'deepSeekPrompt',
+    'deepSeekModel'
+  ];
 
-  let deepLFreeSecret = utools.dbStorage.getItem("deepLFreeSecret");
-  if (deepLFreeSecret) {
-    document.getElementById("deepLFreeSecret").value = deepLFreeSecret;
-  }
-
-  let deepLProSecret = utools.dbStorage.getItem("deepLProSecret");
-  if (deepLProSecret) {
-    document.getElementById("deepLProSecret").value = deepLProSecret;
-  }
-
-  let youDaoAppId = utools.dbStorage.getItem("youDaoAppId");
-  if (youDaoAppId) {
-    document.getElementById("youDaoAppId").value = youDaoAppId;
-  }
-
-  let youDaoAppSecret = utools.dbStorage.getItem("youDaoAppSecret");
-  if (youDaoAppSecret) {
-    document.getElementById("youDaoAppSecret").value = youDaoAppSecret;
-  }
-
-  let youDaoVocab = utools.dbStorage.getItem("youDaoVocab");
-  if (youDaoVocab) {
-    document.getElementById("youDaoVocab").value = youDaoVocab;
-  }
-
-  let baiDuAppId = utools.dbStorage.getItem("baiDuAppId");
-  if (baiDuAppId) {
-    document.getElementById("baiDuAppId").value = baiDuAppId;
-  }
-
-  let baiDuAppSecret = utools.dbStorage.getItem("baiDuAppSecret");
-  if (baiDuAppSecret) {
-    document.getElementById("baiDuAppSecret").value = baiDuAppSecret;
-  }
-
-  let aliYunAppId = utools.dbStorage.getItem("aliYunAppId");
-  if (aliYunAppId) {
-    document.getElementById("aliYunAppId").value = aliYunAppId;
-  }
-
-  let aliYunAppSecret = utools.dbStorage.getItem("aliYunAppSecret");
-  if (aliYunAppSecret) {
-    document.getElementById("aliYunAppSecret").value = aliYunAppSecret;
-  }
-
-  let tencentAppId = utools.dbStorage.getItem("tencentAppId");
-  if (tencentAppId) {
-    document.getElementById("tencentAppId").value = tencentAppId;
-  }
-
-  let tencentAppSecret = utools.dbStorage.getItem("tencentAppSecret");
-  if (tencentAppSecret) {
-    document.getElementById("tencentAppSecret").value = tencentAppSecret;
-  }
-
-  let huoShanAppId = utools.dbStorage.getItem("huoShanAppId");
-  if (huoShanAppId) {
-    document.getElementById("huoShanAppId").value = huoShanAppId;
-  }
-
-  let huoShanAppSecret = utools.dbStorage.getItem("huoShanAppSecret");
-  if (huoShanAppSecret) {
-    document.getElementById("huoShanAppSecret").value = huoShanAppSecret;
-  }
-
-  let huaWeiAK = utools.dbStorage.getItem("huaWeiAK");
-  if (huaWeiAK) {
-    document.getElementById("huaWeiAK").value = huaWeiAK;
-  }
-
-  let huaWeiSK = utools.dbStorage.getItem("huaWeiSK");
-  if (huaWeiSK) {
-    document.getElementById("huaWeiSK").value = huaWeiSK;
-  }
-
-  let huaWeiProjectId = utools.dbStorage.getItem("huaWeiProjectId");
-  if (huaWeiProjectId) {
-    document.getElementById("huaWeiProjectId").value = huaWeiProjectId;
-  }
-
-  let caiYunToken = utools.dbStorage.getItem("caiYunToken");
-  if (caiYunToken) {
-    document.getElementById("caiYunToken").value = caiYunToken;
-  }
-
-  let xiaoNiuToken = utools.dbStorage.getItem("xiaoNiuToken");
-  if (xiaoNiuToken) {
-    document.getElementById("xiaoNiuToken").value = xiaoNiuToken;
-  }
+  configArr.forEach(key => {
+    const value = utools.dbStorage.getItem(key);
+    if (value) {
+      document.getElementById(key).value = value;
+    }
+  });
 }
 
 /**
@@ -987,151 +939,117 @@ function loadProxy() {
 }
 
 function loadLang() {
-  loadLangTranSmart();
-  loadLangYouDao();
-  loadLangAliYun();
-  loadLangHuaWei();
-  loadLangCaiYun();
+  // 配置需要初始化的翻译服务
+  const services = [
+    {
+      name: 'tranSmart',
+      keyPrefix: 'tranSmart',
+      langPath: 'tranSmart.langs',
+      defaultValue: 'auto'
+    },
+    {
+      name: 'youDao',
+      keyPrefix: 'youDao',
+      langPath: 'youDao.langs',
+      defaultValue: 'auto'
+    },
+    {
+      name: 'aliYun',
+      keyPrefix: 'aliYun',
+      langPath: 'aliYun.langs',
+      defaultValue: 'auto'
+    },
+    {
+      name: 'huaWei',
+      keyPrefix: 'huaWei',
+      langPath: 'huaWei.langs',
+      defaultValue: 'auto'
+    },
+    {
+      name: 'caiYun',
+      keyPrefix: 'caiYun',
+      langPath: 'caiYun.langs',
+      defaultValue: 'auto'
+    }
+  ];
+
+  services.forEach(initLanguageSelect);
 }
 
-function loadLangTranSmart() {
-  let tranSmartSource = utools.dbStorage.getItem("tranSmartSource") || "auto";
-  let tranSmartTarget = utools.dbStorage.getItem("tranSmartTarget") || "auto";
-  utools.dbStorage.setItem("tranSmartSource", tranSmartSource);
-  utools.dbStorage.setItem("tranSmartTarget", tranSmartTarget);
-  let names = Object.keys(options.tranSmart.langs);
-  let htmlStr = "";
-  for (let i = 0; i < names.length; i++) {
-    htmlStr += `<option value=${options.tranSmart.langs[names[i]]}>${names[i]}</option>`;
-  }
-  let sourceElement = document.querySelector(".service.tranSmart .lang>select.source");
-  let targetElement = document.querySelector(".service.tranSmart .lang>select.target");
-  sourceElement.innerHTML = htmlStr;
-  targetElement.innerHTML = htmlStr;
-  for (let i = 0; i < sourceElement.length; i++) {
-    if (tranSmartSource == sourceElement.options[i].value) {
-      sourceElement.options[i].selected = true;
-      break;
-    }
-  }
-  for (let i = 0; i < targetElement.length; i++) {
-    if (tranSmartTarget == targetElement.options[i].value) {
-      targetElement.options[i].selected = true;
-      break;
-    }
-  }
+// 通用初始化函数
+function initLanguageSelect({ name, keyPrefix, langPath, defaultValue }) {
+  // 获取语言配置
+  const langs = getNestedProperty(options, langPath);
+  const [sourceKey, targetKey] = [`${keyPrefix}Source`, `${keyPrefix}Target`];
+
+  // 获取存储值
+  const getStorageValue = key => utools.dbStorage.getItem(key) || defaultValue;
+  const [sourceValue, targetValue] = [sourceKey, targetKey].map(getStorageValue);
+
+  // 更新存储保证默认值
+  [sourceKey, targetKey].forEach(key =>
+    utools.dbStorage.setItem(key, key === sourceKey ? sourceValue : targetValue)
+  );
+
+  // 生成选项
+  const optionsHTML = Object.entries(langs)
+    .map(([langName, langCode]) =>
+      `<option value="${langCode}">${langName}</option>`
+    ).join('');
+
+  // 获取并更新DOM
+  const selector = `.service.${name} .lang>select`;
+  const [sourceSelect, targetSelect] = document.querySelectorAll(`${selector}.source, ${selector}.target`);
+
+  [sourceSelect, targetSelect].forEach(select => {
+    select.innerHTML = optionsHTML;
+    select.value = select === sourceSelect ? sourceValue : targetValue;
+  });
 }
 
-function loadLangYouDao() {
-  let youDaoSource = utools.dbStorage.getItem("youDaoSource") || "auto";
-  let youDaoTarget = utools.dbStorage.getItem("youDaoTarget") || "auto";
-  utools.dbStorage.setItem("youDaoSource", youDaoSource);
-  utools.dbStorage.setItem("youDaoTarget", youDaoTarget);
-  let names = Object.keys(options.youDao.langs);
-  let htmlStr = "";
-  for (let i = 0; i < names.length; i++) {
-    htmlStr += `<option value=${options.youDao.langs[names[i]]}>${names[i]}</option>`;
-  }
-  let sourceElement = document.querySelector(".service.youDao .lang>select.source");
-  let targetElement = document.querySelector(".service.youDao .lang>select.target");
-  sourceElement.innerHTML = htmlStr;
-  targetElement.innerHTML = htmlStr;
-  for (let i = 0; i < sourceElement.length; i++) {
-    if (youDaoSource == sourceElement.options[i].value) {
-      sourceElement.options[i].selected = true;
-      break;
-    }
-  }
-  for (let i = 0; i < targetElement.length; i++) {
-    if (youDaoTarget == targetElement.options[i].value) {
-      targetElement.options[i].selected = true;
-      break;
-    }
-  }
+// 辅助函数：安全获取嵌套对象属性
+function getNestedProperty(obj, path) {
+  return path.split('.').reduce((acc, part) => acc?.[part], obj);
 }
 
-function loadLangAliYun() {
-  let aliYunSource = utools.dbStorage.getItem("aliYunSource") || "auto";
-  let aliYunTarget = utools.dbStorage.getItem("aliYunTarget") || "auto";
-  utools.dbStorage.setItem("aliYunSource", aliYunSource);
-  utools.dbStorage.setItem("aliYunTarget", aliYunTarget);
-  let names = Object.keys(options.aliYun.langs);
-  let htmlStr = "";
-  for (let i = 0; i < names.length; i++) {
-    htmlStr += `<option value=${options.aliYun.langs[names[i]]}>${names[i]}</option>`;
-  }
-  let sourceElement = document.querySelector(".service.aliYun .lang>select.source");
-  let targetElement = document.querySelector(".service.aliYun .lang>select.target");
-  sourceElement.innerHTML = htmlStr;
-  targetElement.innerHTML = htmlStr;
-  for (let i = 0; i < sourceElement.length; i++) {
-    if (aliYunSource == sourceElement.options[i].value) {
-      sourceElement.options[i].selected = true;
-      break;
+async function loadUToolsAI() {
+  let models = await utools.allAiModels();
+  let modelHtml = '';
+  const modelIds = models.map(model => model.id);
+  let uToolsAI = utools.dbStorage.getItem("uToolsAI");
+  if (!uToolsAI || uToolsAI.error || modelIds.indexOf(uToolsAI) == -1) {
+    // Choose the default AI.
+    if (modelIds.indexOf(defaultAI) != -1) {
+      uToolsAI = defaultAI;
+    } else {
+      uToolsAI = modelIds[0];
     }
+    utools.dbStorage.setItem("uToolsAI", uToolsAI);
   }
-  for (let i = 0; i < targetElement.length; i++) {
-    if (aliYunTarget == targetElement.options[i].value) {
-      targetElement.options[i].selected = true;
-      break;
-    }
-  }
-}
-
-function loadLangHuaWei() {
-  let huaWeiSource = utools.dbStorage.getItem("huaWeiSource") || "auto";
-  let huaWeiTarget = utools.dbStorage.getItem("huaWeiTarget") || "auto";
-  utools.dbStorage.setItem("huaWeiSource", huaWeiSource);
-  utools.dbStorage.setItem("huaWeiTarget", huaWeiTarget);
-  let names = Object.keys(options.huaWei.langs);
-  let htmlStr = "";
-  for (let i = 0; i < names.length; i++) {
-    htmlStr += `<option value=${options.huaWei.langs[names[i]]}>${names[i]}</option>`;
-  }
-  let sourceElement = document.querySelector(".service.huaWei .lang>select.source");
-  let targetElement = document.querySelector(".service.huaWei .lang>select.target");
-  sourceElement.innerHTML = htmlStr;
-  targetElement.innerHTML = htmlStr;
-  for (let i = 0; i < sourceElement.length; i++) {
-    if (huaWeiSource == sourceElement.options[i].value) {
-      sourceElement.options[i].selected = true;
-      break;
-    }
-  }
-  for (let i = 0; i < targetElement.length; i++) {
-    if (huaWeiTarget == targetElement.options[i].value) {
-      targetElement.options[i].selected = true;
-      break;
-    }
-  }
-}
-
-function loadLangCaiYun() {
-  let caiYunSource = utools.dbStorage.getItem("caiYunSource") || "auto";
-  let caiYunTarget = utools.dbStorage.getItem("caiYunTarget") || "auto";
-  utools.dbStorage.setItem("caiYunSource", caiYunSource);
-  utools.dbStorage.setItem("caiYunTarget", caiYunTarget);
-  let names = Object.keys(options.caiYun.langs);
-  let htmlStr = "";
-  for (let i = 0; i < names.length; i++) {
-    htmlStr += `<option value=${options.caiYun.langs[names[i]]}>${names[i]}</option>`;
-  }
-  let sourceElement = document.querySelector(".service.caiYun .lang>select.source");
-  let targetElement = document.querySelector(".service.caiYun .lang>select.target");
-  sourceElement.innerHTML = htmlStr;
-  targetElement.innerHTML = htmlStr;
-  for (let i = 0; i < sourceElement.length; i++) {
-    if (caiYunSource == sourceElement.options[i].value) {
-      sourceElement.options[i].selected = true;
-      break;
-    }
-  }
-  for (let i = 0; i < targetElement.length; i++) {
-    if (caiYunTarget == targetElement.options[i].value) {
-      targetElement.options[i].selected = true;
-      break;
-    }
-  }
+  models.forEach(model => {
+    const { id, label, icon, description, cost } = model;
+    modelIds.push(id);
+    const activeStr = (uToolsAI === id) ? " active" : "";
+    modelHtml += `
+                  <div class="model-item${activeStr}" data-id="${id}">
+                    <div class="model-title floatL">
+                      <span class="model-status icon${activeStr}"></span>
+                      <img class="model-icon" src="${icon}"/>
+                      <span class="model-name" title="${description}">${label}</span>
+                    </div>
+                    <div class="model-cost floatR">
+                      <span class="cost-value">${cost}</span>
+                      <i class="cost-icon ms-1"></i>
+                      <span class="cost-freq">/ 次</span>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div class="model-desc comment">
+                      ${description}
+                    </div>
+                  </div>
+    `
+  });
+  document.querySelector("#uToolsAI > .detail > .models").innerHTML = modelHtml;
 }
 
 /**
@@ -1295,7 +1213,39 @@ function addApiListener() {
   $("input[type=radio][name=service]").change(function () {
     utools.dbStorage.setItem("option", this.value);
     updateMenuClass(this.value);
-    utools.showNotification(`翻译引擎切换至${options[this.value]["name"]}！`);
+    let AIName = "";
+    if (this.value == "uToolsAI") {
+      const modelNameElement = document.querySelector('.models > .model-item.active .model-name');
+      AIName = modelNameElement ? modelNameElement.textContent : "";
+    }
+    utools.showNotification(`翻译引擎切换至${options[this.value]["name"]} ${AIName}！`);
+  });
+
+  $('.models').on('click', '.model-item', function () {
+    // 缓存jQuery对象提升性能
+    const $this = $(this);
+
+    // 使用data()方法规范获取自定义属性
+    const modelId = $this.data('id');
+    // 使用text().trim()避免空白干扰
+    const AIName = $this.find('.model-name').text().trim();
+
+    // 存储配置信息
+    utools.dbStorage.setItem('option', 'uToolsAI');
+    utools.dbStorage.setItem('uToolsAI', modelId);
+
+    // 批量操作DOM（减少重绘次数）
+    $('.models > .model-item').removeClass('active').find('.model-status').attr('class', 'model-status icon');
+
+    // 设置当前激活项（链式调用优化）
+    $this.addClass('active').find('.model-status').addClass('active');
+
+    // 更新菜单状态
+    updateMenuClass('uToolsAI');
+    document.querySelector('input[type="radio"][name="service"][value="uToolsAI"]').checked = true;
+
+    // 显示反馈通知
+    utools.showNotification(`翻译引擎切换至uToolsAI ${AIName}！`);
   });
 }
 
@@ -1309,62 +1259,23 @@ function addSiteListener() {
 }
 
 function addKeyPasswordListener() {
-  $("#deepLXApi").blur(function () {
-    utools.dbStorage.setItem("deepLXApi", this.value.trim());
-  });
-  $("#deepLFreeSecret").blur(function () {
-    utools.dbStorage.setItem("deepLFreeSecret", this.value.trim());
-  });
-  $("#deepLProSecret").blur(function () {
-    utools.dbStorage.setItem("deepLProSecret", this.value.trim());
-  });
-  $("#youDaoAppId").blur(function () {
-    utools.dbStorage.setItem("youDaoAppId", this.value.trim());
-  });
-  $("#youDaoAppSecret").blur(function () {
-    utools.dbStorage.setItem("youDaoAppSecret", this.value.trim());
-  });
-  $("#youDaoVocab").blur(function () {
-    utools.dbStorage.setItem("youDaoVocab", this.value.trim());
-  });
-  $("#baiDuAppId").blur(function () {
-    utools.dbStorage.setItem("baiDuAppId", this.value.trim());
-  });
-  $("#baiDuAppSecret").blur(function () {
-    utools.dbStorage.setItem("baiDuAppSecret", this.value.trim());
-  });
-  $("#aliYunAppId").blur(function () {
-    utools.dbStorage.setItem("aliYunAppId", this.value.trim());
-  });
-  $("#aliYunAppSecret").blur(function () {
-    utools.dbStorage.setItem("aliYunAppSecret", this.value.trim());
-  });
-  $("#tencentAppId").blur(function () {
-    utools.dbStorage.setItem("tencentAppId", this.value.trim());
-  });
-  $("#tencentAppSecret").blur(function () {
-    utools.dbStorage.setItem("tencentAppSecret", this.value.trim());
-  });
-  $("#huoShanAppId").blur(function () {
-    utools.dbStorage.setItem("huoShanAppId", this.value.trim());
-  });
-  $("#huoShanAppSecret").blur(function () {
-    utools.dbStorage.setItem("huoShanAppSecret", this.value.trim());
-  });
-  $("#huaWeiAK").blur(function () {
-    utools.dbStorage.setItem("huaWeiAK", this.value.trim());
-  });
-  $("#huaWeiSK").blur(function () {
-    utools.dbStorage.setItem("huaWeiSK", this.value.trim());
-  });
-  $("#huaWeiProjectId").blur(function () {
-    utools.dbStorage.setItem("huaWeiProjectId", this.value.trim());
-  });
-  $("#caiYunToken").blur(function () {
-    utools.dbStorage.setItem("caiYunToken", this.value.trim());
-  });
-  $("#xiaoNiuToken").blur(function () {
-    utools.dbStorage.setItem("xiaoNiuToken", this.value.trim());
+  // 需要监听的输入框ID列表
+  const inputKeys = [
+    'deepLXApi', 'deepLFreeSecret', 'deepLProSecret',
+    'youDaoAppId', 'youDaoAppSecret', 'youDaoVocab',
+    'baiDuAppId', 'baiDuAppSecret',
+    'aliYunAppId', 'aliYunAppSecret',
+    'tencentAppId', 'tencentAppSecret',
+    'huoShanAppId', 'huoShanAppSecret',
+    'huaWeiAK', 'huaWeiSK', 'huaWeiProjectId',
+    'caiYunToken', 'xiaoNiuToken', 'deepSeekAPIKey', 'deepSeekPrompt'
+  ];
+
+  // 统一事件处理
+  inputKeys.forEach(key => {
+    $(`#${key}`).on('blur', function () {
+      utools.dbStorage.setItem(key, this.value.trim());
+    });
   });
 }
 
@@ -1385,27 +1296,109 @@ function addEyeListener() {
   });
 }
 
+// 配置所有翻译服务的监听参数
+const langServices = [
+  {
+    name: 'tranSmart',
+    changeHandler: changeBrotherTranSmart,
+    exchangeHandler: changeBrotherTranSmart,
+    sourceClass: 'source',
+    targetClass: 'target'
+  },
+  {
+    name: 'youDao',
+    changeHandler: changeBrotherYouDao,
+    exchangeHandler: changeBrotherYouDao,
+    sourceClass: 'source',
+    targetClass: 'target'
+  },
+  {
+    name: 'aliYun',
+    changeHandler: changeBrotherAliYun,
+    exchangeHandler: changeBrotherAliYun,
+    sourceClass: 'source',
+    targetClass: 'target'
+  },
+  {
+    name: 'huaWei',
+    changeHandler: changeBrotherHuaWei,
+    exchangeHandler: changeBrotherHuaWei,
+    sourceClass: 'source',
+    targetClass: 'target'
+  },
+  {
+    name: 'caiYun',
+    changeHandler: changeBrotherCaiYun,
+    exchangeHandler: changeBrotherCaiYun,
+    sourceClass: 'source',
+    targetClass: 'target'
+  }
+];
+
+// 语言选择监听器
 function addLangListener() {
-  addLangListenerTranSmart();
-  addLangListenerYouDao();
-  addLangListenerAliYun();
-  addLangListenerHuaWei();
-  addLangListenerCaiYun();
+  // 统一事件处理
+  langServices.forEach(service => {
+    const selector = `.service.${service.name} .lang>select`;
+    const sourceSelector = `${selector}.${service.sourceClass}`;
+    const targetSelector = `${selector}.${service.targetClass}`;
+
+    // Source 变化监听
+    $(sourceSelector).on('change', function () {
+      const $target = $(targetSelector);
+      service.changeHandler(this.value, $target);
+      updateStorage(service.name, 'Source', this.value);
+      updateStorage(service.name, 'Target', $target.val());
+    });
+
+    // Target 变化监听
+    $(targetSelector).on('change', function () {
+      const $source = $(sourceSelector);
+      service.changeHandler(this.value, $source);
+      updateStorage(service.name, 'Target', this.value);
+      updateStorage(service.name, 'Source', $source.val());
+    });
+  });
 }
 
-function addLangListenerTranSmart() {
-  $(".service.tranSmart .lang>select.source").change(function () {
-    changeBrotherTranSmart($(this).val(), $(".service.tranSmart .lang>select.target"));
-    utools.dbStorage.setItem("tranSmartSource", $(this).val());
-    let tranSmartTarget = $(".service.tranSmart .lang>select.target").val();
-    utools.dbStorage.setItem("tranSmartTarget", tranSmartTarget);
+// 统一交换按钮监听器
+function addExchangeListener() {
+  langServices.forEach(service => {
+    const exchangeBtn = `.service.${service.name} .lang>.exchange`;
+    const sourceSelector = `.service.${service.name} .lang>select.${service.sourceClass}`;
+    const targetSelector = `.service.${service.name} .lang>select.${service.targetClass}`;
+
+    $(exchangeBtn).on('click', function () {
+      const $source = $(sourceSelector);
+      const $target = $(targetSelector);
+
+      // 交换选中索引
+      [sourceIndex, targetIndex] = [$target[0].selectedIndex, $source[0].selectedIndex];
+      $source[0].selectedIndex = sourceIndex;
+      $target[0].selectedIndex = targetIndex;
+
+      // 触发关联更新
+      service.exchangeHandler($target.val(), $source);
+
+      // 更新存储
+      updateStorage(service.name, 'Source', $source.val());
+      updateStorage(service.name, 'Target', $target.val());
+    });
   });
-  $(".service.tranSmart .lang>select.target").change(function () {
-    changeBrotherTranSmart($(this).val(), $(".service.tranSmart .lang>select.source"));
-    utools.dbStorage.setItem("tranSmartTarget", $(this).val());
-    let tranSmartSource = $(".service.tranSmart .lang>select.source").val();
-    utools.dbStorage.setItem("tranSmartSource", tranSmartSource);
+}
+
+
+// DeepSeek模型选择监听器
+function addDeepSeekModelListener() {
+  $('#deepSeekModel').on('change', function () {
+    utools.dbStorage.setItem('deepSeekModel', this.value);
   });
+}
+
+// 通用存储更新方法
+function updateStorage(serviceName, direction, value) {
+  const storageKey = `${serviceName}${direction}`;
+  utools.dbStorage.setItem(storageKey, value);
 }
 
 /**
@@ -1448,21 +1441,6 @@ function changeBrotherTranSmart(thisValue, brother) {
   }
 }
 
-function addLangListenerYouDao() {
-  $(".service.youDao .lang>select.source").change(function () {
-    changeBrotherYouDao($(this).val(), $(".service.youDao .lang>select.target"));
-    utools.dbStorage.setItem("youDaoSource", $(this).val());
-    let youDaoTarget = $(".service.youDao .lang>select.target").val();
-    utools.dbStorage.setItem("youDaoTarget", youDaoTarget);
-  });
-  $(".service.youDao .lang>select.target").change(function () {
-    changeBrotherYouDao($(this).val(), $(".service.youDao .lang>select.source"));
-    utools.dbStorage.setItem("youDaoTarget", $(this).val());
-    let youDaoSource = $(".service.youDao .lang>select.source").val();
-    utools.dbStorage.setItem("youDaoSource", youDaoSource);
-  });
-}
-
 /**
  * Change the value of the brother select element for YouDao.
  * @param {String} thisValue The value of the current select element.
@@ -1479,21 +1457,6 @@ function changeBrotherYouDao(thisValue, brother) {
       brother[0].selectedIndex = 3;
     }
   }
-}
-
-function addLangListenerAliYun() {
-  $(".service.aliYun .lang>select.source").change(function () {
-    changeBrotherAliYun($(this).val(), $(".service.aliYun .lang>select.target"));
-    utools.dbStorage.setItem("aliYunSource", $(this).val());
-    let targetValue = $(".service.aliYun .lang>select.target").val();
-    utools.dbStorage.setItem("aliYunTarget", targetValue);
-  });
-  $(".service.aliYun .lang>select.target").change(function () {
-    changeBrotherAliYun($(this).val(), $(".service.aliYun .lang>select.source"));
-    utools.dbStorage.setItem("aliYunTarget", $(this).val());
-    let sourceValue = $(".service.aliYun .lang>select.source").val();
-    utools.dbStorage.setItem("aliYunSource", sourceValue);
-  });
 }
 
 /**
@@ -1525,21 +1488,6 @@ function changeBrotherAliYun(thisValue, brother) {
   }
 }
 
-function addLangListenerHuaWei() {
-  $(".service.huaWei .lang>select.source").change(function () {
-    changeBrotherHuaWei($(this).val(), $(".service.huaWei .lang>select.target"));
-    utools.dbStorage.setItem("huaWeiSource", $(this).val());
-    let huaWeiTarget = $(".service.huaWei .lang>select.target").val();
-    utools.dbStorage.setItem("huaWeiTarget", huaWeiTarget);
-  });
-  $(".service.huaWei .lang>select.target").change(function () {
-    changeBrotherHuaWei($(this).val(), $(".service.huaWei .lang>select.source"));
-    utools.dbStorage.setItem("huaWeiTarget", $(this).val());
-    let huaWeiSource = $(".service.huaWei .lang>select.source").val();
-    utools.dbStorage.setItem("huaWeiSource", huaWeiSource);
-  });
-}
-
 /**
  * Change the value of the brother select element for HuaWei.
  * @param {String} thisValue The value of the current select element.
@@ -1556,21 +1504,6 @@ function changeBrotherHuaWei(thisValue, brother) {
       brother[0].selectedIndex = 3;
     }
   }
-}
-
-function addLangListenerCaiYun() {
-  $(".service.caiYun .lang>select.source").change(function () {
-    changeBrotherCaiYun($(this).val(), $(".service.caiYun .lang>select.target"));
-    utools.dbStorage.setItem("caiYunSource", $(this).val());
-    let caiYunTarget = $(".service.caiYun .lang>select.target").val();
-    utools.dbStorage.setItem("caiYunTarget", caiYunTarget);
-  });
-  $(".service.caiYun .lang>select.target").change(function () {
-    changeBrotherCaiYun($(this).val(), $(".service.caiYun .lang>select.source"));
-    utools.dbStorage.setItem("caiYunTarget", $(this).val());
-    let caiYunSource = $(".service.caiYun .lang>select.source").val();
-    utools.dbStorage.setItem("caiYunSource", caiYunSource);
-  });
 }
 
 /**
@@ -1612,77 +1545,6 @@ function changeBrotherCaiYun(thisValue, brother) {
     default:
       break;
   }
-}
-
-/**
- * Add the exchange button listener.
- */
-function addExchangeListener() {
-  $(".service.youDaoFree .lang>.exchange").click(function () {
-    let sourceEle = $(".service.youDaoFree .lang>select.source");
-    let targetEle = $(".service.youDaoFree .lang>select.target");
-    let temp = sourceEle[0].selectedIndex;
-    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
-    targetEle[0].selectedIndex = temp;
-    changeBrotherYouDaoFree(sourceEle.val(), targetEle);
-    utools.dbStorage.setItem("youDaoFreeSource", sourceEle.val());
-    utools.dbStorage.setItem("youDaoFreeTarget", targetEle.val());
-  });
-
-  $(".service.youDao .lang>.exchange").click(function () {
-    let sourceEle = $(".service.youDao .lang>select.source");
-    let targetEle = $(".service.youDao .lang>select.target");
-    let temp = sourceEle[0].selectedIndex;
-    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
-    targetEle[0].selectedIndex = temp;
-    changeBrotherYouDao(targetEle.val(), sourceEle);
-    utools.dbStorage.setItem("youDaoSource", sourceEle.val());
-    utools.dbStorage.setItem("youDaoTarget", targetEle.val());
-  });
-
-  $(".service.aliYun .lang>.exchange").click(function () {
-    let sourceEle = $(".service.aliYun .lang>select.source");
-    let targetEle = $(".service.aliYun .lang>select.target");
-    let temp = sourceEle[0].selectedIndex;
-    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
-    targetEle[0].selectedIndex = temp;
-    changeBrotherAliYun(sourceEle.val(), targetEle);
-    utools.dbStorage.setItem("aliYunSource", sourceEle.val());
-    utools.dbStorage.setItem("aliYunTarget", targetEle.val());
-  });
-
-  $(".service.tranSmart .lang>.exchange").click(function () {
-    let sourceEle = $(".service.tranSmart .lang>select.source");
-    let targetEle = $(".service.tranSmart .lang>select.target");
-    let temp = sourceEle[0].selectedIndex;
-    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
-    targetEle[0].selectedIndex = temp;
-    changeBrotherTranSmart(targetEle.val(), sourceEle);
-    utools.dbStorage.setItem("tranSmartSource", sourceEle.val());
-    utools.dbStorage.setItem("tranSmartTarget", targetEle.val());
-  });
-
-  $(".service.huaWei .lang>.exchange").click(function () {
-    let sourceEle = $(".service.huaWei .lang>select.source");
-    let targetEle = $(".service.huaWei .lang>select.target");
-    let temp = sourceEle[0].selectedIndex;
-    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
-    targetEle[0].selectedIndex = temp;
-    changeBrotherHuaWei(targetEle.val(), sourceEle);
-    utools.dbStorage.setItem("huaWeiSource", sourceEle.val());
-    utools.dbStorage.setItem("huaWeiTarget", targetEle.val());
-  });
-
-  $(".service.caiYun .lang>.exchange").click(function () {
-    let sourceEle = $(".service.caiYun .lang>select.source");
-    let targetEle = $(".service.caiYun .lang>select.target");
-    let temp = sourceEle[0].selectedIndex;
-    sourceEle[0].selectedIndex = targetEle[0].selectedIndex;
-    targetEle[0].selectedIndex = temp;
-    changeBrotherCaiYun(sourceEle.val(), targetEle);
-    utools.dbStorage.setItem("caiYunSource", sourceEle.val());
-    utools.dbStorage.setItem("caiYunTarget", targetEle.val());
-  });
 }
 
 /**

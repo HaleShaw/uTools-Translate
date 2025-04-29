@@ -186,7 +186,9 @@ async function switchApi(word, mainPush) {
     option == Object.keys(options)[19] ||
     option == Object.keys(options)[20] ||
     option == Object.keys(options)[21] ||
-    option == Object.keys(options)[22]
+    option == Object.keys(options)[22] ||
+    option == Object.keys(options)[23] ||
+    option == Object.keys(options)[24]
   ) {
     $("#page").addClass("hide");
     $("#setting").addClass("hide");
@@ -259,6 +261,12 @@ async function switchApi(word, mainPush) {
         break;
       case Object.keys(options)[22]:
         data = await lookupXiaoNiu(word);
+        break;
+      case Object.keys(options)[23]:
+        data = await lookupUToolsAI(word);
+        break;
+      case Object.keys(options)[24]:
+        data = await lookupDeepSeek(word);
         break;
       default:
         break;

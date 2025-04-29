@@ -50,6 +50,11 @@
         </svg>
         <a class="title vm">翻译设置</a>
         <span id="pluginVersion" class="vm"></span>
+        <span class="engine floatR">
+          <strong>当前引擎：</strong>
+          <img class="engine-logo" />
+          <a class="engine-name"></a>
+        </span>
       </div>
       <div class="body">
         <div class="side floatL">
@@ -275,6 +280,21 @@
               <a href="#xiaoNiu">
                 <img src="./assets/images/xiaoNiu.png" />
                 <span class="vm" title="小牛">小牛</span>
+              </a>
+            </div>
+            <div class="split"></div>
+            <div class="service uToolsAI">
+              <a href="#uToolsAI">
+                <img src="./assets/images/uToolsAI.png" />
+                <span class="vm" title="uTools AI">uTools AI</span>
+                <span class="l-badge ai" title="AI">Ai</span>
+              </a>
+            </div>
+            <div class="service deepSeek">
+              <a href="#deepSeek">
+                <img src="./assets/images/deepSeek.png" />
+                <span class="vm" title="DeepSeek">DeepSeek</span>
+                <span class="l-badge ai" title="AI">Ai</span>
               </a>
             </div>
           </div>
@@ -1330,7 +1350,7 @@
                 </div>
               </div>
             </div>
-            <div class="service xiaoNiu" id="xiaoNiu">
+            <div class="service border-bottom xiaoNiu" id="xiaoNiu">
               <div class="api mb-1">
                 <label>
                   <input class="form-check-input" name="service" type="radio" value="xiaoNiu" />
@@ -1361,6 +1381,99 @@
                         name="appSecret"
                       />
                       <i class="eye closed ms-1"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="service border-bottom uToolsAI" id="uToolsAI">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="uToolsAI" />
+                  <img src="./assets/images/uToolsAI.png" />
+                  <strong>uTools AI</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-success">列表</span>
+                    <span class="badge rounded-pill text-bg-info">AI</span>
+                  </span>
+                </label>
+                <a
+                  class="comment site floatR"
+                  href="https://www.u-tools.cn/docs/developer/api-reference/utools/ai.html#utools-allaimodels"
+                  title="https://www.u-tools.cn/docs/developer/api-reference/utools/ai.html#utools-allaimodels"
+                  target="_blank"
+                >
+                  uTools AI
+                </a>
+              </div>
+              <div class="detail">
+                <div>
+                  <a class="comment">由uTools团队提供的AI中转服务，每次将自动消耗uTools的AI能量</a>
+                </div>
+                <div class="models"></div>
+              </div>
+            </div>
+            <div class="service border-bottom deepSeek" id="deepSeek">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="deepSeek" />
+                  <img src="./assets/images/deepSeek.png" />
+                  <strong>DeepSeek</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-success">列表</span>
+                    <span class="badge rounded-pill text-bg-info">AI</span>
+                  </span>
+                </label>
+                <a
+                  class="comment site floatR"
+                  href="https://platform.deepseek.com/api_keys"
+                  title="https://platform.deepseek.com/api_keys"
+                  target="_blank"
+                >
+                  DeepSeek
+                </a>
+              </div>
+              <div class="detail">
+                <div>
+                  <a class="comment">服务商原因，响应相对较慢</a>
+                </div>
+                <div class="private">
+                  <div class="pwd mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">API Key</span>
+                      <input
+                        id="deepSeekAPIKey"
+                        type="password"
+                        class="form-control secret"
+                        name="key"
+                      />
+                      <i class="eye closed ms-1"></i>
+                    </div>
+                  </div>
+                  <div class="model mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <a class="input-group-text private-id">模型</a>
+                      <select class="form-select" id="deepSeekModel" aria-label="模型">
+                        <option value="deepseek-chat">DeepSeek-V3</option>
+                        <option value="deepseek-reasoner">DeepSeek-R1</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="key mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span
+                        class="input-group-text private-id"
+                        style="display: flex; justify-content: center"
+                      >
+                        提示语
+                      </span>
+                      <textarea
+                        id="deepSeekPrompt"
+                        type="input"
+                        class="form-control"
+                        name="prompt"
+                        placeholder="可以自定义提示语，以便获取不同的AI处理结果"
+                      ></textarea>
                     </div>
                   </div>
                 </div>
@@ -1420,6 +1533,8 @@
     <script src="assets/js/api/caiYun.js"></script>
     <script src="assets/js/api/xiaoNiu.js"></script>
     <script src="assets/js/api/iCiBa.js"></script>
+    <script src="assets/js/api/uToolsAI.js"></script>
+    <script src="assets/js/api/deepSeek.js"></script>
     <script src="assets/js/setting.js"></script>
     <script src="assets/js/index.js"></script>
   </body>
