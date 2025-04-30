@@ -71,22 +71,39 @@ function getDebouncingTime() {
   return debouncingTime;
 }
 
+/**
+ * 检查当前操作系统类型，并根据操作系统更新快捷键显示内容。
+ * 对于 macOS 系统，使用 ⌘ 作为部分快捷键的修饰符，Ctrl 作为朗读快捷键的修饰符；
+ * 对于其他系统，使用 Alt 作为所有快捷键的修饰符。
+ */
 function checkSystem() {
-  let listKey = utools.isMacOS() ? "⌘" : "Alt";
-  let speakKey = utools.isMacOS() ? "Ctrl" : "Alt";
-  document.getElementsByClassName("quick-index-identity")[0].innerHTML = `
-  <div>${listKey}+1</div>
-  <div>${listKey}+2</div>
-  <div>${listKey}+3</div>
-  <div>${listKey}+4</div>
-  <div>${listKey}+5</div>
-  <div>${listKey}+6</div>
-  <div>${listKey}+7</div>
-  <div>${listKey}+8</div>
-  <div>${listKey}+9</div>
-  <div>${listKey}+0</div>`;
-  document.getElementById("shortcutEn").innerHTML = `<span class="key">${speakKey}</span>+<span class="key">S</span>`;
-  document.getElementById("shortcutUs").innerHTML = `<span class="key">${speakKey}</span>+<span class="key">D</span>`;
+  const isMac = utools.isMacOS();
+  const listModifier = isMac ? "⌘" : "Alt";
+  const speakModifier = isMac ? "Ctrl" : "Alt";
+
+  // 缓存DOM元素引用
+  const quickIndexEl = document.querySelector(".quick-index-identity");
+  const shortcutEnEl = document.getElementById("shortcutEn");
+  const shortcutUsEl = document.getElementById("shortcutUs");
+
+  // 生成数字快捷键列表
+  const shortcutNumbers = Array.from({ length: 10 }, (_, i) =>
+    `<div>${listModifier}+${i === 9 ? 0 : i + 1}</div>`
+  ).join("");
+
+  /**
+   * 生成快捷键的 HTML 字符串。
+   * @param {string} modifier - 快捷键的修饰符，如 ⌘、Ctrl 或 Alt。
+   * @param {string} key - 快捷键的按键，如 S、D。
+   * @returns {string} - 包含快捷键信息的 HTML 字符串。
+   */
+  const createShortcutHTML = (modifier, key) =>
+    `<span class="key">${modifier}</span>+<span class="key">${key}</span>`;
+
+  // 更新DOM内容
+  quickIndexEl.innerHTML = shortcutNumbers;
+  shortcutEnEl.innerHTML = createShortcutHTML(speakModifier, "S");
+  shortcutUsEl.innerHTML = createShortcutHTML(speakModifier, "D");
 }
 
 /**
@@ -380,79 +397,100 @@ function formatVariableCase(data) {
   }
 }
 
+/**
+ * 初始化翻译结果列表。
+ * @param {Array} data - 包含翻译结果的数组，每个元素是一个对象，包含 `title` 和 `description` 属性。
+ * @param {string} option - 当前选择的翻译 API 选项。
+ */
 function initList(data, option) {
-  let contentFather = $("#root>.list").children(":first");
-  contentFather.html("");
-  for (let i = 0; i < data.length; i++) {
-    let item = $(`
+  // 缓存DOM元素引用
+  const $listContainer = $("#root > .list").children(":first").empty();
+  const currentOption = options[option];
+  const isEmptyData = data.length === 0;
+
+  // 生成列表项HTML模板
+  const generateItemHTML = (item) => `
     <div class="list-item">
       <div class="list-item-icon">
         <img src="./logo.png"/>
-        <img class="minLogo" src="./assets/images/${options[option]["logo"]}"/>
+        <img class="minLogo" src="./assets/images/${currentOption.logo}"/>
       </div>
       <div class="list-item-content">
-        <div class="list-item-title">${data[i].title}</div>
-        <div class="list-item-description">${data[i].description}</div>
+        <div class="list-item-title">${item.title}</div>
+        <div class="list-item-description">${item.description}</div>
       </div>
-    </div>`);
-    contentFather.append(item);
-  }
-  let height = data.length * itemHeight > maxHeight ? maxHeight : data.length * itemHeight;
-  utools.setExpendHeight(height);
-  if (data.length == 0) {
-    return;
-  }
-  defaultItem = $("#root>.list").children(":first").children(":first");
-  defaultItem.focus();
-  defaultItem.addClass("selected");
-  let phonetics = defaultItem[0].querySelectorAll("button.phonetic");
-  if (phonetics.length != 0) {
-    for (let k = 0; k < phonetics.length; k++) {
-      $(phonetics[k]).addClass("selected");
-    }
-  }
+    </div>`;
 
-  let list = $("#root>.list").children(":first").children();
-  for (let i = 0; i < list.length; i++) {
-    $(list[i]).mouseover(function () {
-      for (let j = 0; j < list.length; j++) {
-        $(list[j]).removeClass("selected");
-      }
-      $(list[i]).addClass("selected");
-      $(list[i]).focus();
-      defaultItem = $(list[i]);
-      updatePhonetic(defaultItem[0]);
-    });
+  // 批量插入列表项
+  $listContainer.html(data.map(generateItemHTML).join(""));
 
-    $(list[i]).click(function (e) {
-      copyExit(list[i]);
-    });
+  // 设置容器高度
+  const calculateHeight = () => Math.min(data.length * itemHeight, maxHeight);
+  utools.setExpendHeight(isEmptyData ? 0 : calculateHeight());
+
+  if (isEmptyData) return;
+
+  // 初始化选中项
+  const $items = $listContainer.children();
+  let $defaultItem = $items.first()
+    .addClass("selected")
+    .focus();
+
+  // 处理音标按钮状态
+  const updatePhoneticState = (item) => {
+    $(item).find("button.phonetic").addClass("selected");
+  };
+  updatePhoneticState($defaultItem);
+
+  // 事件委托处理
+  $listContainer
+    .on("mouseover", ".list-item", function () {
+      $items.removeClass("selected");
+      $(this).addClass("selected").focus();
+      $defaultItem = $(this);
+      updatePhonetic($defaultItem[0]);
+    })
+    .on("click", ".list-item", (e) => copyExit(e.currentTarget));
+
+  // 处理溢出逻辑
+  const handleOverflow = (item) => {
+    const $title = $(item).find(".list-item-title");
+    const isOverflowing = $title[0].scrollWidth > $title[0].offsetWidth;
+
+    if (!isOverflowing) return;
 
     // 如果横向显示溢出，则为元素添加title属性。
-    let title = list[i].querySelector("div.list-item-title");
-    if (title.scrollWidth > title.offsetWidth) {
-      list[i].setAttribute("title", getContent(title));
+    item.title = $title.text();
 
-      // 当横向溢出时，通常就只有一个翻译结果，此时直接将结果行展开到自适应高度。若有多个翻译结果，则不展开。
-      let itemList = document.querySelectorAll("div.list-item");
-      if (itemList.length != 1) {
-        continue;
-      }
-      let spanEle = list[i].querySelector("div.list-item-title > span.translation");
-      title.style.height = "unset";
-      title.parentElement.parentElement.style.height = "unset";
-      spanEle.style.display = "block";
-      spanEle.style.wordBreak = "normal";
-      spanEle.style.whiteSpace = "pre-wrap";
-      spanEle.style.maxHeight = "460px";
-      spanEle.style.overflowY = "scroll";
-      let newHeight = title.parentElement.parentElement.scrollHeight;
-      let identity = document.querySelector("div.quick-index-identity > div:nth-child(1)");
-      identity.style.lineHeight = newHeight + "px";
-      identity.style.height = newHeight + "px";
-      utools.setExpendHeight(newHeight);
-    }
-  }
+    // 当横向溢出时，通常就只有一个翻译结果，此时直接将结果行展开到自适应高度。若有多个翻译结果，则不展开。
+    if ($(".list-item").length !== 1) return;
+
+    const $translation = $title.find("span.translation");
+    const $parent = $(item).closest(".list-item");
+
+    // 应用自适应样式
+    $title.add($parent).css("height", "unset");
+    $translation.css({
+      display: "block",
+      wordBreak: "normal",
+      whiteSpace: "pre-wrap",
+      maxHeight: "460px",
+      overflowY: "scroll"
+    });
+
+    // 更新容器高度
+    const newHeight = $parent[0].scrollHeight;
+    $(".quick-index-identity > div:first-child").css({
+      lineHeight: `${newHeight}px`,
+      height: `${newHeight}px`
+    });
+    utools.setExpendHeight(newHeight);
+  };
+
+  // 遍历处理所有项
+  $items.each((i, item) => handleOverflow(item));
+
+  // 为音标按钮添加鼠标悬浮事件监听器
   addPhoneticListener();
 }
 

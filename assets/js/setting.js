@@ -654,7 +654,7 @@ const options = {
     name: "DeepSeek",
     api: "https://api.deepseek.com/v1",
     path: "/chat/completions",
-    logo: "deepSeek.png",
+    logo: "deepSeek.svg",
   },
 };
 
