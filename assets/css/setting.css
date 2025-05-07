@@ -1,5 +1,5 @@
 #setting {
-  padding: 10px 10px;
+  padding: 10px;
 }
 
 .floatL {
@@ -27,7 +27,7 @@
 }
 
 #setting .badge {
-  font-weight: normal !important;
+  font-weight: normal;
   cursor: pointer;
 }
 
@@ -91,18 +91,6 @@
   padding: 1px 6px;
   font-size: 12px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-}
-
-@media (prefers-color-scheme: light) {
-  #pluginVersion {
-    color: #333333;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  #pluginVersion {
-    color: #ffffff;
-  }
 }
 
 #setting > .header > .title {
@@ -352,6 +340,7 @@
 .exchange::before {
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-repeat' viewBox='0 0 16 16'><path d='M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z'/></svg>");
 }
+
 @media (prefers-color-scheme: light) {
   #setting > .header .engine-item:hover,
   #setting > .body > .side a:hover,
@@ -363,10 +352,16 @@
   #setting > .body > .side > .services > .service:hover {
     color: #0000cc;
   }
+
+  #pluginVersion {
+    color: #333333;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
-  #setting {
+  #setting,
+  #pluginVersion,
+  #setting span.input-group-text {
     color: #ffffff;
   }
 
@@ -410,11 +405,9 @@
   }
 
   /* input输入框提示文案 */
-  #setting span.input-group-text {
-    color: #ffffff;
-    background-color: #888888;
-  }
+  #setting span.input-group-text,
 
+  /* 快捷键 */
   #setting .shortcut .key {
     background-color: #888888;
   }
