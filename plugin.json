@@ -1,6 +1,6 @@
 {
   "pluginName": "翻译",
-  "version": "4.3.1",
+  "version": "4.3.2",
   "description": "快速翻译，实时输入翻译，列表翻译，原生列表自动复制，多语言翻译，多API切换，AI翻译，音标朗读，句子朗读，朗读设置，语言设置，变量格式化，代理设置",
   "author": "HaleShaw",
   "homepage": "https://github.com/HaleShaw/uTools-Translate",
@@ -20,16 +20,7 @@
         {
           "type": "over",
           "label": "翻译",
-          "maxLength": 5000
-        },
-        {
-          "type": "over",
-          "label": "translate",
-          "maxLength": 5000
-        },
-        {
-          "type": "over",
-          "label": "tr",
+          "exclude": "/翻译|translate|tr|fy|翻译设置|设置|translatesetting|tsetting|setting|ts|fysz|sz/",
           "maxLength": 5000
         }
       ]
@@ -37,8 +28,8 @@
     {
       "code": "translate_setting",
       "explain": "翻译设置，切换翻译API，设置朗读，设置源语言和目标语言，设置变量模式，设置代理",
-      "icon": "logo.png",
-      "cmds": ["翻译设置", "translate setting", "setting", "t setting", "设置", "ts"]
+      "icon": "setting.png",
+      "cmds": ["翻译设置", "translatesetting", "setting", "tsetting", "设置", "ts"]
     }
   ]
 }

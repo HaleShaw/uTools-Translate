@@ -49,11 +49,13 @@
           />
         </svg>
         <a class="title vm">翻译设置</a>
-        <span id="pluginVersion" class="vm"></span>
+        <span id="pluginVersion"></span>
         <span class="engine floatR">
-          <strong>当前引擎：</strong>
-          <img class="engine-logo" />
-          <a class="engine-name"></a>
+          <strong class="vm">当前引擎：</strong>
+          <a class="engine-item vm">
+            <img class="engine-logo" />
+            <span class="engine-name"></span>
+          </a>
         </span>
       </div>
       <div class="body">
@@ -1413,7 +1415,7 @@
                 <div class="models"></div>
               </div>
             </div>
-            <div class="service border-bottom deepSeek" id="deepSeek">
+            <div class="service deepSeek" id="deepSeek">
               <div class="api mb-1">
                 <label>
                   <input class="form-check-input" name="service" type="radio" value="deepSeek" />
@@ -1452,7 +1454,7 @@
                   </div>
                   <div class="model mb-1">
                     <div class="input-group input-group-sm private-father">
-                      <a class="input-group-text private-id">模型</a>
+                      <span class="input-group-text private-id">模型</span>
                       <select class="form-select" id="deepSeekModel" aria-label="模型">
                         <option value="deepseek-chat">DeepSeek-V3</option>
                         <option value="deepseek-reasoner">DeepSeek-R1</option>

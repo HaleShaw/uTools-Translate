@@ -307,13 +307,13 @@ async function switchApi(word, mainPush) {
 
 function bindHotkey() {
   Mousetrap.bind(["down", "ctrl+n", "ctrl+j"], () => {
-    moveDown();
+    move("down");
   });
   Mousetrap.bind(["up", "ctrl+k", "ctrl+p"], () => {
-    moveUp();
+    move("up");
   });
   Mousetrap.bind("enter", () => {
-    enter();
+    execute();
   });
   Mousetrap.bind(["alt+1", "command+1"], () => {
     copyItemContent(0);
@@ -508,60 +508,27 @@ function getContent(ele) {
  * @param {Object} ele 选中的行DOM元素。
  */
 function copyExit(ele) {
-  const title = ele.querySelector("div.list-item-title");
-  utools.copyText(getContent(title));
+  utools.copyText(getContent(ele.querySelector("div.list-item-title")));
   utools.outPlugin();
   utools.hideMainWindow();
 }
 
-function moveDown() {
-  defaultItem.removeClass("selected");
-  defaultItem = defaultItem.next();
-  if (defaultItem.length == 0) {
-    defaultItem = $($(".list-item")[0]);
-  }
-  if (defaultItem) {
-    let list = $("#root>.list").children(":first").children();
-    for (let i = 0; i < list.length; i++) {
-      $(list[i]).removeClass("selected");
-    }
-    defaultItem.addClass("selected");
-    defaultItem.focus();
-  }
 
-  updatePhonetic(defaultItem[0]);
+function move(direction) {
+  const $current = $(".list-item.selected").removeClass("selected");
+  const $items = $(".list-item");
+
+  const $target = direction === 'down'
+    ? $current.next().addBack($items.first())
+    : $current.prev().addBack($items.last());
+
+  $target.addClass("selected").focus();
+  updatePhonetic($target[0]);
 }
 
-function moveUp() {
-  defaultItem.removeClass("selected");
-  defaultItem = defaultItem.prev();
-  if (defaultItem.length == 0) {
-    defaultItem = $($(".list-item")[$(".list-item").length - 1]);
-  }
-  if (defaultItem) {
-    let list = $("#root>.list").children(":first").children();
-    for (let i = 0; i < list.length; i++) {
-      $(list[i]).removeClass("selected");
-    }
-    defaultItem.addClass("selected");
-    defaultItem.focus();
-  }
-
-  updatePhonetic(defaultItem[0]);
-}
-
-function enter() {
-  let list = $("#root>.list").children(":first").children();
-  if (list.length == 0) {
-    return;
-  }
-  for (let i = 0; i < list.length; i++) {
-    const className = list[i].className;
-    if (className.indexOf("selected") != -1) {
-      copyExit(list[i]);
-      break;
-    }
-  }
+function execute() {
+  const $selected = $(".list-item.selected");
+  $selected.length && copyExit($selected[0]);
 }
 
 /**
@@ -611,15 +578,9 @@ function updatePhonetic(ele) {
  * 当鼠标悬浮在音标上时，自动播放读音。
  */
 function addPhoneticListener() {
-  let phonetics = $(".phonetic");
-  if (phonetics.length == 0) {
-    return;
-  }
-  for (let i = 0; i < phonetics.length; i++) {
-    $(phonetics[i]).mouseover(function () {
-      phonetics[i].children[0].play();
-    });
-  }
+  $("#root > .list").children(":first").on("mouseenter", ".phonetic", function () {
+    $(this).find("audio")[0]?.play();
+  });
 }
 
 /**

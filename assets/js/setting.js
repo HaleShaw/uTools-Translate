@@ -759,8 +759,9 @@ function updateMenuClass(service) {
       .find(className => className !== 'service' && className !== 'active');
     $el.toggleClass('active', serviceClass === service);
   });
-  $('#setting > .header > .engine > .engine-logo').attr('src', `./assets/images/${options[service].logo}`);
-  $('#setting > .header > .engine > .engine-name').text(options[service].name);
+  $('#setting > .header > .engine > .engine-item').attr('href', `#${service}`);
+  $('#setting > .header > .engine > .engine-item > .engine-logo').attr('src', `./assets/images/${options[service].logo}`);
+  $('#setting > .header > .engine > .engine-item > .engine-name').text(options[service].name);
 }
 
 /**

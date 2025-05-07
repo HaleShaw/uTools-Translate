@@ -1,5 +1,5 @@
 #setting {
-  padding: 10px 20px;
+  padding: 10px 10px;
 }
 
 .floatL {
@@ -33,7 +33,8 @@
 
 #setting > .header {
   padding-bottom: 7px;
-  border-bottom: 1px solid rgba(240, 240, 240, 0.8);
+  margin: 0 5px;
+  border-bottom: 1px solid #dee2e6;
 }
 
 #setting > .header > svg {
@@ -42,10 +43,11 @@
 
 #setting > .footer {
   padding-top: 7px;
-  border-top: 1px solid rgba(240, 240, 240, 0.8);
+  margin: 0 5px;
+  border-top: 1px solid #dee2e6;
 }
 
-#setting .header .engine .engine-logo,
+#setting .header .engine .engine-item .engine-logo,
 #setting .body .side.floatL svg,
 #setting .body .side .services .service img,
 #setting .services .service img,
@@ -59,7 +61,7 @@
 #setting .split {
   display: block;
   height: 1px;
-  border-bottom: #dfe1e6 solid 1px;
+  border-bottom: 1px solid#dee2e6;
   margin: 0.25rem 0;
 }
 
@@ -111,6 +113,7 @@
 #pluginVersion {
   margin: 0 5px;
   font-size: 0.85rem;
+  vertical-align: bottom;
 }
 
 #proxyHost {
@@ -122,11 +125,13 @@
 }
 
 #setting > .body > .side {
-  width: 22%;
+  width: 23%;
+  background-color: #f9fafb;
+  padding: 5px;
 }
 
 #setting > .body > .content {
-  width: calc(78% - 10px);
+  width: calc(77% - 10px);
 }
 
 #setting > .body > .side,
@@ -146,7 +151,7 @@
 
 #setting > .body > .side > div,
 #setting > .body > .side > .services > .service {
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
 }
 
 #setting > .body > .side > div:not(:nth-last-child(2)):hover,
@@ -209,9 +214,9 @@
 
 #setting > div.body > div.content > div.ext {
   padding: 1rem;
-  margin: 10px 5px 10px 5px;
+  margin: 5px;
   border-radius: 5px;
-  box-shadow: #e6e6e6 0px 0px 10px 3px;
+  border: 1px solid #dee2e6;
 }
 
 #setting > div.body > div.content > div.ext > .title {
@@ -236,7 +241,7 @@
 
 #setting .model-item {
   padding: 10px 5px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid #dee2e6;
   border-bottom: none;
   cursor: pointer;
 }
@@ -253,7 +258,7 @@
 }
 
 #setting .model-item:last-child {
-  border-bottom: 1px solid #e6e6e6;
+  border-bottom: 1px solid #dee2e6;
 }
 
 #setting .model-item .model-status.icon {
@@ -348,6 +353,7 @@
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-repeat' viewBox='0 0 16 16'><path d='M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z'/></svg>");
 }
 @media (prefers-color-scheme: light) {
+  #setting > .header .engine-item:hover,
   #setting > .body > .side a:hover,
   #setting > .body > .content label:hover,
   #setting > .body > .content > .services > .service > .api > label > strong:hover,
@@ -385,11 +391,13 @@
   #setting input[type="text"],
   #setting input[type="password"],
   #setting .form-control,
-  #setting .form-control:focus {
+  #setting .form-control:focus,
+  #setting > .body > .side {
     background-color: #333333;
     color: #ffffff;
   }
 
+  #setting > .header .engine-item:hover,
   #setting > .body > .side a:hover,
   #setting > .body > .content label:hover,
   #setting > .body > .content > .services > .service > .api > label > strong:hover,
@@ -407,11 +415,7 @@
     background-color: #888888;
   }
 
-  #setting > .header {
-    border-bottom: 1px solid rgba(80, 80, 80, 0.8);
-  }
-
-  #setting > .footer {
-    border-top: 1px solid rgba(80, 80, 80, 0.8);
+  #setting .shortcut .key {
+    background-color: #888888;
   }
 }
