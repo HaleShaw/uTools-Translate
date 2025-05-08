@@ -299,6 +299,13 @@
                 <span class="l-badge ai" title="AI">Ai</span>
               </a>
             </div>
+            <div class="service openAI">
+              <a href="#openAI">
+                <img src="./assets/images/openAI.svg" />
+                <span class="vm" title="OpenAI">OpenAI</span>
+                <span class="l-badge ai" title="AI">Ai</span>
+              </a>
+            </div>
           </div>
           <div class="help">
             <a class="site" href="https://docs.qq.com/aio/DYm9ZWWN6R2dYZE9t" target="_blank">
@@ -1415,7 +1422,7 @@
                 <div class="models"></div>
               </div>
             </div>
-            <div class="service deepSeek" id="deepSeek">
+            <div class="service border-bottom deepSeek" id="deepSeek">
               <div class="api mb-1">
                 <label>
                   <input class="form-check-input" name="service" type="radio" value="deepSeek" />
@@ -1448,6 +1455,7 @@
                         type="password"
                         class="form-control secret"
                         name="key"
+                        placeholder="sk-******************************"
                       />
                       <i class="eye closed ms-1"></i>
                     </div>
@@ -1471,6 +1479,88 @@
                       </span>
                       <textarea
                         id="deepSeekPrompt"
+                        type="input"
+                        class="form-control"
+                        name="prompt"
+                        placeholder="可以自定义提示语，以便获取不同的AI处理结果"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="service openAI" id="openAI">
+              <div class="api mb-1">
+                <label>
+                  <input class="form-check-input" name="service" type="radio" value="openAI" />
+                  <img src="./assets/images/openAI.svg" />
+                  <strong>OpenAI</strong>
+                  <span class="tags">
+                    <span class="badge rounded-pill text-bg-success">列表</span>
+                    <span class="badge rounded-pill text-bg-info">AI</span>
+                  </span>
+                </label>
+                <a
+                  class="comment site floatR"
+                  href="https://platform.openai.com"
+                  title="https://platform.openai.com"
+                  target="_blank"
+                >
+                  openAI
+                </a>
+              </div>
+              <div class="detail">
+                <div>
+                  <a class="comment">完全自定义基于OpenAI的AI模型</a>
+                </div>
+                <div class="private">
+                  <div class="url mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">URL</span>
+                      <input
+                        id="openAIURL"
+                        type="input"
+                        class="form-control secret"
+                        name="url"
+                        placeholder="https://api.openai.com"
+                      />
+                    </div>
+                  </div>
+                  <div class="model mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">模型</span>
+                      <input
+                        id="openAIModel"
+                        type="input"
+                        class="form-control secret"
+                        name="model"
+                        placeholder="模型ID"
+                      />
+                    </div>
+                  </div>
+                  <div class="pwd mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span class="input-group-text private-id">API Key</span>
+                      <input
+                        id="openAIAPIKey"
+                        type="password"
+                        class="form-control secret"
+                        name="key"
+                        placeholder="sk-******************************"
+                      />
+                      <i class="eye closed ms-1"></i>
+                    </div>
+                  </div>
+                  <div class="key mb-1">
+                    <div class="input-group input-group-sm private-father">
+                      <span
+                        class="input-group-text private-id"
+                        style="display: flex; justify-content: center"
+                      >
+                        提示语
+                      </span>
+                      <textarea
+                        id="openAIPrompt"
                         type="input"
                         class="form-control"
                         name="prompt"
@@ -1537,6 +1627,8 @@
     <script src="assets/js/api/iCiBa.js"></script>
     <script src="assets/js/api/uToolsAI.js"></script>
     <script src="assets/js/api/deepSeek.js"></script>
+    <script src="assets/js/api/openAI.js"></script>
+    <script src="assets/js/api/ai-commom.js"></script>
     <script src="assets/js/setting.js"></script>
     <script src="assets/js/index.js"></script>
   </body>

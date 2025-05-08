@@ -297,6 +297,10 @@
   display: none;
 }
 
+textarea.form-control {
+  min-height: calc(3.0em + 0.75rem + 2px) !important;
+}
+
 .eye {
   position: absolute;
   right: 10px;
