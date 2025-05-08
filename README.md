@@ -36,6 +36,10 @@
 
   ![translateVariable](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateVariable.png)
 
+- 推送到主输入框
+
+  ![translateMainPush](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateMainPush.png)
+
 - 列表模式，暗黑模式
 
   ![translateListDark](https://raw.githubusercontent.com/HaleShaw/uTools-Translate/main/screenshots/translateListDark.png)
@@ -72,6 +76,7 @@
 20. 支持 LOGO 显示翻译引擎
 21. 支持快捷键上下移动（向下：`Down` / `Ctrl+N` / `Ctrl+J`，向上：`Up` / `Ctrl+P` / `Ctrl+K`）
 22. 支持自定义API防抖时间
+23.支持推送翻译结果到主搜索框
 
 ## API
 
