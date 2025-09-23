@@ -169,7 +169,7 @@
 23. uTools AI
     - <https://www.u-tools.cn/docs/developer/api-reference/utools/ai.html#utools-allaimodels>
     - 由uTools团队提供的AI中转服务，每次将自动消耗uTools的AI能量。
-    - 支持模型：`豆包 1.5 Pro`、`DeepSeek-v3`、`DeepSeek-R1`、`QwQ-32B`、`文心一言 3.5`、`文心一言 Speed`、`智普 GLM4-flash`、`通义千问 long`
+    - 支持模型将跟随uTools团队的支持而动态更新，目前支持：`deepseek-v3`、`deepseek-r1`、`deepseek-3.1`、`豆包 1.5 Pro`、`QwQ-32B`、`通义千问3-235B`、`文心一言 Speed`、`文心一言 4.5`、`智普 GLM4.5-flash`、`kimi-k2`
 24. DeepSeek
     - <https://platform.deepseek.com>
     - 服务商原因，响应相对较慢。

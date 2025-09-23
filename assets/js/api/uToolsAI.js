@@ -4,11 +4,16 @@ async function lookupUToolsAI(word) {
   let langSource = isChinese(word) ? "zh-CN" : "en";
   let langTarget = langSource == "en" ? "zh-CN" : "en";
   let uToolsAI = utools.dbStorage.getItem("uToolsAI");
+  let uToolsAIPrompt = utools.dbStorage.getItem("uToolsAIPrompt");
+  if (!uToolsAIPrompt) {
+    uToolsAIPrompt = DEFAULT_PROMPT;
+    utools.dbStorage.setItem("uToolsAIPrompt", uToolsAIPrompt);
+  }
   let model = uToolsAI ? uToolsAI : null;
   const messages = [
     {
       role: "system",
-      content: DEFAULT_PROMPT,
+      content: uToolsAIPrompt,
     },
     {
       role: "user",

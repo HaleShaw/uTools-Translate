@@ -760,15 +760,19 @@ function loadConfiguration() {
 }
 
 function updateMenuClass(service) {
-  $('#setting > .body > .side > .services > .service').each(function () {
+  $("#setting > .body > .side > .services > .service").each(function () {
     const $el = $(this);
-    const serviceClass = Array.from($el[0].classList)
-      .find(className => className !== 'service' && className !== 'active');
-    $el.toggleClass('active', serviceClass === service);
+    const serviceClass = Array.from($el[0].classList).find(
+      className => className !== "service" && className !== "active"
+    );
+    $el.toggleClass("active", serviceClass === service);
   });
-  $('#setting > .header > .engine > .engine-item').attr('href', `#${service}`);
-  $('#setting > .header > .engine > .engine-item > .engine-logo').attr('src', `./assets/images/${options[service].logo}`);
-  $('#setting > .header > .engine > .engine-item > .engine-name').text(options[service].name);
+  $("#setting > .header > .engine > .engine-item").attr("href", `#${service}`);
+  $("#setting > .header > .engine > .engine-item > .engine-logo").attr(
+    "src",
+    `./assets/images/${options[service].logo}`
+  );
+  $("#setting > .header > .engine > .engine-item > .engine-name").text(options[service].name);
 }
 
 /**
@@ -781,32 +785,33 @@ function loadVersion() {
 function loadIdSecret() {
   // 配置信息：存储键名 -> 元素ID
   const configObj = {
-    'deepLXApi': null,
-    'deepLFreeSecret': null,
-    'deepLProSecret': null,
-    'youDaoAppId': null,
-    'youDaoAppSecret': null,
-    'youDaoVocab': null,
-    'baiDuAppId': null,
-    'baiDuAppSecret': null,
-    'aliYunAppId': null,
-    'aliYunAppSecret': null,
-    'tencentAppId': null,
-    'tencentAppSecret': null,
-    'huoShanAppId': null,
-    'huoShanAppSecret': null,
-    'huaWeiAK': null,
-    'huaWeiSK': null,
-    'huaWeiProjectId': null,
-    'caiYunToken': null,
-    'xiaoNiuToken': null,
-    'deepSeekAPIKey': null,
-    'deepSeekPrompt': null,
-    'deepSeekModel': DEFAULT_PROMPT,
-    'openAIURL': null,
-    'openAIModel': null,
-    'openAIAPIKey': null,
-    'openAIPrompt': DEFAULT_PROMPT
+    deepLXApi: null,
+    deepLFreeSecret: null,
+    deepLProSecret: null,
+    youDaoAppId: null,
+    youDaoAppSecret: null,
+    youDaoVocab: null,
+    baiDuAppId: null,
+    baiDuAppSecret: null,
+    aliYunAppId: null,
+    aliYunAppSecret: null,
+    tencentAppId: null,
+    tencentAppSecret: null,
+    huoShanAppId: null,
+    huoShanAppSecret: null,
+    huaWeiAK: null,
+    huaWeiSK: null,
+    huaWeiProjectId: null,
+    caiYunToken: null,
+    xiaoNiuToken: null,
+    uToolsAIPrompt: DEFAULT_PROMPT,
+    deepSeekAPIKey: null,
+    deepSeekPrompt: DEFAULT_PROMPT,
+    deepSeekModel: null,
+    openAIURL: null,
+    openAIModel: null,
+    openAIAPIKey: null,
+    openAIPrompt: DEFAULT_PROMPT,
   };
 
   Object.entries(configObj).forEach(([key, defaultValue]) => {
@@ -956,35 +961,35 @@ function loadLang() {
   // 配置需要初始化的翻译服务
   const services = [
     {
-      name: 'tranSmart',
-      keyPrefix: 'tranSmart',
-      langPath: 'tranSmart.langs',
-      defaultValue: 'auto'
+      name: "tranSmart",
+      keyPrefix: "tranSmart",
+      langPath: "tranSmart.langs",
+      defaultValue: "auto",
     },
     {
-      name: 'youDao',
-      keyPrefix: 'youDao',
-      langPath: 'youDao.langs',
-      defaultValue: 'auto'
+      name: "youDao",
+      keyPrefix: "youDao",
+      langPath: "youDao.langs",
+      defaultValue: "auto",
     },
     {
-      name: 'aliYun',
-      keyPrefix: 'aliYun',
-      langPath: 'aliYun.langs',
-      defaultValue: 'auto'
+      name: "aliYun",
+      keyPrefix: "aliYun",
+      langPath: "aliYun.langs",
+      defaultValue: "auto",
     },
     {
-      name: 'huaWei',
-      keyPrefix: 'huaWei',
-      langPath: 'huaWei.langs',
-      defaultValue: 'auto'
+      name: "huaWei",
+      keyPrefix: "huaWei",
+      langPath: "huaWei.langs",
+      defaultValue: "auto",
     },
     {
-      name: 'caiYun',
-      keyPrefix: 'caiYun',
-      langPath: 'caiYun.langs',
-      defaultValue: 'auto'
-    }
+      name: "caiYun",
+      keyPrefix: "caiYun",
+      langPath: "caiYun.langs",
+      defaultValue: "auto",
+    },
   ];
 
   services.forEach(initLanguageSelect);
@@ -1007,13 +1012,14 @@ function initLanguageSelect({ name, keyPrefix, langPath, defaultValue }) {
 
   // 生成选项
   const optionsHTML = Object.entries(langs)
-    .map(([langName, langCode]) =>
-      `<option value="${langCode}">${langName}</option>`
-    ).join('');
+    .map(([langName, langCode]) => `<option value="${langCode}">${langName}</option>`)
+    .join("");
 
   // 获取并更新DOM
   const selector = `.service.${name} .lang>select`;
-  const [sourceSelect, targetSelect] = document.querySelectorAll(`${selector}.source, ${selector}.target`);
+  const [sourceSelect, targetSelect] = document.querySelectorAll(
+    `${selector}.source, ${selector}.target`
+  );
 
   [sourceSelect, targetSelect].forEach(select => {
     select.innerHTML = optionsHTML;
@@ -1023,12 +1029,12 @@ function initLanguageSelect({ name, keyPrefix, langPath, defaultValue }) {
 
 // 辅助函数：安全获取嵌套对象属性
 function getNestedProperty(obj, path) {
-  return path.split('.').reduce((acc, part) => acc?.[part], obj);
+  return path.split(".").reduce((acc, part) => acc?.[part], obj);
 }
 
 async function loadUToolsAI() {
   let models = await utools.allAiModels();
-  let modelHtml = '';
+  let modelHtml = "";
   const modelIds = models.map(model => model.id);
   let uToolsAI = utools.dbStorage.getItem("uToolsAI");
   if (!uToolsAI || uToolsAI.error || modelIds.indexOf(uToolsAI) == -1) {
@@ -1043,7 +1049,7 @@ async function loadUToolsAI() {
   models.forEach(model => {
     const { id, label, icon, description, cost } = model;
     modelIds.push(id);
-    const activeStr = (uToolsAI === id) ? " active" : "";
+    const activeStr = uToolsAI === id ? " active" : "";
     modelHtml += `
                   <div class="model-item${activeStr}" data-id="${id}">
                     <div class="model-title floatL">
@@ -1061,7 +1067,7 @@ async function loadUToolsAI() {
                       ${description}
                     </div>
                   </div>
-    `
+    `;
   });
   document.querySelector("#uToolsAI > .detail > .models").innerHTML = modelHtml;
 }
@@ -1229,33 +1235,36 @@ function addApiListener() {
     updateMenuClass(this.value);
     let AIName = "";
     if (this.value == "uToolsAI") {
-      const modelNameElement = document.querySelector('.models > .model-item.active .model-name');
+      const modelNameElement = document.querySelector(".models > .model-item.active .model-name");
       AIName = modelNameElement ? modelNameElement.textContent : "";
     }
     utools.showNotification(`翻译引擎切换至${options[this.value]["name"]} ${AIName}！`);
   });
 
-  $('.models').on('click', '.model-item', function () {
+  $(".models").on("click", ".model-item", function () {
     // 缓存jQuery对象提升性能
     const $this = $(this);
 
     // 使用data()方法规范获取自定义属性
-    const modelId = $this.data('id');
+    const modelId = $this.data("id");
     // 使用text().trim()避免空白干扰
-    const AIName = $this.find('.model-name').text().trim();
+    const AIName = $this.find(".model-name").text().trim();
 
     // 存储配置信息
-    utools.dbStorage.setItem('option', 'uToolsAI');
-    utools.dbStorage.setItem('uToolsAI', modelId);
+    utools.dbStorage.setItem("option", "uToolsAI");
+    utools.dbStorage.setItem("uToolsAI", modelId);
 
     // 批量操作DOM（减少重绘次数）
-    $('.models > .model-item').removeClass('active').find('.model-status').attr('class', 'model-status icon');
+    $(".models > .model-item")
+      .removeClass("active")
+      .find(".model-status")
+      .attr("class", "model-status icon");
 
     // 设置当前激活项（链式调用优化）
-    $this.addClass('active').find('.model-status').addClass('active');
+    $this.addClass("active").find(".model-status").addClass("active");
 
     // 更新菜单状态
-    updateMenuClass('uToolsAI');
+    updateMenuClass("uToolsAI");
     document.querySelector('input[type="radio"][name="service"][value="uToolsAI"]').checked = true;
 
     // 显示反馈通知
@@ -1275,19 +1284,36 @@ function addSiteListener() {
 function addKeyPasswordListener() {
   // 需要监听的输入框ID列表
   const inputKeys = [
-    'deepLXApi', 'deepLFreeSecret', 'deepLProSecret',
-    'youDaoAppId', 'youDaoAppSecret', 'youDaoVocab',
-    'baiDuAppId', 'baiDuAppSecret',
-    'aliYunAppId', 'aliYunAppSecret',
-    'tencentAppId', 'tencentAppSecret',
-    'huoShanAppId', 'huoShanAppSecret',
-    'huaWeiAK', 'huaWeiSK', 'huaWeiProjectId',
-    'caiYunToken', 'xiaoNiuToken', 'deepSeekAPIKey', 'deepSeekPrompt', 'openAIURL', 'openAIModel', 'openAIAPIKey', 'openAIPrompt'
+    "deepLXApi",
+    "deepLFreeSecret",
+    "deepLProSecret",
+    "youDaoAppId",
+    "youDaoAppSecret",
+    "youDaoVocab",
+    "baiDuAppId",
+    "baiDuAppSecret",
+    "aliYunAppId",
+    "aliYunAppSecret",
+    "tencentAppId",
+    "tencentAppSecret",
+    "huoShanAppId",
+    "huoShanAppSecret",
+    "huaWeiAK",
+    "huaWeiSK",
+    "huaWeiProjectId",
+    "caiYunToken",
+    "xiaoNiuToken",
+    "deepSeekAPIKey",
+    "deepSeekPrompt",
+    "openAIURL",
+    "openAIModel",
+    "openAIAPIKey",
+    "openAIPrompt",
   ];
 
   // 统一事件处理
   inputKeys.forEach(key => {
-    $(`#${key}`).on('blur', function () {
+    $(`#${key}`).on("blur", function () {
       utools.dbStorage.setItem(key, this.value.trim());
     });
   });
@@ -1313,40 +1339,40 @@ function addEyeListener() {
 // 配置所有翻译服务的监听参数
 const langServices = [
   {
-    name: 'tranSmart',
+    name: "tranSmart",
     changeHandler: changeBrotherTranSmart,
     exchangeHandler: changeBrotherTranSmart,
-    sourceClass: 'source',
-    targetClass: 'target'
+    sourceClass: "source",
+    targetClass: "target",
   },
   {
-    name: 'youDao',
+    name: "youDao",
     changeHandler: changeBrotherYouDao,
     exchangeHandler: changeBrotherYouDao,
-    sourceClass: 'source',
-    targetClass: 'target'
+    sourceClass: "source",
+    targetClass: "target",
   },
   {
-    name: 'aliYun',
+    name: "aliYun",
     changeHandler: changeBrotherAliYun,
     exchangeHandler: changeBrotherAliYun,
-    sourceClass: 'source',
-    targetClass: 'target'
+    sourceClass: "source",
+    targetClass: "target",
   },
   {
-    name: 'huaWei',
+    name: "huaWei",
     changeHandler: changeBrotherHuaWei,
     exchangeHandler: changeBrotherHuaWei,
-    sourceClass: 'source',
-    targetClass: 'target'
+    sourceClass: "source",
+    targetClass: "target",
   },
   {
-    name: 'caiYun',
+    name: "caiYun",
     changeHandler: changeBrotherCaiYun,
     exchangeHandler: changeBrotherCaiYun,
-    sourceClass: 'source',
-    targetClass: 'target'
-  }
+    sourceClass: "source",
+    targetClass: "target",
+  },
 ];
 
 // 语言选择监听器
@@ -1358,19 +1384,19 @@ function addLangListener() {
     const targetSelector = `${selector}.${service.targetClass}`;
 
     // Source 变化监听
-    $(sourceSelector).on('change', function () {
+    $(sourceSelector).on("change", function () {
       const $target = $(targetSelector);
       service.changeHandler(this.value, $target);
-      updateStorage(service.name, 'Source', this.value);
-      updateStorage(service.name, 'Target', $target.val());
+      updateStorage(service.name, "Source", this.value);
+      updateStorage(service.name, "Target", $target.val());
     });
 
     // Target 变化监听
-    $(targetSelector).on('change', function () {
+    $(targetSelector).on("change", function () {
       const $source = $(sourceSelector);
       service.changeHandler(this.value, $source);
-      updateStorage(service.name, 'Target', this.value);
-      updateStorage(service.name, 'Source', $source.val());
+      updateStorage(service.name, "Target", this.value);
+      updateStorage(service.name, "Source", $source.val());
     });
   });
 }
@@ -1382,7 +1408,7 @@ function addExchangeListener() {
     const sourceSelector = `.service.${service.name} .lang>select.${service.sourceClass}`;
     const targetSelector = `.service.${service.name} .lang>select.${service.targetClass}`;
 
-    $(exchangeBtn).on('click', function () {
+    $(exchangeBtn).on("click", function () {
       const $source = $(sourceSelector);
       const $target = $(targetSelector);
 
@@ -1395,17 +1421,16 @@ function addExchangeListener() {
       service.exchangeHandler($target.val(), $source);
 
       // 更新存储
-      updateStorage(service.name, 'Source', $source.val());
-      updateStorage(service.name, 'Target', $target.val());
+      updateStorage(service.name, "Source", $source.val());
+      updateStorage(service.name, "Target", $target.val());
     });
   });
 }
 
-
 // DeepSeek模型选择监听器
 function addDeepSeekModelListener() {
-  $('#deepSeekModel').on('change', function () {
-    utools.dbStorage.setItem('deepSeekModel', this.value);
+  $("#deepSeekModel").on("change", function () {
+    utools.dbStorage.setItem("deepSeekModel", this.value);
   });
 }
 
