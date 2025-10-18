@@ -1047,8 +1047,9 @@ async function loadUToolsAI() {
     utools.dbStorage.setItem("uToolsAI", uToolsAI);
   }
   models.forEach(model => {
-    const { id, label, icon, description, cost } = model;
+    let { id, label, icon, description, cost } = model;
     modelIds.push(id);
+    description = description === undefined ? "" : description;
     const activeStr = uToolsAI === id ? " active" : "";
     modelHtml += `
                   <div class="model-item${activeStr}" data-id="${id}">
