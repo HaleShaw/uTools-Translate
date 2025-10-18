@@ -12,7 +12,7 @@
 
 #setting .comment {
   font-size: 14px;
-  color: #808080;
+  color: var(--light-secondary-color);
 }
 
 #setting a {
@@ -151,7 +151,7 @@
 
 #setting > .body > .side > .services > .service.active {
   background-color: #f5e6e6;
-  color: #cc3333;
+  color: var(--red-color);
   font-weight: 500;
   border-radius: 4px;
 }
@@ -236,7 +236,7 @@
 
 #setting .model-item.active {
   background-color: #f5e6e6;
-  color: #cc3333;
+  color: var(--red-color);
   font-weight: 500;
 }
 
@@ -271,7 +271,7 @@
   vertical-align: middle;
   width: 6px;
   height: 12px;
-  border: solid #cc3333;
+  border: solid var(--red-color);
   border-width: 0 3px 3px 0;
   transform: rotate(45deg);
 }
@@ -298,7 +298,7 @@
 }
 
 textarea.form-control {
-  min-height: calc(3.0em + 0.75rem + 2px) !important;
+  min-height: calc(3em + 0.75rem + 2px) !important;
 }
 
 .eye {
@@ -354,24 +354,33 @@ textarea.form-control {
   #setting > .footer a:hover,
   #setting > .body > .side > div:not(:nth-last-child(2)):hover,
   #setting > .body > .side > .services > .service:hover {
-    color: #0000cc;
+    color: var(--blue-color);
   }
 
   #pluginVersion {
-    color: #333333;
+    color: var(--light-secondary-color);
   }
 }
 
 @media (prefers-color-scheme: dark) {
   #setting,
-  #pluginVersion,
   #setting span.input-group-text {
-    color: #ffffff;
+    color: var(--dark-primary-color);
+  }
+
+  #pluginVersion,
+  #setting .comment {
+    color: var(--dark-secondary-color);
+  }
+
+  #setting > .body > .side > .services > .service.active,
+  #setting .model-item.active {
+    background-color: #575757;
   }
 
   /* 部分图标在暗黑模式下需要处理背景色 */
   img.compatible {
-    background-color: #ffffff;
+    background-color: var(--dark-primary-color);
   }
 
   .eye.opened::before {
@@ -392,8 +401,8 @@ textarea.form-control {
   #setting .form-control,
   #setting .form-control:focus,
   #setting > .body > .side {
-    background-color: #333333;
-    color: #ffffff;
+    background-color: var(--dark-primary-bg-color);
+    color: var(--dark-primary-color);
   }
 
   #setting > .header .engine-item:hover,
@@ -405,7 +414,13 @@ textarea.form-control {
   #setting > .body > .side > div:not(:nth-last-child(2)):hover,
   #setting > .body > .side > .services > .service:hover,
   #setting .model-item:hover {
-    color: #cc3333;
+    color: var(--red-color);
+  }
+
+  #setting > .body > .side > div:not(:nth-last-child(2)):hover,
+  #setting > .body > .side > .services > .service:hover,
+  #setting .model-item:hover {
+    background-color: #3b3c3d !important;
   }
 
   /* input输入框提示文案 */
@@ -413,6 +428,6 @@ textarea.form-control {
 
   /* 快捷键 */
   #setting .shortcut .key {
-    background-color: #888888;
+    background-color: #555555;
   }
 }
