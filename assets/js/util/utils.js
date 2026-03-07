@@ -122,13 +122,27 @@ function getPhoneticGoogle(word, lang) {
 }
 
 function getPhoneticHtml(word, result, langSource, langTarget) {
-  const speakSwitch = speak["speakSwitch"];
+  const { speakSwitch, speakContent, speakEngine } = speak || {};
   if (!speakSwitch) {
     return "";
   }
-  const speakContent = speak["speakContent"];
-  const speakEngine = speak["speakEngine"];
-  const str = speakContent == "Source" ? word : result;
+  let str, lang;
+  switch (speakContent) {
+    case "Source":
+      str = word;
+      lang = langSource;
+      break;
+    case "Result":
+      str = result;
+      lang = langTarget;
+      break;
+    case "En":
+      str = langSource === "en" ? word : result;
+      lang = langSource === "en" ? langSource : langTarget;
+      break;
+    default:
+      return "";
+  }
   if ("YouDao" == speakEngine) {
     if (
       ("Source" == speakContent && "en" != langSource) ||
@@ -139,7 +153,6 @@ function getPhoneticHtml(word, result, langSource, langTarget) {
       return `<span>英</span>${getPhoneticEn(str)}<span>美</span>${getPhoneticUs(str)}`;
     }
   } else {
-    const lang = speakContent == "Source" ? langSource : langTarget;
     return getPhoneticGoogle(str, lang);
   }
 }

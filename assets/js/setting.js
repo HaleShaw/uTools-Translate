@@ -849,11 +849,14 @@ function loadSpeak() {
 
   let speakContentSource = document.getElementById("speakContentRadioSource");
   let speakContentResult = document.getElementById("speakContentRadioResult");
+  let speakContentRadioEn = document.getElementById("speakContentRadioEn");
   const speakContent = speak["speakContent"];
   if ("Source" == speakContent) {
     speakContentSource.setAttribute("checked", true);
   } else if ("Result" == speakContent) {
     speakContentResult.setAttribute("checked", true);
+  } else if ("En" == speakContent) {
+    speakContentRadioEn.setAttribute("checked", true);
   }
 
   updateSpeakStatus(speak["speakSwitch"]);
