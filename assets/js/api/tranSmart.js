@@ -12,10 +12,11 @@ async function lookupTranSmart(word) {
 
   let body = {
     header: {
-      fn: "auto_translation_block",
+      fn: "auto_translation",
+      client_key: "browser-chrome-145.0.0",
     },
     source: {
-      text_block: word,
+      text_list: [word],
       lang: source,
     },
     target: {
