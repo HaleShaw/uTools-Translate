@@ -61,7 +61,7 @@ async function lookupHuaWei(word) {
     });
     return data;
   }
-  let source = utools.dbStorage.getItem("huaWeiSource") || "auto";
+  let source = getStorageItem("huaWeiSource", "auto");
   let target = utools.dbStorage.getItem("huaWeiTarget");
   utools.dbStorage.setItem("huaWeiSource", source);
   utools.dbStorage.setItem("huaWeiTarget", target);
@@ -103,8 +103,9 @@ async function lookupHuaWei(word) {
     }
   } catch (error) {
     let errorCode = response?.error_code ? response?.error_code : error?.error_code;
-    let errorMsg = errorCodeMsgHuaWei[errorCode]
-      ? errorCodeMsgHuaWei[errorCode]
+    let errorMsg =
+      errorCodeMsgHuaWei[errorCode] ?
+        errorCodeMsgHuaWei[errorCode]
       : errorCodeMsgHuaWei[errorCodeOther];
     data.push({
       title: errTitle,

@@ -5,8 +5,8 @@ const errorCodeMsgTranSmart = {
 async function lookupTranSmart(word) {
   let data = [];
   const api = options.tranSmart.api;
-  let source = utools.dbStorage.getItem("tranSmartSource") || "auto";
-  let target = utools.dbStorage.getItem("tranSmartTarget") || "auto";
+  let source = getStorageItem("tranSmartSource", "auto");
+  let target = getStorageItem("tranSmartTarget", "auto");
   utools.dbStorage.setItem("tranSmartSource", source);
   utools.dbStorage.setItem("tranSmartTarget", target);
 

@@ -146,14 +146,10 @@ async function lookupYouDao(word) {
   let appSecret = utools.dbStorage.getItem("youDaoAppSecret");
   let vocab = utools.dbStorage.getItem("youDaoVocab");
   if (!appId || !appSecret) {
-    data.push({
-      title: errTitle,
-      description: errMsgEmptyConf,
-    });
-    return data;
+    return [{ title: errTitle, description: errMsgEmptyConf }];
   }
-  let source = utools.dbStorage.getItem("youDaoSource") || "auto";
-  let target = utools.dbStorage.getItem("youDaoTarget") || "auto";
+  let source = getStorageItem("youDaoSource", "auto");
+  let target = getStorageItem("youDaoTarget", "auto");
   utools.dbStorage.setItem("youDaoSource", source);
   utools.dbStorage.setItem("youDaoTarget", target);
 
@@ -176,82 +172,77 @@ async function lookupYouDao(word) {
   let response;
   try {
     response = await post(api, stringify(param), formHeaders);
-    const errorCode = response.errorCode;
-    if (errorCode == "0") {
-      const trans = response.translation;
-      const basic = response.basic;
-      if (trans.length != 0) {
-        let dataTitle = `<span class="translation">${trans.join(", ")}</span>`;
-        const speakSwitch = speak["speakSwitch"];
-        const speakContent = speak["speakContent"];
-        const speakEngine = speak["speakEngine"];
-        if (speakSwitch) {
-          const str = speakContent == "Source" ? word : trans[0];
-          let phoneticEn;
-          let phoneticUs;
+    const { errorCode, basic, web, translation } = response;
+    if (errorCode !== "0") {
+      return [{ title: errTitle, description: errorCodeMsgYouDao[errorCode] || "未知错误" }];
+    }
+    if (translation.length != 0) {
+      let dataTitle = `<span class="translation">${translation.join(", ")}</span>`;
+      const { speakSwitch, speakContent, speakEngine } = speak || {};
+      if (speakSwitch) {
+        let langArr = response.l.split("2");
+        let phoneticEn = "",
+          phoneticUs = "";
+        let str = "";
+        if (speakContent == "En") {
+          mapLanguageArray(langArr);
+          if (langArr[0] == "en") {
+            str = word;
+            if ("YouDao" == speakEngine) {
+              phoneticEn = getPhoneticEn(str);
+              phoneticUs = getPhoneticUs(str);
+            } else {
+              phoneticEn = getPhoneticGoogle(str, "en");
+              phoneticUs = getPhoneticGoogle(str, "en");
+            }
+          } else if (langArr[1] == "en") {
+            str = translation[0];
+            if ("YouDao" == speakEngine) {
+              phoneticEn = getPhoneticEn(str);
+              phoneticUs = getPhoneticUs(str);
+            } else {
+              phoneticEn = getPhoneticGoogle(str, "en");
+              phoneticUs = getPhoneticGoogle(str, "en");
+            }
+          }
+        } else {
+          str = speakContent == "Source" ? word : translation[0];
           if ("YouDao" == speakEngine) {
             phoneticEn = getPhoneticEn(str);
             phoneticUs = getPhoneticUs(str);
           } else {
-            let langArr = response.l.split("2");
             let lang = getLangYouDao(speakContent, langArr);
             phoneticEn = getPhoneticGoogle(str, lang);
             phoneticUs = getPhoneticGoogle(str, lang);
           }
-          if (basic && basic.phonetic && basic.phonetic != "") {
-            if (basic["us-phonetic"] && basic["us-phonetic"] != "") {
-              dataTitle += `<span>英[${basic.phonetic}]</span>${phoneticEn}<span>美[${basic["us-phonetic"]}]</span>${phoneticUs}`;
-            } else {
-              dataTitle += `<span>[${basic.phonetic}]</span>${phoneticEn}`;
-            }
-          } else if (phoneticEn != "" && phoneticUs != "") {
-            dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
+        }
+        if (basic?.phonetic) {
+          const usPhonetic = basic["us-phonetic"];
+          if (usPhonetic) {
+            dataTitle += `<span>英[${basic.phonetic}]</span>${phoneticEn}<span>美[${basic["us-phonetic"]}]</span>${phoneticUs}`;
+          } else {
+            dataTitle += `<span>[${basic.phonetic}]</span>${phoneticEn}`;
           }
-        }
-        data.push({ title: dataTitle, description: "翻译结果" });
-      }
-
-      if (basic && basic.explains && basic.explains.length != 0) {
-        const explains = basic.explains;
-        for (let i = 0; i < explains.length; i++) {
-          data.push({
-            title: explains[i],
-            description: "基本释义",
-          });
+        } else if (phoneticEn != "" && phoneticUs != "") {
+          dataTitle += `<span>英</span>${phoneticEn}<span>美</span>${phoneticUs}`;
         }
       }
-
-      if (basic && basic.wfs && basic.wfs.length != 0) {
-        const wfs = basic.wfs;
-        let dataTitle = "";
-        for (let i = 0; i < wfs.length; i++) {
-          dataTitle += `${wfs[i].wf.name}:${wfs[i].wf.value};  `;
-        }
-        data.push({
-          title: dataTitle,
-          description: "变形",
-        });
-      }
-
-      const web = response.web;
-      if (web && web.length != 0) {
-        for (let i = 0; i < web.length; i++) {
-          data.push({
-            title: web[i].value.join(", "),
-            description: "网络释义：" + web[i].key,
-          });
-        }
-      }
-    } else {
-      data.push({
-        title: errTitle,
-        description: errorCodeMsgYouDao[errorCode],
-      });
+      data.push({ title: dataTitle, description: "翻译结果" });
     }
+
+    // 基本释义
+    data.push(...handleExplanations(basic));
+
+    // 变形
+    data.push(...handleWordForms(basic));
+
+    // 网络释义
+    data.push(...handleWebDefinitions(web));
   } catch (error) {
     let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
-    let errorMsg = errorCodeMsgYouDao[errorCode]
-      ? errorCodeMsgYouDao[errorCode]
+    let errorMsg =
+      errorCodeMsgYouDao[errorCode] ?
+        errorCodeMsgYouDao[errorCode]
       : errorCodeMsgYouDao[errorCodeOther];
     data.push({
       title: errTitle,
@@ -261,10 +252,34 @@ async function lookupYouDao(word) {
   return data;
 }
 
+// 处理基本释义
+function handleExplanations(basic) {
+  if (!basic?.explains?.length) return [];
+  return basic.explains.map(explain => ({
+    title: explain,
+    description: "基本释义",
+  }));
+}
+
+// 处理变形
+function handleWordForms(basic) {
+  if (!basic?.wfs?.length) return [];
+  const formsText = basic.wfs.map(wf => `${wf.wf.name}:${wf.wf.value}`).join(";  ");
+  return [{ title: formsText, description: "变形" }];
+}
+
+// 处理网络释义
+function handleWebDefinitions(web) {
+  if (!web?.length) return [];
+  return web.map(item => ({
+    title: item.value.join(", "),
+    description: `网络释义：${item.key}`,
+  }));
+}
+
 function truncate(str) {
   var len = str.length;
-  if (len <= 20) return str;
-  return str.substring(0, 10) + len + str.substring(len - 10, len);
+  return len <= 20 ? str : `${str.substring(0, 10)}${len}${str.substring(len - 10, len)}`;
 }
 
 function getSignYouDao(appId, query, salt, curtime, appSecret) {
@@ -272,10 +287,18 @@ function getSignYouDao(appId, query, salt, curtime, appSecret) {
   return window.SHA256(str);
 }
 
+// 简化语言映射
+function mapLanguage(lang) {
+  return LANG_MAP_YOUDAO[lang] || lang;
+}
+
+// 更新语言数组映射
+function mapLanguageArray(langArr) {
+  langArr[0] = mapLanguage(langArr[0]);
+  langArr[1] = mapLanguage(langArr[1]);
+}
+
 function getLangYouDao(speakContent, langArr) {
-  if ("Source" == speakContent) {
-    return LANG_MAP_YOUDAO[langArr[0]] ? LANG_MAP_YOUDAO[langArr[0]] : langArr[0];
-  } else {
-    return LANG_MAP_YOUDAO[langArr[1]] ? LANG_MAP_YOUDAO[langArr[1]] : langArr[1];
-  }
+  const index = speakContent === "Source" ? 0 : 1;
+  return mapLanguage(langArr[index]);
 }

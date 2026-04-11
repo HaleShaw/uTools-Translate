@@ -44,8 +44,8 @@ async function lookupAliYun(word) {
     return data;
   }
 
-  let source = utools.dbStorage.getItem("aliYunSource") || "auto";
-  let target = utools.dbStorage.getItem("aliYunTarget") || "auto";
+  let source = getStorageItem("aliYunSource", "auto");
+  let target = getStorageItem("aliYunTarget", "auto");
   utools.dbStorage.setItem("aliYunSource", source);
   utools.dbStorage.setItem("aliYunTarget", target);
   if ("auto" == target) {

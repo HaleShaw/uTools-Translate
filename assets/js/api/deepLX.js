@@ -3,13 +3,9 @@ const errorCodeMsgDeepLX = {
 };
 
 async function lookupDeepLX(word) {
-
   const api = utools.dbStorage.getItem("deepLXApi") || options.deepLX.api;
   if (!api || "" == api) {
-    return [{
-      title: errTitle,
-      description: errMsgEmptyConf,
-    }];
+    return [{ title: errTitle, description: errMsgEmptyConf }];
   }
 
   const isChineseWord = isChinese(word);
@@ -48,19 +44,16 @@ async function lookupDeepLX(word) {
     }
 
     const alternatives = response?.alternatives;
-    if(alternatives){
+    if (alternatives) {
       for (let i = 0; i < alternatives.length; i++) {
-      data.push({
-        title: alternatives[i],
-        description: "变形",
-      });
+        data.push({
+          title: alternatives[i],
+          description: "变形",
+        });
       }
     }
   } catch (error) {
-    data.push({
-      title: errTitle,
-      description: errorCodeMsgDeepLX[errorCodeOther],
-    });
+    return [{ title: errTitle, description: errorCodeMsgDeepLX[errorCodeOther] }];
   }
 
   return data;

@@ -271,3 +271,14 @@ function getFullDate(timestamp) {
   const day = ("0" + date.getUTCDate()).slice(-2);
   return `${year}-${month}-${day}`;
 }
+
+/**
+ * Get the value of the storage item.
+ * @param {String} key the key of the storage item.
+ * @param {String} defaultValue the default value if the key is not found.
+ * @returns
+ */
+function getStorageItem(key, defaultValue = "") {
+  const value = utools.dbStorage.getItem(key);
+  return value ?? defaultValue;
+}

@@ -22,8 +22,8 @@ async function lookupCaiYun(word) {
     return data;
   }
 
-  let source = utools.dbStorage.getItem("caiYunSource") || "auto";
-  let target = utools.dbStorage.getItem("caiYunTarget") || "auto";
+  let source = getStorageItem("caiYunSource", "auto");
+  let target = getStorageItem("caiYunTarget", "auto");
   utools.dbStorage.setItem("caiYunSource", source);
   utools.dbStorage.setItem("caiYunTarget", target);
 
@@ -80,8 +80,9 @@ async function lookupCaiYun(word) {
     }
   } catch (error) {
     let errorCode = response?.errorCode ? response?.errorCode : error?.errorCode;
-    let errorMsg = errorCodeMsgCaiYun[errorCode]
-      ? errorCodeMsgCaiYun[errorCode]
+    let errorMsg =
+      errorCodeMsgCaiYun[errorCode] ?
+        errorCodeMsgCaiYun[errorCode]
       : errorCodeMsgCaiYun[errorCodeOther];
     data.push({
       title: errTitle,
