@@ -517,14 +517,18 @@ function copyExit(ele) {
   utools.hideMainWindow();
 }
 
-
 function move(direction) {
-  const $current = $(".list-item.selected").removeClass("selected");
+  const $current = $(".list-item.selected");
+  $current.removeClass("selected");
   const $items = $(".list-item");
 
-  const $target = direction === 'down'
-    ? $current.next().addBack($items.first())
-    : $current.prev().addBack($items.last());
+  if (direction === "down") {
+    // 如果有下一个元素，用它；否则用第一个
+    $target = $current.next().length ? $current.next() : $items.first();
+  } else {
+    // 如果有上一个元素，用它；否则用最后一个
+    $target = $current.prev().length ? $current.prev() : $items.last();
+  }
 
   $target.addClass("selected").focus();
   updatePhonetic($target[0]);
